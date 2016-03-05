@@ -1,4 +1,12 @@
-h1 {
+* {
 	font-family: 'Press Start 2P', cursive;
+}
+h1 {
 	font-size: 100;
-} 
+}
+h3 {
+  font-size: 40;
+}
+p {
+  font-size: 12;
+}
