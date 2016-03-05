@@ -1,5 +1,9 @@
+body {
+	background-color: #117190;
+}
 * {
 	font-family: 'Press Start 2P', cursive;
+	color: #6c6c6c;
 }
 h1 {
 	font-size: 100;
