@@ -1,4 +1,6 @@
 from flask import Flask
-app = Flask(fragforce)
+app = Flask(__name__)
+
+app.config.from_object('config')
 
 import fragforce.views
