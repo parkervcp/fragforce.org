@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    {% block head %}
+    <link rel='stylesheet' href="{{ url_for('static', filename='fragforce.css') }}" />
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id='content'>{% block content %}{% endblock %}</div>
+    <div id='footer'>
+      {% block footer %}
+      &copy; 2016 by Fragforce Elder Council
+      {% endblock %}
+    </div>
+  </body>
+</html>
