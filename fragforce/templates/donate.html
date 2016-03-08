@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}How to Donate{% endblock %}
+{% block content %}
+  <h1>Donating to Fragforce</h1>
+  <p>
+    <ul>
+      <li>Go to <a href="http://team.fragforce.org">team.fragforce.org</a></li>
+      <li>Go to the Roster</li>
+      <li>Pick a person to get credit for your donation using whichever method you feel like using</li>
+      <ul>
+        <li>Roll a die!</li>
+        <li>Throw darts at a wall!</li>
+        <li>Find someone who hasn't met their goal and help them reach it!</li>
+      </ul>
+      <li>Alternatively, instead of donating to someone else, you can <a href="{{ url_for('join') }}">Join the team</a> and raise money yourself!</li>
+    </ul>
+{% endblock %}
