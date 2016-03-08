@@ -1,6 +1,6 @@
 * {
-  font-family: 'Press Start 2P', cursive;
-  color: #46a4e8;
+  font-family: 'Roboto Slab', serif;
+  color: #ffffff;
 }
 html, body {
   height: 100%;
@@ -13,6 +13,8 @@ body {
   height: auto !important;
   height: 100%;
   margin: 0 auto -100px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .footer, .push {
   height: 100px;
@@ -20,11 +22,18 @@ body {
 }
 h1 {
   font-size: 100;
+  font-family: 'Press Start 2P', cursive;
+  color: #46a4e8;
 }
 h3 {
   font-size: 40;
+  font-family: 'Press Start 2P', cursive;
+  color: #46a4e8;
 }
 p {
   font-size: 12;
-  color: #ffffff;
+}
+a {
+  color: #46a4e8;
+  text-decoration: none;
 }

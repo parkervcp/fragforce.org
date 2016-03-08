@@ -4,7 +4,7 @@
     {% block head %}
     <link rel='stylesheet' href="{{ url_for('static', filename='fragforce.css') }}" />
     <link rel='stylesheet' href="{{ url_for('static', filename='menu.css') }}" />
-    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:300' rel='stylesheet' type='text/css'>
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
@@ -14,10 +14,12 @@
       <div id='cssmenu'>
       <ul>
         <li><a href="{{ url_for('index') }}"><span>Home</span></a></li>
+        <li><a href="{{ url_for('donate') }}"><span>Donate</span></a></li>
         <li><a href="{{ url_for('join') }}"><span>Join</span></a></li>
         <li class='last'><a href="{{ url_for('contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
+      <hr><br />
       {% block header %}{% endblock %}
     </div>
     {% block content %}{% endblock %}

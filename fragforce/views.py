@@ -7,6 +7,9 @@ def index(name=None):
 @app.route('/contact')
 def contact(name=None):
   return render_template('contact.html', name=name)
+@app.route('/donate')
+def donate(name=None):
+  return render_template('donate.html', name=name)
 @app.route('/join')
 def join(name=None):
   return render_template('join.html', name=name)
