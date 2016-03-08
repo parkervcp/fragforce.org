@@ -3,11 +3,20 @@
   <head>
     {% block head %}
     <link rel='stylesheet' href="{{ url_for('static', filename='fragforce.css') }}" />
+    <link rel='stylesheet' href="{{ url_for('static', filename='menu.css') }}" />
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
+    <div id='header'>
+      <div id='cssmenu'>
+      <ul>
+        <li><a href="{{ url_for('index') }}"><span>Home</span></a></li>
+        <li class='last'><a href="{{ url_for('contact') }}"><span>Contact</span></a></li>
+      </ul>
+      </div>
+{% block header %}{% endblock %}</div>
     <div id='content'>{% block content %}{% endblock %}</div>
     <div id='footer'>
       {% block footer %}
