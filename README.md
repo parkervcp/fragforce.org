@@ -13,6 +13,7 @@
     export CPPFLAGS="-I/usr/local/include $CPPFLAGS"
     export LDFLAGS="-L/usr/local/lib $LDFLAGS"
     ```
+  * Serving SVG files on FreeBSD will also fail due to missing mime-support port in ```misc/mime-support```
 5. To verify that it works, simply run ```python run.py``` to start a local server running on port 8000 for verification/development
 6. Create a new nginx server config for your server with the following data: 
 
