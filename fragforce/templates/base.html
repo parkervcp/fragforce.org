@@ -9,10 +9,12 @@
     {% endblock %}
   </head>
   <body>
+  <div id='body'>
     <div id='header'>
       <div id='cssmenu'>
       <ul>
         <li><a href="{{ url_for('index') }}"><span>Home</span></a></li>
+        <li><a href="{{ url_for('join') }}"><span>Join</span></a></li>
         <li class='last'><a href="{{ url_for('contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
@@ -23,5 +25,6 @@
       &copy; 2016 by Fragforce Elder Council
       {% endblock %}
     </div>
+  </div>
   </body>
 </html>
