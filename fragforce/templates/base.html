@@ -9,8 +9,8 @@
     {% endblock %}
   </head>
   <body>
-  <div id='body'>
-    <div id='header'>
+  <div class='wrapper'>
+    <div class='header'>
       <div id='cssmenu'>
       <ul>
         <li><a href="{{ url_for('index') }}"><span>Home</span></a></li>
@@ -18,13 +18,15 @@
         <li class='last'><a href="{{ url_for('contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
-{% block header %}{% endblock %}</div>
-    <div id='content'>{% block content %}{% endblock %}</div>
-    <div id='footer'>
-      {% block footer %}
-      &copy; 2016 by Fragforce Elder Council
-      {% endblock %}
+      {% block header %}{% endblock %}
     </div>
+    {% block content %}{% endblock %}
+    <div class='push'></div>
+  </div>
+  <div class='footer'>
+    {% block footer %}
+    &copy; 2016 by Fragforce Elder Council
+    {% endblock %}
   </div>
   </body>
 </html>
