@@ -16,6 +16,12 @@
         <li><a href="{{ url_for('general.index') }}"><span>Home</span></a></li>
         <li><a href="{{ url_for('general.donate') }}"><span>Donate</span></a></li>
         <li><a href="{{ url_for('general.join') }}"><span>Join</span></a></li>
+        <li class='has-sub'><a href="#"><span><Events></span></a>
+          <ul>
+            <li><a href="{{ url_for('events.index') }}"><span>All Events</span></a></li>
+            <li><a href="#"><span>Upcoming</span></a></li>
+            <li class='last'><a href="#"><span>Past</a></li>
+          </ul>
         <li class='last'><a href="{{ url_for('general.contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
