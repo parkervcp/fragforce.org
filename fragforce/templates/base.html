@@ -14,6 +14,7 @@
       <div id='cssmenu'>
       <ul>
         <li><a href="{{ url_for('general.index') }}"><span>Home</span></a></li>
+        {% block menu %}
         <li><a href="{{ url_for('general.donate') }}"><span>Donate</span></a></li>
         <li><a href="{{ url_for('general.join') }}"><span>Join</span></a></li>
         <li class='has-sub'><a href="#"><span>Events</span></a>
@@ -23,6 +24,7 @@
             <li class='last'><a href="#"><span>Past</a></li>
           </ul>
         </li>
+        {% endblock %}
         <li class='last'><a href="{{ url_for('general.contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
