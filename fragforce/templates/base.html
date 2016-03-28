@@ -2,8 +2,8 @@
 <html lang='en'>
   <head>
     {% block head %}
-    <link rel='stylesheet' href="{{ url_for('static', filename='fragforce.css') }}" />
-    <link rel='stylesheet' href="{{ url_for('static', filename='menu.css') }}" />
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/fragforce.css') }}" />
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/menu.css') }}" />
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:300' rel='stylesheet' type='text/css'>
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
@@ -13,10 +13,10 @@
     <div class='header'>
       <div id='cssmenu'>
       <ul>
-        <li><a href="{{ url_for('index') }}"><span>Home</span></a></li>
-        <li><a href="{{ url_for('donate') }}"><span>Donate</span></a></li>
-        <li><a href="{{ url_for('join') }}"><span>Join</span></a></li>
-        <li class='last'><a href="{{ url_for('contact') }}"><span>Contact</span></a></li>
+        <li><a href="{{ url_for('general.index') }}"><span>Home</span></a></li>
+        <li><a href="{{ url_for('general.donate') }}"><span>Donate</span></a></li>
+        <li><a href="{{ url_for('general.join') }}"><span>Join</span></a></li>
+        <li class='last'><a href="{{ url_for('general.contact') }}"><span>Contact</span></a></li>
       </ul>
       </div>
       <hr><br />
