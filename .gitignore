@@ -1,6 +1,7 @@
 # Project Specific excludes
 env
 uwsgi.ini
+config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
