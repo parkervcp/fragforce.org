@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends '2col.html' %}
 {% block title %}Fragforce{% endblock %}
-{% block content %}
-  <object type='image/svg+xml' data="{{ url_for('static', filename='images/fragforce_basic_white_fill.svg') }}" width="800"><img src="{{ url_for('static', filename='images/fragforce_basic.png') }}" /></object>
+{% block content_left %}
   <h3>Who we are</h3>
   <p>Fragforce is the Extra Life team from Salesforce that is raising money to support charity, and creating/facilitating a new philanthropic tradition to boost employee morale, and to support cross-team collaboration through a shared love of gaming.</p>
   <h3>Who we are supporting</h3>
@@ -10,4 +9,13 @@
   <p>Make a donation to Fragforce's team by visiting the Extra Life page and searching for Fragforce, or just go to <a href='http://team.fragforce.org'>team.fragforce.org</a></p>
   <h3>How can I help?</h3>
   <p>Sign up to participate in the event and raise money as you can to save kid's lives! Simply click the 'Join Team' link on the Extra Life team page for Fragforce at <a href='http://team.fragforce.org'>team.fragforce.org</a></p>
+{% endblock %}
+
+{% block content_right %}
+  <a class="twitter-timeline"
+    width="500"
+    data-chrome="nofooter noscrollbar noborders transparent"
+    data-tweet-limit="3"
+    href="https://twitter.com/fragforce" data-widget-id="723172971154563073">Tweets by @fragforce</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}

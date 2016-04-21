@@ -29,9 +29,14 @@
       </ul>
       </div>
       <hr><br />
+      <object type='image/svg+xml' data="{{ url_for('static', filename='images/fragforce_basic_white_fill.svg') }}" width="800">
+          <img src="{{ url_for('static', filename='images/fragforce_basic.png') }}" />
+      </object>
       {% block header %}{% endblock %}
     </div>
+    <div class='content'>
     {% block content %}{% endblock %}
+    </div>
     <div class='push'></div>
   </div>
   <div class='footer'>
