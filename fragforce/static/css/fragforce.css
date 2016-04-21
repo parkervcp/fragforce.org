@@ -8,6 +8,16 @@ html, body {
 body {
   background-color: #37474f;
 }
+#left
+{
+    width: 800px;
+    float: left
+}
+#right
+{
+    margin-left: 800px;
+    /* Same as the width of the #left id above */
+}
 .wrapper {
   min-height: 100%;
   height: auto !important;
@@ -17,6 +27,7 @@ body {
   padding-right: 10px;
 }
 .footer, .push {
+  clear: both;
   height: 100px;
   color: #ffffff;
 }
