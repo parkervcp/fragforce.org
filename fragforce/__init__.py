@@ -61,4 +61,6 @@ def tracker_data():
             print_bar(full_goal, full_total, full_percent, "Totals")
   return dict(
           print_bar=print_bar,
-          print_bars=print_bars) 
+          print_bars=print_bars,
+          extralife_link="http://team.fragforce.org",
+          childsplay_link="http://childsplay.fragforce.org") 
