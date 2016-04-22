@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}How to Donate{% endblock %}
 {% block content %}
-  <h1>Donating to Fragforce</h1>
+  <h3>Donating to Fragforce via Extra-Life (US and Canada only)</h3>
   <p>
     <ul>
-      <li>Go to <a href="http://team.fragforce.org">team.fragforce.org</a></li>
+        <li>Go to <a href="{{extralife_link}}">{{extralife_link}}</a></li>
       <li>Go to the Roster</li>
       <li>Pick a person to get credit for your donation using whichever method you feel like using</li>
       <ul>
@@ -14,4 +14,13 @@
       </ul>
       <li>Alternatively, instead of donating to someone else, you can <a href="{{ url_for('general.join') }}">Join the team</a> and raise money yourself!</li>
     </ul>
+  </p>
+  <h3>Donating to Fragforce via Child's Play (International)</h3>
+  <p>
+    <ul>
+        <li>Go to our <a href="{{childsplay_link}}">Child's Play</a> page.</li>
+        <li>Determine how much you would like to donate, and leave a comment if you would like to.</li>
+        <li>Pay via PayPal.</li>
+        <li>Pat yourself on the back for helping make kid's lives betteri.</li>
+  </p>
 {% endblock %}
