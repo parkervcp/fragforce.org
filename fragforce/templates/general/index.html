@@ -1,5 +1,10 @@
 {% extends '2col.html' %}
 {% block title %}Fragforce{% endblock %}
+{% block header %}
+{% autoescape false %}
+{{ print_bars() }}
+{% endautoescape %}
+{% endblock %}
 {% block content_left %}
   <h3>Who we are</h3>
   <p>Fragforce is the Extra Life team from Salesforce that is raising money to support charity, and creating/facilitating a new philanthropic tradition to boost employee morale, and to support cross-team collaboration through a shared love of gaming.</p>

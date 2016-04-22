@@ -48,3 +48,26 @@ a {
   color: #46a4e8;
   text-decoration: none;
 }
+.bar_container {
+  margin: none; 
+  text-align: center; 
+  width: 800px;
+}
+.bar_back {
+  text-align: left; 
+  margin: 3px auto; 
+  font-size: 0px; 
+  line-height: 0px; 
+  border: solid 1px #FFFFFF; 
+  background: #000000;
+}
+.bar_fill {
+  font-size: 0px; 
+  line-height: 0px; 
+  height: 7px;
+  background: #46a4e8;
+}
+.bar_label {
+  font-size: 10pt; 
+  font-family: monospace;
+}
