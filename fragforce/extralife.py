@@ -22,6 +22,9 @@ class ExtraLifeTeam(object):
         # when the team was registered with Extra-Life
         self.created = created
 
+        # participant cache - see participants()
+        self._participants = None
+
     @classmethod
     def from_url(cls, team_id):
         """Constructs an ExtraLifeTeam from the team web service.
@@ -45,6 +48,45 @@ class ExtraLifeTeam(object):
         created = data.get("createdOn", None)
 
         return cls(team_id, name, raised, goal, avatar_url, created)
+
+    def participants(self, force=False):
+        """Returns the list of participants for the team using the
+        teamParticipants web service call. This call is cached. To force a
+        new service call, use force=True
+
+        :param force: Ignore existing participants info. Default False.
+        """
+        if self._participants is not None and not force:
+            return self._participants
+
+        url = ("http://www.extra-life.org/index.cfm?"
+               "fuseaction=donorDrive.teamParticipants&teamID={}&format=json")
+
+        r = requests.get(url.format(self.team_id))
+        if r.status_code != 200:
+            raise Exception("Could not retrieve Extra-Life team participant "
+                            "information.")
+
+        data = r.json()
+        self._participants = []
+        for pdata in data:
+            participant_id = pdata.get("participantID", None)
+            created = pdata.get("createdOn", None)
+            last_name = pdata.get("lastName", None)
+            first_name = pdata.get("firstName", None)
+            avatar_url = pdata.get("avatarImageURL", None)
+            team_captain = pdata.get("isTeamCaptain", False)
+
+            # these fields are not present in the web service
+            raised = None
+            goal = None
+
+            p = ExtraLifeParticipant(participant_id, self.team_id,
+                                     team_captain, first_name, last_name,
+                                     raised, goal, avatar_url, created)
+            self._participants.append(p)
+
+        return self._participants
 
     def __repr__(self):
         return "ExtraLifeTeam<team_id={}>".format(self.team_id)
