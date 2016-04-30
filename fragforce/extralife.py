@@ -49,3 +49,64 @@ class ExtraLifeTeam(object):
     def __repr__(self):
         return "ExtraLifeTeam<team_id={}>".format(self.team_id)
 
+
+class ExtraLifeParticipant(object):
+    def __init__(self, participant_id, team_id, is_team_captain, first_name,
+                 last_name, raised, goal, avatar_url, created):
+
+        # extra-life assigned participant ID
+        self.participant_id = participant_id
+
+        # which team they belong to
+        self.team_id = team_id
+        
+        # is this person a team captain?
+        self.is_team_captain = is_team_captain
+
+        # participant-entered name data
+        self.first_name = first_name
+        self.last_name = last_name
+
+        # how much money this person has raised
+        self.raised = raised
+
+        # this person's fundraising goal
+        self.goal = goal
+
+        # avatar image url
+        self.avatar_url = avatar_url
+
+        # when this person registered
+        self.created = created
+
+    @classmethod
+    def from_url(cls, participant_id):
+        """Constructs an ExtraLifeParticipant from the participant web service.
+        
+        :param participant_id: The Extra-Life provided participant ID.
+        """
+        url = ("http://www.extra-life.org/index.cfm?"
+               "fuseaction=donorDrive.participant&"
+               "participantID={}&format=json")
+
+        r = requests.get(url.format(participant_id))
+
+        if r.status_code != 200:
+            raise Exception("Could not retrieve Extra-Life participant information.")
+
+        data = r.json()
+
+        team_id = data.get("teamID", None)
+        is_team_captain = data.get("isTeamCaptain", False)
+        first_name = data.get("firstName", "John")
+        last_name = data.get("lastName", "Doe")
+        raised = data.get("totalRaisedAmount", 0.0)
+        goal = data.get("fundraisingGoal", 0.0)
+        avatar_url = data.get("avatarImageURL", None)
+        created = data.get("createdOn", None)
+
+        return cls(participant_id, team_id, is_team_captain, first_name,
+                   last_name, raised, goal, avatar_url, created)
+
+    def __repr__(self):
+        return "ExtraLifeParticipant<participant_id={}>".format(self.team_id)
