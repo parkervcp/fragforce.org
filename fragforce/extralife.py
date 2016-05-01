@@ -121,6 +121,9 @@ class ExtraLifeParticipant(object):
         # when this person registered
         self.created = created
 
+        # the list of donations this participant has - see donations()
+        self._donations = None
+
     @classmethod
     def from_url(cls, participant_id):
         """Constructs an ExtraLifeParticipant from the participant web service.
@@ -147,8 +150,75 @@ class ExtraLifeParticipant(object):
         avatar_url = data.get("avatarImageURL", None)
         created = data.get("createdOn", None)
 
-        return cls(participant_id, team_id, is_team_captain, first_name,
-                   last_name, raised, goal, avatar_url, created)
+        participant = cls(participant_id, team_id, is_team_captain, first_name,
+                          last_name, raised, goal, avatar_url, created)
+
+        return participant
+
+    def donations(self, force=False):
+        """Returns the list of donations for the participant using the
+        participantDonations web service call. This call is cached. To force a
+        new service call, use force=True
+
+        :param force: Ignore existing donations info. Default False.
+        """
+
+        if self._donations is not None and not force:
+            return self._donations
+
+        url = ("http://www.extra-life.org/index.cfm?"
+               "fuseaction=donorDrive.participantDonations&"
+               "participantID={}&"
+               "format=json")
+
+        r = requests.get(url.format(self.participant_id))
+
+        if r.status_code != 200:
+            raise Exception("Could not retrieve Extra-Life participant "
+                            "donation information.")
+
+        data = r.json()
+
+        self._donations = []
+        for d in data:
+            donor = d.get("donorName", None)
+            amount = d.get("donationAmount", None)
+            message = d.get("message", None)
+            avatar_url = d.get("avatarImageURL", None)
+            created = d.get("created", None)
+
+            donation = ExtraLifeDonation(self.participant_id, donor, amount,
+                                         message, avatar_url, created)
+
+            self._donations.append(donation)
+
+        return self._donations
 
     def __repr__(self):
-        return "ExtraLifeParticipant<participant_id={}>".format(self.team_id)
+        return "ExtraLifeParticipant<participant_id={}>".format(self.participant_id)
+
+
+class ExtraLifeDonation(object):
+    def __init__(self, participant_id, donor, amount, message, avatar_url,
+                 created):
+
+        # the owning participant for this donation
+        self.participant_id = participant_id
+
+        # who donated the $$$
+        self.donor = donor
+
+        # the amount of the donation
+        self.amount = amount
+
+        # personalized message from the donor to the participant
+        self.message = message
+
+        # if the donor was also an ExtraLife participant, they have an avatar
+        self.avatar_url = avatar_url
+
+        # when the donor gave the money (?)
+        self.created = created
+
+    def __repr__(self):
+        return "ExtraLifeDonation<participant_id={}>".format(self.participant_id)
