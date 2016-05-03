@@ -13,14 +13,19 @@ app.register_blueprint(events.mod)
 @app.context_processor
 def tracker_data():
   def print_bar(goal, total, percent, label):
-    return '<div class="bar_container">' + \
-           '   <div class="bar_back">' + \
-           '     <div class="bar_fill" style="' + str(percent) + '%; max-width: ' + str(percent) + '%; width: ' + str(percent) + '%;">' + \
+    return '   <div>' + \
+           '     <div class="progress-text">' + \
+           '       <span class="label">' + str(label) + '</span>' + \
+           '     </div>' + \
+           '     <div class="progress-amount">' + \
+           '       <span class="label"> $' + u'{:0,.0f}'.format(float(total)) + ' &#47; $' + u'{:0,.0f}'.format(float(goal)) + '</span>' + \
            '     </div>' + \
            '   </div>' + \
-           '   <div class="bar_label">' + str(label) + ' $' + u'{:0,.2f}'.format(float(total)) + ' &#47; $' + u'{:0,.2f}'.format(float(goal)) + ' (' + str(percent) + '%)' + \
-           '   </div>' + \
-           ' </div>'
+           '   <div class="progress">' + \
+           '     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="' + str(percent) + '%; max-width: ' + str(percent) + '%; min-width: 2em; width: ' + str(percent) + '%;">' + \
+           '     ' + str(percent) + '% ' + \
+           '     </div>' + \
+           '   </div>'
   def print_bars():
     extralife_total = 0
     extralife_goal = 0

@@ -6,5 +6,4 @@ Pygments
 SQLAlchemy
 Werkzeug
 uwsgi
-requests
 requests[security]
