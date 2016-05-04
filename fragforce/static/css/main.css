@@ -61,3 +61,7 @@ header nav ul.social li {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 100%;
 }
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}

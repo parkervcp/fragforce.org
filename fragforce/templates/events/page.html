@@ -1,0 +1,46 @@
+{% extends 'events/base.html' %}
+
+{% if page.title %}
+  {% block title %}
+    {{ page.title }}
+  {% endblock title %}
+{% endif %}
+
+{% if page.alert %}
+  {% block alert %}
+    {{ page.alert }}
+  {% endblock alert %}
+{% endif %}
+
+{% if page.pagetitle %}
+  {% block pagetitle %}
+    {% if page.date %}
+      {{ page.pagetitle }} - {{ page.date }}
+    {% else %}
+      {{ page.pagetitle }}
+    {% endif %}
+  {% endblock pagetitle %}
+{% endif %}
+
+<!-- Get the Main Content -->
+{% block content %}
+<div class="row well">
+  {{  page }}
+</div>
+{% if images %}
+<div class="row text-center">
+{% for image in images %}
+  <div class="col-sm-4 text-center">
+    <img class="img-responsive well" src="{{ url_for('images.fit', filename=image, width=400) }}" />
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+  {% if page.prev -%}
+  <a class="prev" href="{{ url_for("pages.page", path=page.prev.path) }}">&lt;&lt; {{ page.prev.title }} - {{page.prev.date}}</a>
+  {%- endif %}
+  {% if page.prev and page.next %} | {% endif %}
+  {% if page.next -%}
+  <a class="next" href="{{ url_for("pages.page", path=page.next.path) }}">{{ page.next.title }} - {{page.next.date}} &gt;&gt;</a>
+  {%- endif %} 
+{% endblock content %}
