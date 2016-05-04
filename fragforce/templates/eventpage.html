@@ -14,13 +14,24 @@
 
 {% if page.pagetitle %}
   {% block pagetitle %}
-    {{ page.pagetitle }}
+    {% if page.event_date %}
+      {{ page.pagetitle }} - {{ page.event_date }}
+    {% else %}
+      {{ page.pagetitle }}
+    {% endif %}
   {% endblock pagetitle %}
 {% endif %}
 
 <!-- Get the Main Content -->
 {% block content %}
-{% autoescape false %}
-{{ page.html }}
-{% endautoescape %}
+<div class="row well">
+  {{  page }}
+</div>
+<div class="row text-center">
+{% for image in images %}
+  <div class="col-sm-4 text-center">
+    <img class="img-responsive well" src="{{ image }}" />
+  </div>
+{% endfor %}
+</div>
 {% endblock content %}
