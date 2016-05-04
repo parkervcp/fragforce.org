@@ -1,13 +1,13 @@
 {% extends 'events/base.html' %}
 {% block title %}Fragforce Events{% endblock %}
 {% block content %}
-<h3> Latest Events</h3>
+<h3>Events in {{ year }}</h3>
 {% include "_list.html" %}
 {% if years|length %}
   <div class="row">
     <div class="col-sm-5"></div>
   <div class="col-sm-2 list-group">
-    <a class="list-group-item disabled" href="#">Browse {{ section }} archives</a>
+    <a class="list-group-item" href="{{ url_for('pages.section', section=section) }}">Back to {{ section }}</a>
     {% with current_year = year %}
       {% for year in years %}
         {% if current_year == year %}
@@ -21,5 +21,4 @@
   <div class="col-sm-5"></div>
   </div>
 {% endif %}
-
 {% endblock %}

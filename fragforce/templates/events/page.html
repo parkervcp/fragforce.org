@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'events/base.html' %}
 
 {% if page.title %}
   {% block title %}
@@ -14,8 +14,8 @@
 
 {% if page.pagetitle %}
   {% block pagetitle %}
-    {% if page.event_date %}
-      {{ page.pagetitle }} - {{ page.event_date }}
+    {% if page.date %}
+      {{ page.pagetitle }} - {{ page.date }}
     {% else %}
       {{ page.pagetitle }}
     {% endif %}

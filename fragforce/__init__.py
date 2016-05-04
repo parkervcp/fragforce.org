@@ -1,14 +1,26 @@
-from flask import Flask
+from flask import Flask, render_template_string
+from flask_flatpages import FlatPages
+from flask_flatpages.utils import pygmented_markdown
 import requests
+def jinja_renderer(text):
+  prerendered_body = render_template_string(text)
+  return pygmented_markdown(prerendered_body)
+
 app = Flask(__name__)
 
+# Default Values for config
+app.config['SECTION_MAX_LINKS'] = 10
+app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config.from_object('config')
+pages = FlatPages(app)
 
 from fragforce.views import general
-from fragforce.views import events
+#from fragforce.views import events
+from fragforce.views import pages
 
 app.register_blueprint(general.mod)
-app.register_blueprint(events.mod)
+#app.register_blueprint(events.mod)
+app.register_blueprint(pages.mod)
 
 @app.context_processor
 def tracker_data():
