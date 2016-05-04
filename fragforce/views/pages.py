@@ -9,7 +9,7 @@ import os
 mod = Blueprint('pages', __name__)
 pages = FlatPages(app)
 
-def get_pages(pages, offset=None, limit=None, section=None, year=None):
+def get_pages(pages, offset=None, limit=None, section=None, year=None, before=None, after=None):
   """ Retrieves pages that match specific criteria
   """
   things = list(pages)
@@ -26,16 +26,20 @@ def get_pages(pages, offset=None, limit=None, section=None, year=None):
   # filter year
   if year:
     things = [p for p in things if p.meta.get('date').year == year]
+  if before:
+    things = [p for p in things if p.meta.get('date') < before]
+  if after:
+    things = [p for p in things if p.meta.get('date') > after]
   # sort what's left by date
-  things = sorted(things, reverse=False, key=lambda p: p.meta.get('date', date.today()))
+  things = sorted(things, reverse=True, key=lambda p: p.meta.get('date', date.today()))
   # assign prev/next in series
   for i, thing in enumerate(things):
     if i != 0:
       if section and things[i - 1].meta.get('section') == section:
-        thing.prev = things[i - 1]
+        thing.next = things[i - 1]
     if i != len(things) - 1:
       if section and things[i +1].meta.get('section') == section:
-        thing.next = things[i +1]
+        thing.prev = things[i +1]
   # offset and limit
   if offset and limit:
     return things[offset:limit]
@@ -82,6 +86,24 @@ def section(section):
     abort(404)
   template = '%s/index.html' % section
   things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
+  years = get_years(get_pages(pages, section=section))
+  return render_template(template, pages=things, section=section, years=years)
+
+@mod.route('/<string:section>/upcoming/')
+def section_upcoming(section):
+  if not section_exists(section):
+    abort(404)
+  template = '%s/upcoming.html' % section
+  things = get_pages(pages, section=section, after=date.today())
+  years = get_years(get_pages(pages, section=section))
+  return render_template(template, pages=things, section=section, years=years)
+
+@mod.route('/<string:section>/past/')
+def section_past(section):
+  if not section_exists(section):
+    abort(404)
+  template = '%s/past.html' % section
+  things = get_pages(pages, section=section, before=date.today())
   years = get_years(get_pages(pages, section=section))
   return render_template(template, pages=things, section=section, years=years)
 
