@@ -27,7 +27,7 @@ def get_pages(pages, offset=None, limit=None, section=None, year=None):
   if year:
     things = [p for p in things if p.meta.get('date').year == year]
   # sort what's left by date
-  things = sorted(things, reverse=True, key=lambda p: p.meta.get('date', date.today()))
+  things = sorted(things, reverse=False, key=lambda p: p.meta.get('date', date.today()))
   # assign prev/next in series
   for i, thing in enumerate(things):
     if i != 0:
