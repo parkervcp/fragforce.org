@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% if page.title %}
+  {% block title %}
+    {{ page.title }}
+  {% endblock title %}
+{% endif %}
+
+{% if page.alert %}
+  {% block alert %}
+    {{ page.alert }}
+  {% endblock alert %}
+{% endif %}
+
+{% if page.pagetitle %}
+  {% block pagetitle %}
+    {{ page.pagetitle }}
+  {% endblock pagetitle %}
+{% endif %}
+
+<!-- Get the Main Content -->
+{% block content %}
+{% autoescape false %}
+{{ page.html }}
+{% endautoescape %}
+{% endblock content %}

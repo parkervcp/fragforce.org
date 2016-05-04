@@ -1,6 +1,7 @@
 from fragforce import app
 from flask import Blueprint, render_template, session, redirect, url_for, \
         request, abort
+from flask_flatpages import FlatPages, pygments_style_defs
 
 mod = Blueprint('general', __name__)
 
@@ -16,3 +17,7 @@ def donate(name=None):
 @mod.route('/join')
 def join(name=None):
   return render_template('general/join.html', name=name)
+
+@mod.route('/static/css/pygments.css')
+def pygments_css():
+  return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
