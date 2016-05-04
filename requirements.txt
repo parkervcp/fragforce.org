@@ -1,5 +1,6 @@
 Flask
 Flask-FlatPages
+Flask-Images
 Flask-SQLAlchemy
 Genshi
 Jinja2

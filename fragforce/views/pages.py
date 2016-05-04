@@ -64,7 +64,7 @@ def page(path):
   if not app.debug and not page.meta.get('published', False):
     abort(404)
   template = page.meta.get('template', '%s/page.html' % section)
-  images = []
+  rtn_images = []
   if os.path.isdir(os.path.join(app.static_folder, 'images', path)):
     raw_images = os.listdir(os.path.join(app.static_folder, 'images', path))
     if len(raw_images) > 3:
@@ -72,8 +72,9 @@ def page(path):
     else:
       choices = raw_images
     for raw_image in choices:
-      images.append(url_for('static', filename=os.path.join('images', path, raw_image)))
-  return render_template(template, page=page, section=section, images=images)
+      # Flask-Images already knows to look in the static folder, so only include the rest
+      rtn_images.append(os.path.join('images', path, raw_image))
+  return render_template(template, page=page, section=section, images=rtn_images)
 
 @mod.route('/<string:section>/')
 def section(section):

@@ -30,7 +30,7 @@
 <div class="row text-center">
 {% for image in images %}
   <div class="col-sm-4 text-center">
-    <img class="img-responsive well" src="{{ image }}" />
+    <img class="img-responsive well" src="{{ url_for('images.fit', filename=image, width=400) }}" />
   </div>
 {% endfor %}
 </div>

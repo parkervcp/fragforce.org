@@ -1,6 +1,7 @@
 from flask import Flask, render_template_string
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
+from flask.ext.images import Images
 import requests
 def jinja_renderer(text):
   prerendered_body = render_template_string(text)
@@ -13,6 +14,7 @@ app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config.from_object('config')
 pages = FlatPages(app)
+images = Images(app)
 
 from fragforce.views import general
 #from fragforce.views import events
