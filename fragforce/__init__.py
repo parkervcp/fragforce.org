@@ -3,6 +3,9 @@ from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
 from flask.ext.images import Images
 import requests
+
+import fragforce.extralife as extralife
+
 def jinja_renderer(text):
   prerendered_body = render_template_string(text)
   return pygmented_markdown(prerendered_body)
@@ -66,14 +69,14 @@ def tracker_data():
     full_goal = 0
     full_percent = 0
     try:
-      r = requests.get('http://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=27290&format=json')
-      if r.status_code == 200:
-        data = r.json()
-        extralife_total = data['totalRaisedAmount']
-        extralife_goal = data['fundraisingGoal']
-        if extralife_goal > 0:
+      team = extralife.Team.from_url(27290)
+      extralife_total = team.raised
+      extralife_goal = team.goal
+
+      if extralife_goal > 0:
           extralife_percent = u'{:0,.2f}'.format(100 * (extralife_total / extralife_goal))
-    except requests.exceptions.RequestException as e:
+
+    except extralife.WebServiceException as e:
       fail=True
     try:
       r = requests.get('http://donate.childsplaycharity.org/api/event/a452b820a2be5af7bafe5188a0b8337f/json', verify=True)
