@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang='en'>
+
   <head>
-    {% block head %}
-    <link rel='stylesheet' href="{{ url_for('static', filename='css/fragforce.css') }}" />
-    <link rel='stylesheet' href="{{ url_for('static', filename='css/menu.css') }}" />
-    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:300' rel='stylesheet' type='text/css'>
-    <title>{% block title %}{% endblock %}</title>
-    {% endblock %}
+
+    <!-- Pull in all the CSS and JS scripts -->
+    {% include 'layouts/head.html' with context %}
+
+    <!-- Allow inline CSS from child page -->
+    <style>
+      {% block style %}{% endblock style %}
+    </style>
+
+    <!-- Pull title from each page if it exists -->
+    <title>
+      {% block title %}Fragforce{% endblock title %}
+    </title> 
+
   </head>
+
   <body>
-  <div class='wrapper'>
-    <div class='header'>
-      <div id='cssmenu'>
-      <ul>
-        <li><a href="{{ url_for('general.index') }}"><span>Home</span></a></li>
-        {% block menu %}
-        <li><a href="{{ url_for('general.donate') }}"><span>Donate</span></a></li>
-        <li><a href="{{ url_for('general.join') }}"><span>Join</span></a></li>
-        <li class='has-sub'><a href="#"><span>Events</span></a>
-          <ul>
-            <li><a href="{{ url_for('events.index') }}"><span>All Events</span></a></li>
-            <li><a href="#"><span>Upcoming</span></a></li>
-            <li class='last'><a href="#"><span>Past</a></li>
-          </ul>
-        </li>
-        {% endblock %}
-        <li class='last'><a href="{{ url_for('general.contact') }}"><span>Contact</span></a></li>
-      </ul>
+
+  <!-- Get the <header> data -->
+  {% include 'layouts/header.html' %}
+
+  <!-- Main DIV -->
+  <div class="container-fluid text-center">
+    <div class="row">
+
+      <!-- Pull in the Progress bars and Left Column -->
+      {% include 'layouts/progress-left.html' %} 
+
+      <!-- Central Content DIV -->
+      <div class="col-sm-7 text-left" >
+        <!-- Central ALERT Text -->
+        {% block alert %}{% endblock alert %}
+
+        <!-- CONTENT PAGE TITLE -->
+        {% if self.pagetitle() %}
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h1>{% block pagetitle %}{% endblock pagetitle %}</h1> 
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Get the Main Content -->
+        {% block content %}
+          Default content
+        {% endblock content %}
+
+        <!-- Pagination -->
+        {% include 'layouts/central-pagination.html' %}
+
+      <!-- END Central Content DIV -->
       </div>
-      <hr><br />
-      <object type='image/svg+xml' data="{{ url_for('static', filename='images/fragforce_basic_white_fill.svg') }}" width="800">
-          <img src="{{ url_for('static', filename='images/fragforce_basic.png') }}" />
-      </object>
-      {% block header %}{% endblock %}
+   
+      <!-- Social Media / Right Column --> 
+      {% include 'layouts/social.html' %}
+
+    <!-- END Main DIV -->
     </div>
-    <div class='content'>
-    {% block content %}{% endblock %}
-    </div>
-    <div class='push'></div>
   </div>
-  <div class='footer'>
-    {% block footer %}
-    &copy; 2016 by Fragforce Elder Council
-    {% endblock %}
-  </div>
+
+  <!-- get the <footer> -->
+  {% include 'layouts/footer.html' %} 
+
   </body>
 </html>

@@ -1,4 +1,6 @@
 Flask
+Flask-FlatPages
+Flask-Images
 Flask-SQLAlchemy
 Genshi
 Jinja2
@@ -6,5 +8,4 @@ Pygments
 SQLAlchemy
 Werkzeug
 uwsgi
-requests
 requests[security]
