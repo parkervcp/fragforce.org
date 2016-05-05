@@ -1,6 +1,10 @@
 import requests
 
 
+class WebServiceException(Exception):
+    pass
+
+
 def team(team_id):
     """Convenience method to instantiate an ExtraLifeTeam
 
@@ -8,7 +12,7 @@ def team(team_id):
     """
     try:
         t = ExtraLifeTeam.from_url(team_id)
-    except:
+    except WebServiceException:
         t = None
 
     return t
@@ -21,7 +25,7 @@ def participants(team_id):
     """
     try:
         p = ExtraLifeTeam.from_url(team_id).participants()
-    except:
+    except WebServiceException:
         p = None
 
     return p
@@ -34,7 +38,7 @@ def participant(participant_id):
     """
     try:
         p = ExtraLifeParticipant.from_url(participant_id)
-    except:
+    except WebServiceException:
         p = None
 
     return p
@@ -47,7 +51,7 @@ def participant_donations(participant_id):
     """
     try:
         d = ExtraLifeParticipant.from_url(participant_id).donations()
-    except:
+    except WebServiceException:
         d = None
 
     return d
@@ -89,7 +93,8 @@ class ExtraLifeTeam(object):
 
         r = requests.get(url.format(team_id))
         if r.status_code != 200:
-            raise Exception("Could not retrieve Extra-Life team information.")
+            raise WebServiceException("Could not retrieve Extra-Life team "
+                                      "information.")
 
         data = r.json()
 
@@ -116,8 +121,8 @@ class ExtraLifeTeam(object):
 
         r = requests.get(url.format(self.team_id))
         if r.status_code != 200:
-            raise Exception("Could not retrieve Extra-Life team participant "
-                            "information.")
+            raise WebServiceException("Could not retrieve Extra-Life team "
+                                      "participant information.")
 
         data = r.json()
         self._participants = []
@@ -189,7 +194,8 @@ class ExtraLifeParticipant(object):
         r = requests.get(url.format(participant_id))
 
         if r.status_code != 200:
-            raise Exception("Could not retrieve Extra-Life participant information.")
+            raise WebServiceException("Could not retrieve Extra-Life "
+                                      "participant information.")
 
         data = r.json()
 
@@ -226,8 +232,8 @@ class ExtraLifeParticipant(object):
         r = requests.get(url.format(self.participant_id))
 
         if r.status_code != 200:
-            raise Exception("Could not retrieve Extra-Life participant "
-                            "donation information.")
+            raise WebServiceException("Could not retrieve Extra-Life participant "
+                                      "donation information.")
 
         data = r.json()
 
