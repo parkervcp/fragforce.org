@@ -1,0 +1,15 @@
+title: Herndon, VA
+pagetitle: Herndon, VA
+date: 2016-04-01 (What day is the first day of the event?)
+start_time: 9 AM (What time does it start?)
+start_location: Main Reception lobby (where should people go to start?)
+number_days: 2 (how many distinct days [1 if it's 24 hours straight])
+hours_per_day: 12 (how many hours you are playing/played per day)
+tags: virgina, usa (comma separated list, to be used to view events by tags)
+address: 2550 Wasser Terrace Suite 100 Herndon, VA 20171 (Building address of the event)
+published: false (Set to true when you are happy with the page and want it to appear on fragforce.org)
+
+PAGE TEXT GOES HERE ON OUT IN MARKDOWN FORMAT
+see http://markdownlivepreview.com/ for a live preview of your page and how it would look
+WHEEEEEE
+

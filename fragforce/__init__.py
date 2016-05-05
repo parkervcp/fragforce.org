@@ -1,17 +1,49 @@
-from flask import Flask
+from flask import Flask, render_template_string, request
+from flask_flatpages import FlatPages
+from flask_flatpages.utils import pygmented_markdown
+from flask.ext.images import Images
 import requests
+
+import fragforce.extralife as extralife
+
+def jinja_renderer(text):
+  prerendered_body = render_template_string(text)
+  return pygmented_markdown(prerendered_body)
+
 app = Flask(__name__)
 
+# Default Values for config
+app.config['SECTION_MAX_LINKS'] = 10
+app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config.from_object('config')
+pages = FlatPages(app)
+images = Images(app)
 
 from fragforce.views import general
-from fragforce.views import events
+#from fragforce.views import events
+from fragforce.views import pages
 
 app.register_blueprint(general.mod)
-app.register_blueprint(events.mod)
+app.register_blueprint(pages.mod)
 
 @app.context_processor
 def tracker_data():
+  def is_active(endpoint=None, section=None, noclass=False):
+    rtn = ""
+    if noclass:
+      rtn = 'active'
+    else:
+      rtn = 'class=active'
+    if endpoint and section:
+      if 'section' in request.view_args:
+        if request.url_rule.endpoint == endpoint and request.view_args['section'] == section:
+          return rtn
+    elif endpoint:
+      return rtn if request.url_rule.endpoint == endpoint else ''
+    elif section:
+      if 'section' in request.view_args:
+        return rtn if request.view_args['section'] == section else ''
+    return ''
   def print_bar(goal, total, percent, label):
     return '   <div>' + \
            '     <div class="progress-text">' + \
@@ -37,14 +69,14 @@ def tracker_data():
     full_goal = 0
     full_percent = 0
     try:
-      r = requests.get('http://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=27290&format=json')
-      if r.status_code == 200:
-        data = r.json()
-        extralife_total = data['totalRaisedAmount']
-        extralife_goal = data['fundraisingGoal']
-        if extralife_goal > 0:
+      team = extralife.Team.from_url(27290)
+      extralife_total = team.raised
+      extralife_goal = team.goal
+
+      if extralife_goal > 0:
           extralife_percent = u'{:0,.2f}'.format(100 * (extralife_total / extralife_goal))
-    except requests.exceptions.RequestException as e:
+
+    except extralife.WebServiceException as e:
       fail=True
     try:
       r = requests.get('http://donate.childsplaycharity.org/api/event/a452b820a2be5af7bafe5188a0b8337f/json', verify=True)
@@ -68,4 +100,5 @@ def tracker_data():
           print_bar=print_bar,
           print_bars=print_bars,
           extralife_link="http://team.fragforce.org",
-          childsplay_link="http://childsplay.fragforce.org") 
+          childsplay_link="http://childsplay.fragforce.org",
+          is_active=is_active) 

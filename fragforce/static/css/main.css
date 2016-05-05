@@ -44,6 +44,10 @@ header nav ul.social li {
   text-decoration: none;
 }
 
+.unpublished q, .unpublished time {
+  color: red;
+}
+
 .progress-text {
   float: left;
   text-align: left; 
@@ -60,4 +64,8 @@ header nav ul.social li {
 .label {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 100%;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
 }

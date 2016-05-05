@@ -1,0 +1,20 @@
+<div class="row">
+    {%- for page in pages %}
+    <div class="well {% if not page.published %}unpublished{% endif %}">
+        <h2>
+            <a href="{{ url_for('pages.page', path=page.path) }}">{{ page.title }}</a>
+            | <time datetime="{{ page.date }}">{{ page.date }}</time>
+        </h2>
+        <q itemprop="description">
+            {%- if page.meta.summary and page.meta.summary|striptags|trim %}
+                {{- page.summary|trim }}
+            {%- elif page.html|striptags|trim -%}
+                {{- page.html|striptags|trim|truncate(135) }}
+            {%- endif -%}
+        </q>
+        <hr>
+    </div>
+    {%- else %}
+      <div>No pages (yet?)</div>
+    {%- endfor %}
+</div>
