@@ -14,8 +14,10 @@
     export LDFLAGS="-L/usr/local/lib $LDFLAGS"
     ```
   * Serving SVG files on FreeBSD will also fail due to missing mime-support port in ```misc/mime-support```
-5. To verify that it works, simply run ```python run.py``` to start a local server running on port 8000 for verification/development
-6. Create a new nginx server config for your server with the following data: 
+5. Create a config.py file from the provided config.py.sample. Edit the
+   information inside as needed.
+6. To verify that it works, simply run ```python run.py``` to start a local server running on port 8000 for verification/development
+7. Create a new nginx server config for your server with the following data: 
 
     ```
     server {
@@ -35,6 +37,6 @@
     }
     ```
   * Modify the listen port and server_name to your environment
-7. Restart nginx
-8. Run uwsgi in the project directory via ```uwsgi -s /tmp/fragforce.sock --module fragforce --callable app -H <PATH TO VIRTUALENV ENV DIRECTORY>```
-9. ```chmod 777 /tmp/fragforce.sock```
+8. Restart nginx
+9. Run uwsgi in the project directory via ```uwsgi -s /tmp/fragforce.sock --module fragforce --callable app -H <PATH TO VIRTUALENV ENV DIRECTORY>```
+10. ```chmod 777 /tmp/fragforce.sock```
