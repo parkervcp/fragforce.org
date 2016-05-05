@@ -6,12 +6,12 @@ class WebServiceException(Exception):
 
 
 def team(team_id):
-    """Convenience method to instantiate an ExtraLifeTeam
+    """Convenience method to instantiate a Team
 
     :param team_id: The assigned team ID
     """
     try:
-        t = ExtraLifeTeam.from_url(team_id)
+        t = Team.from_url(team_id)
     except WebServiceException:
         t = None
 
@@ -19,12 +19,12 @@ def team(team_id):
 
 
 def participants(team_id):
-    """Convenience method to retrieve an ExtraLifeTeam's participants
+    """Convenience method to retrieve a Team's participants
 
     :param team_id: The assigned team ID
     """
     try:
-        p = ExtraLifeTeam.from_url(team_id).participants()
+        p = Team.from_url(team_id).participants()
     except WebServiceException:
         p = None
 
@@ -32,12 +32,12 @@ def participants(team_id):
 
 
 def participant(participant_id):
-    """Convenience method to retrieve an ExtraLifeParticipant
+    """Convenience method to retrieve a Participant
 
     :param participant_id: The assigned participant ID
     """
     try:
-        p = ExtraLifeParticipant.from_url(participant_id)
+        p = Participant.from_url(participant_id)
     except WebServiceException:
         p = None
 
@@ -45,19 +45,19 @@ def participant(participant_id):
 
 
 def participant_donations(participant_id):
-    """Convenience method to retrieve an ExtraLifeParticipant's donations
+    """Convenience method to retrieve a Participant's donations
 
     :param participant_id: The assigned participant ID
     """
     try:
-        d = ExtraLifeParticipant.from_url(participant_id).donations()
+        d = Participant.from_url(participant_id).donations()
     except WebServiceException:
         d = None
 
     return d
 
 
-class ExtraLifeTeam(object):
+class Team(object):
     def __init__(self, team_id, name, raised, goal, avatar_url, created):
 
         # extra-life assigned team ID
@@ -138,9 +138,9 @@ class ExtraLifeTeam(object):
             raised = None
             goal = None
 
-            p = ExtraLifeParticipant(participant_id, self.team_id,
-                                     team_captain, first_name, last_name,
-                                     raised, goal, avatar_url, created)
+            p = Participant(participant_id, self.team_id,
+                            team_captain, first_name, last_name,
+                            raised, goal, avatar_url, created)
             self._participants.append(p)
 
         return self._participants
@@ -149,7 +149,7 @@ class ExtraLifeTeam(object):
         return "ExtraLifeTeam<team_id={}>".format(self.team_id)
 
 
-class ExtraLifeParticipant(object):
+class Participant(object):
     def __init__(self, participant_id, team_id, is_team_captain, first_name,
                  last_name, raised, goal, avatar_url, created):
 
@@ -183,7 +183,7 @@ class ExtraLifeParticipant(object):
 
     @classmethod
     def from_url(cls, participant_id):
-        """Constructs an ExtraLifeParticipant from the participant web service.
+        """Constructs an Participant from the participant web service.
         
         :param participant_id: The Extra-Life provided participant ID.
         """
@@ -245,18 +245,18 @@ class ExtraLifeParticipant(object):
             avatar_url = d.get("avatarImageURL", None)
             created = d.get("created", None)
 
-            donation = ExtraLifeDonation(self.participant_id, donor, amount,
-                                         message, avatar_url, created)
+            donation = Donation(self.participant_id, donor, amount,
+                                message, avatar_url, created)
 
             self._donations.append(donation)
 
         return self._donations
 
     def __repr__(self):
-        return "ExtraLifeParticipant<participant_id={}>".format(self.participant_id)
+        return "Participant<participant_id={}>".format(self.participant_id)
 
 
-class ExtraLifeDonation(object):
+class Donation(object):
     def __init__(self, participant_id, donor, amount, message, avatar_url,
                  created):
 
@@ -279,4 +279,4 @@ class ExtraLifeDonation(object):
         self.created = created
 
     def __repr__(self):
-        return "ExtraLifeDonation<participant_id={}>".format(self.participant_id)
+        return "Donation<participant_id={}>".format(self.participant_id)
