@@ -3,7 +3,7 @@ from fragforce import app
 from flask import Blueprint, render_template, session, redirect, url_for, \
         request, abort
 from flask_flatpages import FlatPages
-from random import sample
+from random import choice, sample
 import os
 
 mod = Blueprint('pages', __name__)
@@ -64,6 +64,8 @@ def page(path):
   page = pages.get_or_404(path)
   # ensure an accurate "section" meta is available
   page.meta['section'] = page.meta.get('section', section)
+  # add a random youtube promo video if one is not set
+  page.meta['youtube_id'] = page.meta.get('youtube_id', choice(['ZS7WRl7N1Ig', 'wp2ORytO1F4', 'kaUPEdwjWyg'])) 
   # show all pages in debug, but hide unpublished in production
   if not app.debug and not page.meta.get('published', False):
     abort(404)
