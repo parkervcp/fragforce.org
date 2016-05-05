@@ -1,6 +1,58 @@
 import requests
 
 
+def team(team_id):
+    """Convenience method to instantiate an ExtraLifeTeam
+
+    :param team_id: The assigned team ID
+    """
+    try:
+        t = ExtraLifeTeam.from_url(team_id)
+    except:
+        t = None
+
+    return t
+
+
+def participants(team_id):
+    """Convenience method to retrieve an ExtraLifeTeam's participants
+
+    :param team_id: The assigned team ID
+    """
+    try:
+        p = ExtraLifeTeam.from_url(team_id).participants()
+    except:
+        p = None
+
+    return p
+
+
+def participant(participant_id):
+    """Convenience method to retrieve an ExtraLifeParticipant
+
+    :param participant_id: The assigned participant ID
+    """
+    try:
+        p = ExtraLifeParticipant.from_url(participant_id)
+    except:
+        p = None
+
+    return p
+
+
+def participant_donations(participant_id):
+    """Convenience method to retrieve an ExtraLifeParticipant's donations
+
+    :param participant_id: The assigned participant ID
+    """
+    try:
+        d = ExtraLifeParticipant.from_url(participant_id).donations()
+    except:
+        d = None
+
+    return d
+
+
 class ExtraLifeTeam(object):
     def __init__(self, team_id, name, raised, goal, avatar_url, created):
 
