@@ -44,6 +44,10 @@ header nav ul.social li {
   text-decoration: none;
 }
 
+.unpublished q, .unpublished time {
+  color: red;
+}
+
 .progress-text {
   float: left;
   text-align: left; 
