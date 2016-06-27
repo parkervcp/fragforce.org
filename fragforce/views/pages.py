@@ -69,7 +69,9 @@ def page(path):
   # show all pages in debug, but hide unpublished in production
   if not app.debug and not page.meta.get('published', False):
     abort(404)
-  template = page.meta.get('template', '%s/page.html' % section)
+  templates = []
+  templates.append(page.meta.get('template', '%s/page.html' % section))
+  templates.append('default_templates/page.html')
   rtn_images = []
   if os.path.isdir(os.path.join(app.static_folder, 'images', path)):
     raw_images = os.listdir(os.path.join(app.static_folder, 'images', path))
@@ -80,40 +82,48 @@ def page(path):
     for raw_image in choices:
       # Flask-Images already knows to look in the static folder, so only include the rest
       rtn_images.append(os.path.join('images', path, raw_image))
-  return render_template(template, page=page, section=section, images=rtn_images)
+  return render_template(templates, page=page, section=section, images=rtn_images)
 
 @mod.route('/<string:section>/')
 def section(section):
   if not section_exists(section):
     abort(404)
-  template = '%s/index.html' % section
+  templates = []
+  templates.append('%s/index.html' % section)
+  templates.append('default_templates/index.html')
   things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
   years = get_years(get_pages(pages, section=section))
-  return render_template(template, pages=things, section=section, years=years)
+  return render_template(templates, pages=things, section=section, years=years)
 
 @mod.route('/<string:section>/upcoming/')
 def section_upcoming(section):
   if not section_exists(section):
     abort(404)
-  template = '%s/upcoming.html' % section
+  templates = []
+  templates.append('%s/upcoming.html' % section)
+  templates.append('default_templates/upcoming.html')
   things = get_pages(pages, section=section, after=date.today())
   years = get_years(get_pages(pages, section=section))
-  return render_template(template, pages=things, section=section, years=years)
+  return render_template(templates, pages=things, section=section, years=years)
 
 @mod.route('/<string:section>/past/')
 def section_past(section):
   if not section_exists(section):
     abort(404)
-  template = '%s/past.html' % section
+  templates = []
+  templates.append('%s/past.html' % section)
+  templates.append('default_templates/past.html')
   things = get_pages(pages, section=section, before=date.today())
   years = get_years(get_pages(pages, section=section))
-  return render_template(template, pages=things, section=section, years=years)
+  return render_template(templates, pages=things, section=section, years=years)
 
 @mod.route('/<string:section>/<int:year>/')
 def section_archives_year(section, year):
   if not section_exists(section):
     abort(404)
-  template = '%s/archives.html' % section
+  templates = []
+  templates.append('%s/archives.html' % section)
+  templates.append('default_templates/archives.html')
   years = get_years(get_pages(pages, section=section))
   things = get_pages(pages, section=section, year=year)
-  return render_template(template, pages=things, section=section, years=years, year=year)
+  return render_template(templates, pages=things, section=section, years=years, year=year)
