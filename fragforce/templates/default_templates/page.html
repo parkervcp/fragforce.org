@@ -25,43 +25,10 @@
 <!-- Get the Main Content -->
 {% block content %}
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-12">
     <div class="well">
       {{  page }}
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="well">
-      {% if page.address %}
-        <div class="event_info">
-          Event Location: {{page.address}}
-        </div>
-      {% endif %}
-      {% if page.start_time %}
-        <div class="event_info">
-          Event starts at: {{page.start_time}}
-        </div>
-      {% endif %}
-      {% if page.hours_per_day and page.number_days %}
-        <div class="event_info">
-            Event lasts for {{page.number_days}} day{% if page.number_days >1%}s{%endif%}, for {{page.hours_per_day}} hours each day!
-        </div>
-      {% elif page.hours_per_day %}
-        <div class="event_info">
-          Event lasts for {{page.hours_per_day}}
-        </div>
-      {% endif %}
-      {% if page.start_location %}
-        <div class="event_info">
-          Meet at {{page.start_location}} to get started at the event!
-        </div>
-      {% endif %}
-    </div>
-   {% if page.youtube_id %}
-      <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ page.youtube_id }}" allowfullscreen></iframe>
-      </div>
-    {% endif %}
   </div>
 </div>
 <div class="row"><br /></div>
