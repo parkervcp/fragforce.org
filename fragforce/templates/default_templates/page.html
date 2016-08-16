@@ -19,6 +19,9 @@
     {% else %}
       {{ page.pagetitle }}
     {% endif %}
+    {% if page.author %}
+      <br />By: {{page.author}}
+    {% endif %}
   {% endblock pagetitle %}
 {% endif %}
 
