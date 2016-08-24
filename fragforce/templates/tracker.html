@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+
+    <!-- Pull in all the CSS and JS scripts -->
+    {% include 'layouts/head.html' with context %}
+
+    <!-- Allow inline CSS from child page -->
+    <style>
+      {% block style %}{% endblock style %}
+    </style>
+
+    <!-- Pull title from each page if it exists -->
+    <title>
+      {% block title %}Fragforce{% endblock title %}
+    </title> 
+
+  </head>
+
+  <body>
+
+  <div class="container-fluid text-center">
+    <div class="row">
+
+      <!-- Pull in the Progress bars and Left Column -->
+      {% include 'layouts/progress-left.html' %} 
+
+    <!-- END Main DIV -->
+    </div>
+  </div>
+
+  <!-- get the <footer> -->
+  {% include 'layouts/js_bottom.html' %}
+  </body>
+</html>

@@ -17,6 +17,9 @@ def donate(name=None):
 @mod.route('/join')
 def join(name=None):
   return render_template('general/join.html', name=name)
+@mod.route('/tracker')
+def tracker(name=None):
+  return render_template('tracker.html', name=name)
 
 @mod.route('/static/css/pygments.css')
 def pygments_css():
