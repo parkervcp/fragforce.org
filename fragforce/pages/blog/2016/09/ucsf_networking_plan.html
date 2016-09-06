@@ -1,0 +1,56 @@
+title: Fragforce & UCSF Benioff Networking Plan
+pagetitle: Fragforce & UCSF Benioff Networking Plan
+date: 2016-09-06
+author: Paulson McIntyre
+tags: ucsf-benioff, networking, fragforce
+published: true
+all_images: true
+
+The [Fragforce][FF] team has started working with the [UCSF Benioff Children's Hospital][UCSF]
+on an event later this year. This event would have more network-based devices (computers,
+consoles, etc) than ever before. The result is that our networking plans are more critical
+than ever before.
+
+Our basic network design consists of a pfSense based border firewall with at least two LACP
+bonded links to a 48 port managed switch. This core switch would then connect via a pair of
+1Gbps links to two other 48 port managed switches. It's possible that 10Gbps may be used
+between two of the three switches and the firewall. Smaller five and eight port unmanaged
+switches may also be used to provide individual tables with access while uplinking the switches
+to the managed ones.
+
+The wireless network would be made up of between three and five [Ubiquiti UAP-AC-PROs][UAP]. The
+APs run on both 2.4GHz and 5GHz, support up to three separate networks, and offer band steering.
+The [UCSF][UCSF] setup would consist of a wireless network that places the user on the same VLAN
+as the other gaming computers. This would be for laptops and other gaming devices that don't have a
+physical ethernet port.
+
+A second network would be for non-gaming devices such as cellphones and anything else that
+needs network access. The Unifi web UI would provide near real time information on all wireless
+clients, their usage of the network, and device status.
+
+A third wireless network would be dedicated for admin usage and, if needed, streaming. The use of
+a private admin network would help keep these systems and the streaming systems secure.
+
+The network would be divided into a set of VLANs. The first VLAN being the main gaming VLAN. All
+gaming users would be placed on it. This gaming VLAN would accessible via wired connections by
+default and via a gaming wireless network. The second VLAN would be for non-gaming systems. It's
+primarily intended for wireless devices such as cell phones. The third would be for administrative
+access to systems and other critical systems such as the streaming machines. Other VLANs
+could be created on demand if the need arrises.
+
+The various VLANs would all be connected via the pfSense firewall. It would be responsible for
+filtering and routing traffic between subnets plus applying bandwidth limiters and shapers. Future
+events would also use a VPN to provide networks at different sites with direct access to each other.
+
+Since loops can be an issue with any large, ad-hoc network, STP will be in use on the managed
+switches. This will prevent more than one port being cut off because of a wiring mistake by any of
+the guests.
+
+The two biggest networking challenges are likely to be the physical wiring and acquiring enough
+five or eight port desktop switches to cover most tables that are at a distance from either of
+the three managed switches.
+
+
+[FF]: https://fragforce.org
+[UCSF]: https://www.ucsfbenioffchildrens.org
+[UAP]: https://www.ubnt.com/unifi/unifi-ap-ac-pro/
