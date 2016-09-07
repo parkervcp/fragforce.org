@@ -28,7 +28,9 @@
     <div class="row">
 
       <!-- Pull in the Progress bars and Left Column -->
-      {% include 'layouts/progress-left.html' %} 
+      <div class="col-sm-2">
+        {% include 'layouts/progress-left.html' %} 
+      </div>
 
       <!-- Central Content DIV -->
       <div class="col-sm-7 text-left" >
@@ -53,10 +55,11 @@
         {% include 'layouts/central-pagination.html' %}
 
       <!-- END Central Content DIV -->
-      </div>
-   
+      </div> 
       <!-- Social Media / Right Column --> 
-      {% include 'layouts/social.html' %}
+      <div class="col-sm-3">
+        {% include 'layouts/social.html' %}
+      </div>
 
     <!-- END Main DIV -->
     </div>
