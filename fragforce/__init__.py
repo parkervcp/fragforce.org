@@ -69,7 +69,7 @@ def tracker_data():
     full_goal = 0
     full_percent = 0
     try:
-      team = extralife.Team.from_url(27290)
+      team = extralife.Team.from_url(33118)
       extralife_total = team.raised
       extralife_goal = team.goal
 
