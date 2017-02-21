@@ -79,12 +79,12 @@ def tracker_data():
     except extralife.WebServiceException as e:
       fail=True
     try:
-      r = requests.get('http://donate.childsplaycharity.org/api/event/a452b820a2be5af7bafe5188a0b8337f/json', verify=True)
+      r = requests.get('https://tiltify.com/api/v2/campaign', headers={"Authorization: Token token":"10e41ff90dbf83dd1b31c7ac902e243c"})
       if r.status_code == 200:
         data = r.json()
-        childsplay_total = data['total']
+        childsplay_total = data['total_raised']
         childsplay_goal = data['goal']
-        childsplay_percent = data['percentage']
+        childsplay_percent = data['percent_raised']
     except requests.exceptions.RequestException as e:
       fail=True
     full_total = extralife_total + childsplay_total
