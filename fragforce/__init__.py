@@ -80,8 +80,7 @@ def tracker_data():
       fail=True
     try:
       r = requests.get('https://tiltify.com/api/v2/campaign', 
-              headers={'Authorization': 'Token',
-                       'token': '10e41ff90dbf83dd1b31c7ac902e243c'
+              headers={'Authorization': 'Token 10e41ff90dbf83dd1b31c7ac902e243c'
                        })
       if r.status_code == 200:
         data = r.json()
