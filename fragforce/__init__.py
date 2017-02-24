@@ -86,7 +86,7 @@ def tracker_data():
         data = r.json()
         childsplay_total = data['total_raised']
         childsplay_goal = data['goal']
-        childsplay_percent = data['percent_raised']
+        childsplay_percent = data['percent_raised'].rstrip("%")
     except requests.exceptions.RequestException as e:
       fail=True
     full_total = extralife_total + childsplay_total
@@ -102,5 +102,5 @@ def tracker_data():
           print_bar=print_bar,
           print_bars=print_bars,
           extralife_link="http://team.fragforce.org",
-          childsplay_link="http://childsplay.fragforce.org",
+          childsplay_link="https://tiltify.com/teams/fragforce",
           is_active=is_active) 
