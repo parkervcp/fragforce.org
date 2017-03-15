@@ -158,7 +158,7 @@ class Participant(object):
 
         # which team they belong to
         self.team_id = team_id
-        
+
         # is this person a team captain?
         self.is_team_captain = is_team_captain
 
@@ -259,7 +259,6 @@ class Participant(object):
 class Donation(object):
     def __init__(self, participant_id, donor, amount, message, avatar_url,
                  created):
-
         # the owning participant for this donation
         self.participant_id = participant_id
 
