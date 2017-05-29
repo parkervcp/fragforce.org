@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, session, redirect, url_for, \
     request, abort
 from flask_flatpages import FlatPages, pygments_style_defs
 import re
+import os
 
 mod = Blueprint('general', __name__)
 RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z]+\.(nets|ports|urls|ips)$')
