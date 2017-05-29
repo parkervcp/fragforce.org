@@ -2,8 +2,10 @@ from fragforce import app
 from flask import Blueprint, render_template, session, redirect, url_for, \
     request, abort
 from flask_flatpages import FlatPages, pygments_style_defs
+import re
 
 mod = Blueprint('general', __name__)
+RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z]+\.(nets|ports|urls|ips)$')
 
 
 @mod.route('/')
@@ -35,13 +37,14 @@ def tracker(name=None):
 def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
 
-@mod.route('/firewalls/aliases/<string:section>/<int:year>/')
-def section_archives_year(section, year):
-    if not section_exists(section):
+
+@mod.route('/firewalls/tables/<string:table_type>/<string:fname>')
+def section_archives_year(table_type, fname):
+    if table_type not in ['ports', 'urls', 'nets']:
         abort(404)
-    templates = []
-    templates.append('%s/archives.html' % section)
-    templates.append('default_templates/archives.html')
-    years = get_years(get_pages(pages, section=section))
-    things = get_pages(pages, section=section, year=year)
-    return render_template(templates, pages=things, section=section, years=years, year=year)
+    if fname not in os.listdir(os.path.join(app.template_folder, 'fwaliases', table_type)):
+        abort(404)
+    if not RE_FW_TABLE_NAME.match(fname):
+        abort(404)
+
+    return render_template('fwaliases/%s/%s' % (table_type, fname), table_type=table_type)
