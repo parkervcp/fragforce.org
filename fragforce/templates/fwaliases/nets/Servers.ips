@@ -1,7 +1,5 @@
-172.16.0.19
-172.16.0.21
-172.16.0.9
-172.16.0.20
-172.16.0.22
-172.16.0.10
-172.16.0.8
+{% include "fwaliases/nets/Bob.ips" %}
+{% include "fwaliases/nets/Canterbury.ips" %}
+{% include "fwaliases/nets/Doug.ips" %}
+{% include "fwaliases/nets/Roz.ips" %}
+{% include "fwaliases/nets/Xonotic.ips" %}
