@@ -34,3 +34,14 @@ def tracker(name=None):
 @mod.route('/static/css/pygments.css')
 def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
+
+@mod.route('/firewalls/aliases/<string:section>/<int:year>/')
+def section_archives_year(section, year):
+    if not section_exists(section):
+        abort(404)
+    templates = []
+    templates.append('%s/archives.html' % section)
+    templates.append('default_templates/archives.html')
+    years = get_years(get_pages(pages, section=section))
+    things = get_pages(pages, section=section, year=year)
+    return render_template(templates, pages=things, section=section, years=years, year=year)
