@@ -40,7 +40,7 @@ def pygments_css():
 
 
 @mod.route('/firewalls/tables/<string:table_type>/<string:fname>')
-def section_archives_year(table_type, fname):
+def firewall_tables(table_type, fname):
     if table_type not in ['ports', 'urls', 'nets']:
         abort(404)
     if fname not in os.listdir(os.path.join(app.instance_path, app.template_folder, 'fwaliases', table_type)):
