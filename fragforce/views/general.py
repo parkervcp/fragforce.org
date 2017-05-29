@@ -43,7 +43,7 @@ def pygments_css():
 def section_archives_year(table_type, fname):
     if table_type not in ['ports', 'urls', 'nets']:
         abort(404)
-    if fname not in os.listdir(os.path.join(app.template_folder, 'fwaliases', table_type)):
+    if fname not in os.listdir(os.path.join(app.instance_path, app.template_folder, 'fwaliases', table_type)):
         abort(404)
     if not RE_FW_TABLE_NAME.match(fname):
         abort(404)
