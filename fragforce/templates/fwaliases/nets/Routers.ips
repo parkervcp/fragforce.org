@@ -1,7 +1,7 @@
-172.16.0.1
-172.16.2.1
-172.16.4.1
-172.16.6.1
-172.16.8.1
-172.16.10.1
-172.16.12.1
+{% include "fwaliases/nets/Prime.ips" %}
+{% include "fwaliases/nets/Secundus.ips" %}
+{% include "fwaliases/nets/Tertius.ips" %}
+{% include "fwaliases/nets/4.ips" %}
+{% include "fwaliases/nets/Fifth.ips" %}
+{% include "fwaliases/nets/NumberSix.ips" %}
+{% include "fwaliases/nets/FW2.ips" %}

@@ -6,7 +6,7 @@ import re
 import os
 
 mod = Blueprint('general', __name__)
-RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z]+\.(nets|ports|urls|ips)$')
+RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z0-9]+\.(nets|ports|urls|ips)$')
 
 
 @mod.route('/')
@@ -40,12 +40,12 @@ def pygments_css():
 
 
 @mod.route('/firewalls/tables/<string:table_type>/<string:fname>')
-def section_archives_year(table_type, fname):
-    if table_type not in ['ports', 'urls', 'nets']:
+def firewall_tables(table_type, fname):
+    if table_type not in ['ports', 'nets']:
         abort(404)
-    if fname not in os.listdir(os.path.join(app.template_folder, 'fwaliases', table_type)):
-        abort(404)
+    # if fname not in os.listdir(os.path.join(app.instance_path, app.template_folder, 'fwaliases', table_type)):
+    #     abort(404)
     if not RE_FW_TABLE_NAME.match(fname):
         abort(404)
 
-    return render_template('fwaliases/%s/%s' % (table_type, fname), table_type=table_type)
+    return render_template('fwaliases/%s/%s' % (table_type, fname), table_type=table_type, base_name=fname)
