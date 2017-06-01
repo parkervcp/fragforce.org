@@ -1,0 +1,7 @@
+{% include "fwaliases/nets/Prime.ips" %}
+{% include "fwaliases/nets/Secundus.ips" %}
+{% include "fwaliases/nets/Tertius.ips" %}
+{% include "fwaliases/nets/4.ips" %}
+{% include "fwaliases/nets/Fifth.ips" %}
+{% include "fwaliases/nets/NumberSix.ips" %}
+{% include "fwaliases/nets/FW2.ips" %}

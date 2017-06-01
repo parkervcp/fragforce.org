@@ -1,0 +1,14 @@
+{# All entries MUST be commented!!! #}
+
+{# Paulson's Work Laptop #}
+172.16.0.11
+{# Siebren's Work Laptop #}
+172.16.0.12
+{# Paulson's Windows NUC #}
+172.16.0.17
+{# Paul E's Desktop #}
+172.16.0.16
+{# Paulson's Secondary Desktop #}
+10.22.0.27
+{# Paulson's Primary Desktop #}
+10.22.0.18
