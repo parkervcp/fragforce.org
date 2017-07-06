@@ -1,0 +1,4 @@
+{# Ports to always allow - Used to prevent locking ourselves out of firewalls #}
+80
+443
+22
