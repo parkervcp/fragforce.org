@@ -10,6 +10,5 @@ Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
-appdirs
 lxml
 
