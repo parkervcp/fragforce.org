@@ -1,3 +1,4 @@
+appdirs
 Flask
 Flask-FlatPages
 Flask-Images
