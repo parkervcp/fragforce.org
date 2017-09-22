@@ -13,12 +13,12 @@ class PfSenseBackup(object):
 
     def make_child_nfo(self, name, value):
         tag = self.doc.new_tag(name)
-        tag.append(value)
+        tag.replace_with(value)
         return tag
 
     def add_child_nfo(self, parent, name, value):
         assert hasattr(parent, 'append'), "Expected %r to have an append method" % parent
-        return parent.append(self.make_child_nfo(name=str(name), value=str(value)))
+        return parent.append(self.make_child_nfo(name=str(name), value=value))
 
 
 class AliasBackup(PfSenseBackup):
@@ -36,13 +36,13 @@ class AliasBackup(PfSenseBackup):
 
         """ Add an alias table """
         alias = self.doc.new_tag('alias')
-        self.add_child_nfo(alias, 'name', name)
-        self.add_child_nfo(alias, 'type', type_)
-        self.add_child_nfo(alias, 'url', url)
-        self.add_child_nfo(alias, 'updatefreq', updatefreq)
-        self.add_child_nfo(alias, 'address', address)
-        self.add_child_nfo(alias, 'descr', CData(descr))
-        self.add_child_nfo(alias, 'detail', CData(detail))
+        self.add_child_nfo(alias, 'name', str(name))
+        self.add_child_nfo(alias, 'type', str(type_))
+        self.add_child_nfo(alias, 'url', str(url))
+        self.add_child_nfo(alias, 'updatefreq', str(updatefreq))
+        self.add_child_nfo(alias, 'address', str(address))
+        self.add_child_nfo(alias, 'descr', CData(str(descr)))
+        self.add_child_nfo(alias, 'detail', CData(str(detail)))
         self.doc.aliases.append(alias)
 
     def add_port_alias(self, name, url, update_frequency_days, description):
