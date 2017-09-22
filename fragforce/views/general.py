@@ -8,7 +8,7 @@ import os
 mod = Blueprint('general', __name__)
 RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z0-9]+\.(nets|ports|urls|ips)$')
 FW_ALIAS_PATH_FIXER = re.compile(r'^(https://.*/)firewalls/aliases.*')
-
+NAME_CHAR_FIX = re.compile(r'[^A-Za-z0-9_]+')
 
 @mod.route('/')
 def index(name=None):
@@ -82,6 +82,8 @@ def alias_backup_gen():
     def visit_port(aba, dirname, names):
         for file_name in names:
             path = os.path.join(dirname, file_name)
+            name = file_name.replace('.nets', '')
+            name = NAME_CHAR_FIX.sub('', name)
             if file_name.endswith('.ports'):
                 url = root_url + "/firewalls/tables/ports/" + file_name
                 ab.add_port_alias(name=file_name.replace('.ports', ''), url=url, update_frequency_days=1,
@@ -91,7 +93,8 @@ def alias_backup_gen():
         for file_name in names:
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
-            name = "%s %s" % (folder, file_name.replace('.nets', ''))
+            name = "%s_%s" % (folder, file_name.replace('.nets', ''))
+            name = NAME_CHAR_FIX.sub('', name)
             if file_name.endswith('.nets'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
                 ab.add_ip_alias(name=name, url=url, update_frequency_days=1,
