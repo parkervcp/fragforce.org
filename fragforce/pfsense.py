@@ -18,14 +18,13 @@ class PfSenseBackup(object):
 
     def add_child_nfo(self, parent, name, value):
         assert hasattr(parent, 'append'), "Expected %r to have an append method" % parent
-        return parent.append(self.make_child_nfo(name=name, value=value))
+        return parent.append(self.make_child_nfo(name=str(name), value=str(value)))
 
 
 class AliasBackup(PfSenseBackup):
     def __init__(self):
         super(AliasBackup, self).__init__()
         self.add_aliases_base()
-
 
     def add_aliases_base(self):
         aliases = self.doc.new_tag('aliases')
