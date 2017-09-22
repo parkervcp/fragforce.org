@@ -101,6 +101,6 @@ def alias_backup_gen():
                                 description='IP Table %r' % file_name)
 
     os.path.walk(port_path, visit_port, ab)
-    os.path.walk(port_path, visit_nets, ab)
+    os.path.walk(nets_path, visit_nets, ab)
 
     return ab.render(pretty=True)
