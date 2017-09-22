@@ -1,3 +1,4 @@
+pip>=9.0.1
 appdirs
 Flask
 Flask-FlatPages
@@ -11,4 +12,4 @@ Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
-lxml==3.8.0
+lxml
