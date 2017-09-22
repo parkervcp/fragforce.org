@@ -84,7 +84,7 @@ def alias_backup_gen():
             path = os.path.join(dirname, file_name)
             if file_name.endswith('.ports'):
                 url = root_url + "/firewalls/tables/ports/" + file_name
-                ab.add_port_alias(name=file_name.rstrip('.ports'), url=url, update_frequency_days=1,
+                ab.add_port_alias(name=file_name.replace('.ports', ''), url=url, update_frequency_days=1,
                                   description="Port Table %r" % file_name)
 
     def visit_nets(aba, dirname, names):
@@ -93,14 +93,14 @@ def alias_backup_gen():
             folder = os.path.split(dirname)[-1]
             if file_name.endswith('.nets'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
-                ab.add_ip_alias(name=file_name.rstrip('.nets'), url=url, update_frequency_days=1,
+                ab.add_ip_alias(name=file_name.replace('.nets', ''), url=url, update_frequency_days=1,
                                 description='Network Table %r' % file_name)
             elif file_name.endswith('.ips'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
-                ab.add_ip_alias(name=file_name.rstrip('.ips'), url=url, update_frequency_days=1,
+                ab.add_ip_alias(name=file_name.replace('.ips', ''), url=url, update_frequency_days=1,
                                 description='IP Table %r' % file_name)
 
     os.path.walk(port_path, visit_port, ab)
     os.path.walk(nets_path, visit_nets, ab)
 
-    return ab.render(pretty=True)
+    return ab.render(pretty=False)
