@@ -9,3 +9,4 @@ SQLAlchemy
 Werkzeug
 uwsgi
 requests[security]
+beautifulsoup4
