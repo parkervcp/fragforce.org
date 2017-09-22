@@ -72,7 +72,7 @@ def alias_backup_gen():
     import os, os.path
     import urllib
 
-    root_url = FW_ALIAS_PATH_FIXER.match(request.base_url)[0]
+    root_url = FW_ALIAS_PATH_FIXER.match(request.base_url).groups()[0]
 
     port_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'ports')
     nets_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'nets')
