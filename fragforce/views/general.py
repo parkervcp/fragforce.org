@@ -1,6 +1,6 @@
 from fragforce import app
 from flask import Blueprint, render_template, session, redirect, url_for, \
-    request, abort
+    request, abort, Response
 from flask_flatpages import FlatPages, pygments_style_defs
 import re
 import os
@@ -107,4 +107,4 @@ def alias_backup_gen():
     os.path.walk(port_path, visit_port, ab)
     os.path.walk(nets_path, visit_nets, ab)
 
-    return ab.render(pretty=False)
+    return Response(ab.render(pretty=False), mimetype='text/xml')
