@@ -65,7 +65,7 @@ def firewall_tables_ports(table_type, fname):
     return render_template('fwaliases/%s/%s' % (table_type, fname), table_type=table_type, base_name=fname)
 
 
-@mod.route('/firewalls/aliases/backup.xml.*')
+@mod.route('/firewalls/aliases/backup.xml')
 def alias_backup_gen():
     """ Return an XML doc that can be restored via the pfsense backup interface. It will load all aliases. """
     from fragforce.pfsense import AliasBackup
