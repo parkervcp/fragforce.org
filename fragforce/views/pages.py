@@ -62,7 +62,7 @@ def section_exists(section):
     return not len(get_pages(pages, section=section)) == 0
 
 
-@mod.route('/<path:path>/')
+@mod.route('/<path:path>')
 def page(path):
     section = path.split('/')[0]
     page = pages.get_or_404(path)
