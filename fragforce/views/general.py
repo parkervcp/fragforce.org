@@ -79,7 +79,7 @@ def alias_backup_gen():
 
     ab = AliasBackup()
 
-    def visit_port(ab, dirname, names):
+    def visit_port(aba, dirname, names):
         for file_name in names:
             path = os.path.join(dirname, file_name)
             if file_name.endswith('.ports'):
@@ -87,7 +87,7 @@ def alias_backup_gen():
                 ab.add_port_alias(name=file_name.rstrip('.ports'), url=url, update_frequency_days=1,
                                   description="Port Table %r" % file_name)
 
-    def visit_nets(ab, dirname, names):
+    def visit_nets(aba, dirname, names):
         for file_name in names:
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
