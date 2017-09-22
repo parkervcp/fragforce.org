@@ -48,7 +48,7 @@ def firewall_tables_nets(table_type, folder, fname):
     if not RE_FW_TABLE_NAME.match(fname):
         abort(404)
 
-    return render_template('fwaliases/nets/%s/%s/%s' % (table_type, folder, fname), table_type=table_type, base_name=fname,
+    return render_template('fwaliases/%s/%s/%s' % (table_type, folder, fname), table_type=table_type, base_name=fname,
                            folder=folder)
 
 
