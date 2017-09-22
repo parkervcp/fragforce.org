@@ -32,7 +32,7 @@ class AliasBackup(PfSenseBackup):
 
     def add_alias(self, name, type_, url, updatefreq=1, address=None, descr='', detail=''):
         if address is None:
-            address=url
+            address = url
 
         """ Add an alias table """
         alias = self.doc.new_tag('alias')
