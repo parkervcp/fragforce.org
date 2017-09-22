@@ -23,8 +23,9 @@ class PfSenseBackup(object):
 
 class AliasBackup(PfSenseBackup):
     def __init__(self):
-        self.add_aliases_base()
         super(AliasBackup, self).__init__()
+        self.add_aliases_base()
+
 
     def add_aliases_base(self):
         aliases = self.doc.new_tag('aliases')
