@@ -74,8 +74,8 @@ def alias_backup_gen():
 
     root_url = FW_ALIAS_PATH_FIXER.match(request.base_url).groups()[0]
 
-    port_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'ports')
-    nets_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'nets')
+    port_path = os.path.join(app.config['BASE_DIR'], 'fragforce', 'templates', 'fwaliases', 'ports')
+    nets_path = os.path.join(app.config['BASE_DIR'], 'fragforce', 'templates', 'fwaliases', 'nets')
 
     ab = AliasBackup()
 
@@ -92,11 +92,11 @@ def alias_backup_gen():
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
             if file_name.endswith('.nets'):
-                url = root_url + "/firewalls/tables/nets/%s/%s"%(folder,file_name)
+                url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
                 ab.add_ip_alias(name=file_name.rstrip('.nets'), url=url, update_frequency_days=1,
                                 description='Network Table %r' % file_name)
             elif file_name.endswith('.ips'):
-                url = root_url + "/firewalls/tables/nets/%s/%s"%(folder,file_name)
+                url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
                 ab.add_ip_alias(name=file_name.rstrip('.ips'), url=url, update_frequency_days=1,
                                 description='IP Table %r' % file_name)
 
