@@ -83,7 +83,7 @@ def alias_backup_gen():
         for file_name in names:
             path = os.path.join(dirname, file_name)
             name = file_name.replace('.nets', '')
-            name = NAME_CHAR_FIX.sub('', name)
+            name = NAME_CHAR_FIX.sub('_', name)
             if file_name.endswith('.ports'):
                 url = root_url + "/firewalls/tables/ports/" + file_name
                 ab.add_port_alias(name=file_name.replace('.ports', ''), url=url, update_frequency_days=1,
@@ -94,7 +94,7 @@ def alias_backup_gen():
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
             name = "%s_%s" % (folder, file_name.replace('.nets', '').replace('.ips', ''))
-            name = NAME_CHAR_FIX.sub('', name)
+            name = NAME_CHAR_FIX.sub('_', name)
             if file_name.endswith('.nets'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
                 ab.add_ip_alias(name=name, url=url, update_frequency_days=1,
