@@ -91,13 +91,14 @@ def alias_backup_gen():
         for file_name in names:
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
+            name = "%s %s" % (folder, file_name.replace('.nets', ''))
             if file_name.endswith('.nets'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
-                ab.add_ip_alias(name=file_name.replace('.nets', ''), url=url, update_frequency_days=1,
+                ab.add_ip_alias(name=name, url=url, update_frequency_days=1,
                                 description='Network Table %r' % file_name)
             elif file_name.endswith('.ips'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
-                ab.add_ip_alias(name=file_name.replace('.ips', ''), url=url, update_frequency_days=1,
+                ab.add_ip_alias(name=name, url=url, update_frequency_days=1,
                                 description='IP Table %r' % file_name)
 
     os.path.walk(port_path, visit_port, ab)
