@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config.from_object('config')
+app.config['DEBUG']=True
 pages = FlatPages(app)
 images = Images(app)
 
