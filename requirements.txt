@@ -1,5 +1,5 @@
 pip>=9.0.1
-setuptools
+setuptools==18.5
 appdirs
 Flask
 Flask-FlatPages
