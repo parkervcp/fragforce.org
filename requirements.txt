@@ -13,4 +13,4 @@ Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
-lxml
+lxml==3.4
