@@ -39,9 +39,8 @@ def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
 
 
-@mod.route('/firewalls/tables/nets/<string:group>/<string:fname>')
-def firewall_tables_nets(group, fname):
-    table_type = 'nets'
+@mod.route('/firewalls/tables/<string:table_type>/<string:group>/<string:fname>$')
+def firewall_tables_nets(table_type, folder, fname):
     if table_type not in ['ports', 'nets']:
         abort(404)
     # if fname not in os.listdir(os.path.join(app.instance_path, app.template_folder, 'fwaliases', table_type)):
@@ -49,11 +48,11 @@ def firewall_tables_nets(group, fname):
     if not RE_FW_TABLE_NAME.match(fname):
         abort(404)
 
-    return render_template('fwaliases/nets/%s/%s' % (table_type, fname), table_type=table_type, base_name=fname,
-                           group=group)
+    return render_template('fwaliases/nets/%s/%s/%s' % (table_type, folder, fname), table_type=table_type, base_name=fname,
+                           folder=folder)
 
 
-@mod.route('/firewalls/tables/<string:table_type>/<string:fname>')
+@mod.route('/firewalls/tables/<string:table_type>/<string:fname>$')
 def firewall_tables_ports(table_type, fname):
     if table_type not in ['ports', 'nets']:
         abort(404)
