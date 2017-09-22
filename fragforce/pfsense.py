@@ -13,7 +13,7 @@ class PfSenseBackup(object):
 
     def make_child_nfo(self, name, value):
         tag = self.doc.new_tag(name)
-        tag.replace_with(value)
+        tag.string.replace_with(value)
         return tag
 
     def add_child_nfo(self, parent, name, value):
