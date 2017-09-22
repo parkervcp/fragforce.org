@@ -93,7 +93,7 @@ def alias_backup_gen():
         for file_name in names:
             path = os.path.join(dirname, file_name)
             folder = os.path.split(dirname)[-1]
-            name = "%s_%s" % (folder, file_name.replace('.nets', ''))
+            name = "%s_%s" % (folder, file_name.replace('.nets', '').replace('.ips', ''))
             name = NAME_CHAR_FIX.sub('', name)
             if file_name.endswith('.nets'):
                 url = root_url + "/firewalls/tables/nets/%s/%s" % (folder, file_name)
