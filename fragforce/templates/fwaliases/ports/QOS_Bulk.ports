@@ -1,3 +1,20 @@
 {# Ports frequently used by high bandwidth apps that aren't latency sensitive #}
 {# TCP or UDP #}
 21
+{# Steam dl ports #}
+27015
+27016
+27017
+27018
+27019
+27020
+27021
+27022
+27023
+27024
+27025
+27026
+27027
+27028
+27029
+27030
