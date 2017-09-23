@@ -1,0 +1,3 @@
+{# Ports frequently used by high bandwidth apps that aren't latency sensitive #}
+{# TCP or UDP #}
+21
