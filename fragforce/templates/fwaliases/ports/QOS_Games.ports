@@ -1,3 +1,5 @@
 {# Ports frequently used by low bandwidth apps with high latency sensitivity #}
 {# TCP or UDP #}
 25565
+123
+53
