@@ -10,6 +10,7 @@ RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z0-9\-_]+\.(nets|ports|urls|ips)$')
 FW_ALIAS_PATH_FIXER = re.compile(r'^(https://.*/)firewalls/aliases.*')
 NAME_CHAR_FIX = re.compile(r'[^A-Za-z0-9_]+')
 
+
 @mod.route('/')
 def index(name=None):
     return render_template('general/index.html', name=name)
