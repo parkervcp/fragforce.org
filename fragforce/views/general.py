@@ -6,7 +6,7 @@ import re
 import os
 
 mod = Blueprint('general', __name__)
-RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z0-9]+\.(nets|ports|urls|ips)$')
+RE_FW_TABLE_NAME = re.compile(r'^[a-zA-Z0-9\-_]+\.(nets|ports|urls|ips)$')
 FW_ALIAS_PATH_FIXER = re.compile(r'^(https://.*/)firewalls/aliases.*')
 NAME_CHAR_FIX = re.compile(r'[^A-Za-z0-9_]+')
 
