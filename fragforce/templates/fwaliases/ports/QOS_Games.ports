@@ -1,0 +1,20 @@
+{# Ports frequently used by low bandwidth apps with high latency sensitivity #}
+{# TCP or UDP #}
+25565
+123
+53
+27000
+27001
+27002
+27003
+27004
+27005
+27006
+27007
+27008
+27009
+27010
+27011
+27012
+27013
+27014

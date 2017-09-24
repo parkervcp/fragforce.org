@@ -1,2 +1,0 @@
-{% include "fwaliases/nets/AevumPrime.nets" %}
-{% include "fwaliases/nets/AevumSecundus.nets" %}

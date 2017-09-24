@@ -1,7 +1,0 @@
-{% include "fwaliases/nets/PrimeGaming.nets" %}
-{% include "fwaliases/nets/SecundusGaming.nets" %}
-{% include "fwaliases/nets/TertiusGaming.nets" %}
-{% include "fwaliases/nets/4Gaming.nets" %}
-{% include "fwaliases/nets/FifthGaming.nets" %}
-{% include "fwaliases/nets/NumberSixGaming.nets" %}
-{% include "fwaliases/nets/FW2Gaming.nets" %}

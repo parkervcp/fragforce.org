@@ -1,0 +1,14 @@
+{# IPs/nets of all managed switches #}
+
+{% include "fwaliases/nets/Switches/Core4.ips" %}
+{% include "fwaliases/nets/Switches/Core5.ips" %}
+{% include "fwaliases/nets/Switches/Core6.ips" %}
+{% include "fwaliases/nets/Switches/Core9.ips" %}
+{% include "fwaliases/nets/Switches/Core10.ips" %}
+{% include "fwaliases/nets/Switches/Core11.ips" %}
+{% include "fwaliases/nets/Switches/Core12.ips" %}
+{% include "fwaliases/nets/Switches/Core13.ips" %}
+{% include "fwaliases/nets/Switches/Core14.ips" %}
+{% include "fwaliases/nets/Switches/Core15.ips" %}
+{% include "fwaliases/nets/Switches/Core16.ips" %}
+{% include "fwaliases/nets/Switches/Core17.ips" %}
