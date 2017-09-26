@@ -1,3 +1,6 @@
+pip>=9.0.1
+setuptools==18.5
+appdirs
 Flask
 Flask-FlatPages
 Flask-Images
@@ -9,3 +12,5 @@ SQLAlchemy
 Werkzeug
 uwsgi
 requests[security]
+beautifulsoup4
+lxml==3.4

@@ -1,0 +1,8 @@
+{# User's networks #}
+{% include "fwaliases/nets/Remotes/Paulson.nets" %}
+{% include "fwaliases/nets/Remotes/Aevum.nets" %}
+{# Fragforce Firewall Networks #}
+{% include "fwaliases/nets/Groups/admin.nets" %}
+{% include "fwaliases/nets/Groups/gaming.nets" %}
+{% include "fwaliases/nets/Groups/nongaming.nets" %}
+{% include "fwaliases/nets/Groups/servers.nets" %}
