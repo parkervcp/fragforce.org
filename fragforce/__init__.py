@@ -3,7 +3,7 @@ from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
 from flask.ext.images import Images
 import requests
-
+import os
 import fragforce.extralife as extralife
 
 
@@ -14,10 +14,15 @@ def jinja_renderer(text):
 
 app = Flask(__name__)
 
-# Default Values for config
 app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
-app.config.from_object('config')
+app.config['DEBUG'] = bool(os.environ.get('DEBUG', 'False').lower() == 'true')
+app.config['BASE_DIR'] = os.path.abspath(os.path.dirname(__file__))
+app.config['THREADS_PER_PAGE'] = 2
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
+app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
+app.config['DATABASE_CONNECT_OPTIONS'] = {}
+
 pages = FlatPages(app)
 images = Images(app)
 
