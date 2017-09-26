@@ -8,9 +8,11 @@ Flask-SQLAlchemy
 Genshi
 Jinja2
 Pygments
-SQLAlchemy
+gunicorn==19.4.5
+SQLAlchemy==1.0.15
 Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
 lxml==3.4
+psycopg2==2.6.1
