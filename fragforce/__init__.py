@@ -62,7 +62,7 @@ def tracker_data():
                 return rtn if request.view_args['section'] == section else ''
         return ''
 
-    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bar')
+    @cache.memoize(timeout=app.config['CACHE_DONATIONS_TIME'])
     def print_bar(goal, total, percent, label):
         return '   <div>' + \
                '     <div class="progress-text">' + \

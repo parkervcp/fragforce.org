@@ -6,7 +6,7 @@ class WebServiceException(Exception):
     pass
 
 
-@fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'], key_prefix='extralife.team')
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def team(team_id):
     """Convenience method to instantiate a Team
 
@@ -20,7 +20,7 @@ def team(team_id):
     return t
 
 
-@fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'], key_prefix='extralife.participants')
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participants(team_id):
     """Convenience method to retrieve a Team's participants
 
@@ -34,7 +34,7 @@ def participants(team_id):
     return p
 
 
-@fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'], key_prefix='extralife.participant')
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participant(participant_id):
     """Convenience method to retrieve a Participant
 
@@ -48,8 +48,7 @@ def participant(participant_id):
     return p
 
 
-@fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'],
-                        key_prefix='extralife.participant_donations')
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participant_donations(participant_id):
     """Convenience method to retrieve a Participant's donations
 
@@ -88,7 +87,7 @@ class Team(object):
         self._participants = None
 
     @classmethod
-    @fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'], key_prefix='extralife.team.from_url')
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def from_url(cls, team_id):
         """Constructs an ExtraLifeTeam from the team web service.
 
@@ -113,8 +112,7 @@ class Team(object):
 
         return cls(team_id, name, raised, goal, avatar_url, created)
 
-    @fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'],
-                            key_prefix='extralife.team.participants')
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def participants(self, force=False):
         """Returns the list of participants for the team using the
         teamParticipants web service call. This call is cached. To force a
@@ -191,8 +189,7 @@ class Participant(object):
         self._donations = None
 
     @classmethod
-    @fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'],
-                            key_prefix='extralife.participant.from_url')
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def from_url(cls, participant_id):
         """Constructs an Participant from the participant web service.
         
@@ -224,8 +221,7 @@ class Participant(object):
 
         return participant
 
-    @fragforce.cache.cached(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'],
-                            key_prefix='extralife.participant.donations')
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def donations(self, force=False):
         """Returns the list of donations for the participant using the
         participantDonations web service call. This call is cached. To force a
