@@ -5,7 +5,7 @@ from flask_images import Images
 import requests
 import os
 import fragforce.extralife as extralife
-from flask.ext.cache import Cache
+from flask_cache import Cache
 
 
 def jinja_renderer(text):
