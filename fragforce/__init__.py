@@ -5,6 +5,7 @@ from flask.ext.images import Images
 import requests
 import os
 import fragforce.extralife as extralife
+from flask.ext.cache import Cache
 
 
 def jinja_renderer(text):
@@ -22,6 +23,7 @@ app.config['THREADS_PER_PAGE'] = 2
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
 app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
 app.config['DATABASE_CONNECT_OPTIONS'] = {}
+app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 
 pages = FlatPages(app)
 images = Images(app)
@@ -33,8 +35,16 @@ from fragforce.views import pages
 app.register_blueprint(general.mod)
 app.register_blueprint(pages.mod)
 
+# Init cache
+if app.config['REDIS_URL']:
+    cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': app.config['REDIS_URL']})
+else:
+    # fallback for local testing
+    cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
 
 @app.context_processor
+@cache.cached(timeout=120, key_prefix='tracker_data')
 def tracker_data():
     def is_active(endpoint=None, section=None, noclass=False):
         rtn = ""
