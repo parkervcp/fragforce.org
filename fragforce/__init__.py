@@ -45,7 +45,7 @@ else:
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 @app.context_processor
 def tracker_data():
-    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.is_active')
+
     def is_active(endpoint=None, section=None, noclass=False):
         rtn = ""
         if noclass:
