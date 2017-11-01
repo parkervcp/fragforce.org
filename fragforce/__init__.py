@@ -62,7 +62,7 @@ def tracker_data():
                 return rtn if request.view_args['section'] == section else ''
         return ''
 
-    @cache.memoize(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bar')
+    @cache.memoize(timeout=app.config['CACHE_DONATIONS_TIME'])
     def print_bar(goal, total, percent, label):
         return '   <div>' + \
                '     <div class="progress-text">' + \
@@ -81,7 +81,7 @@ def tracker_data():
                '     </div>' + \
                '   </div>'
 
-    @cache.memoize(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bars')
+    @cache.cache(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bars')
     def print_bars():
         extralife_total = 0
         extralife_goal = 0
