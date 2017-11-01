@@ -37,10 +37,11 @@ app.register_blueprint(pages.mod)
 
 # Init cache
 if app.config['REDIS_URL']:
-    cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': app.config['REDIS_URL']})
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
+                               'CACHE_REDIS_URL': app.config['REDIS_URL']})
 else:
     # fallback for local testing
-    cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
 
 
 @app.context_processor
