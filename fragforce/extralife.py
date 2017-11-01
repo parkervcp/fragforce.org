@@ -1,5 +1,5 @@
 import requests
-from . import cache,app
+from fragforce import cache,app
 
 class WebServiceException(Exception):
     pass
