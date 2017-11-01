@@ -81,7 +81,7 @@ def tracker_data():
                '     </div>' + \
                '   </div>'
 
-    @cache.cache(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bars')
+    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bars')
     def print_bars():
         extralife_total = 0
         extralife_goal = 0
