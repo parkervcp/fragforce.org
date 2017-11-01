@@ -4,7 +4,6 @@ from flask_flatpages.utils import pygmented_markdown
 from flask_images import Images
 import requests
 import os
-import fragforce.extralife as extralife
 from flask_cache import Cache
 
 
@@ -130,3 +129,6 @@ def tracker_data():
         extralife_link="http://team.fragforce.org",
         childsplay_link="https://tiltify.com/teams/fragforce",
         is_active=is_active)
+
+
+import fragforce.extralife as extralife
