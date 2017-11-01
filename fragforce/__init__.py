@@ -42,11 +42,10 @@ if app.config['REDIS_URL']:
 else:
     # fallback for local testing
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
-
-
+app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 @app.context_processor
 def tracker_data():
-    @cache.cached(timeout=120, key_prefix='is_active')
+    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='is_active')
     def is_active(endpoint=None, section=None, noclass=False):
         rtn = ""
         if noclass:
@@ -64,7 +63,7 @@ def tracker_data():
                 return rtn if request.view_args['section'] == section else ''
         return ''
 
-    @cache.cached(timeout=120, key_prefix='print_bar')
+    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='print_bar')
     def print_bar(goal, total, percent, label):
         return '   <div>' + \
                '     <div class="progress-text">' + \
@@ -83,7 +82,7 @@ def tracker_data():
                '     </div>' + \
                '   </div>'
 
-    @cache.cached(timeout=120, key_prefix='print_bars')
+    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='print_bars')
     def print_bars():
         extralife_total = 0
         extralife_goal = 0

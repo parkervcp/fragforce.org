@@ -41,7 +41,7 @@ def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
 
 
-@mod.route('/firewalls/tables/<string:table_type>/<string:folder>/<string:fname>')
+@mod.route('/firwalls/tables/<string:table_type>/<string:folder>/<string:fname>')
 def firewall_tables_nets(table_type, folder, fname):
     if table_type not in ['ports', 'nets']:
         abort(404)
