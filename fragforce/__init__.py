@@ -1,7 +1,7 @@
 from flask import Flask, render_template_string, request
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
-from flask.ext.images import Images
+from flask_images import Images
 import requests
 import os
 import fragforce.extralife as extralife
