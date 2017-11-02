@@ -15,3 +15,4 @@ def update_team():
     result = q.enqueue(database.update_team)
 
 database.create_tables()
+sched.start()
