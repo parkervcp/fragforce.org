@@ -27,3 +27,5 @@ flask-restful==0.3.5
 marshmallow==2.10.1
 ipython==5.1.0
 Flask-Cache
+apscheduler
+rq
