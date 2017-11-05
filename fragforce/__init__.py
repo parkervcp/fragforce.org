@@ -54,7 +54,7 @@ def random_participant():
     return dict(
         rnd_pct=participant,
         rnd_pct_link=participant.donate_link(),
-        rnd_pct_name="%s %s"%(participant.first_name,participant.last_name),
+        rnd_pct_name=participant.display_name,
     )
 
 

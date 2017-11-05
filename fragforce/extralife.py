@@ -136,8 +136,7 @@ class Team(object):
         for pdata in data:
             participant_id = pdata.get("participantID", None)
             created = pdata.get("createdOn", None)
-            last_name = pdata.get("lastName", None)
-            first_name = pdata.get("firstName", None)
+            display_name = pdata.get("displayName", None)
             avatar_url = pdata.get("avatarImageURL", None)
             team_captain = pdata.get("isTeamCaptain", False)
 
@@ -146,7 +145,7 @@ class Team(object):
             goal = None
 
             p = Participant(participant_id, self.team_id,
-                            team_captain, first_name, last_name,
+                            team_captain, display_name,
                             raised, goal, avatar_url, created)
             self._participants.append(p)
 
@@ -157,8 +156,7 @@ class Team(object):
 
 
 class Participant(object):
-    def __init__(self, participant_id, team_id, is_team_captain, first_name,
-                 last_name, raised, goal, avatar_url, created):
+    def __init__(self, participant_id, team_id, is_team_captain, display_name, raised, goal, avatar_url, created):
 
         # extra-life assigned participant ID
         self.participant_id = participant_id
@@ -168,10 +166,6 @@ class Participant(object):
 
         # is this person a team captain?
         self.is_team_captain = is_team_captain
-
-        # participant-entered name data
-        self.first_name = first_name
-        self.last_name = last_name
 
         # how much money this person has raised
         self.raised = raised
@@ -187,6 +181,9 @@ class Participant(object):
 
         # the list of donations this participant has - see donations()
         self._donations = None
+
+        # Participant entered name
+        self.display_name = display_name
 
     def donate_link(self):
         """ Direct donate link """
@@ -214,15 +211,14 @@ class Participant(object):
 
         team_id = data.get("teamID", None)
         is_team_captain = data.get("isTeamCaptain", False)
-        first_name = data.get("firstName", "John")
-        last_name = data.get("lastName", "Doe")
+        display_name = data.get("displayName", "John Doe")
         raised = data.get("totalRaisedAmount", 0.0)
         goal = data.get("fundraisingGoal", 0.0)
         avatar_url = data.get("avatarImageURL", None)
         created = data.get("createdOn", None)
 
-        participant = cls(participant_id, team_id, is_team_captain, first_name,
-                          last_name, raised, goal, avatar_url, created)
+        participant = cls(participant_id, team_id, is_team_captain, display_name,
+                          raised, goal, avatar_url, created)
 
         return participant
 
