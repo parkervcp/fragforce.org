@@ -5,10 +5,11 @@
 
 <div>
     <ul>
-        <li>Go to <a href="{{random_participant}}">{{random_participant}}</a></li>
+        <li>Donate to a random Fragforce team member: <a href="{{random_participant.doante_link}}">{{random_participant.first_name}}
+            {{random_participant.last_name}}</a></li>
         <li>Alternatively, instead of donating to someone else, you can <a href="{{ url_for('general.join') }}">Join the
             team</a> and raise money yourself!
-        </li
+        </li>
         <li>You can donate to a user of your choice using <a href="{{extralife_link}}">{{extralife_link}}</a></li>
     </ul>
 </div>

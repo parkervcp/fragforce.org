@@ -188,6 +188,11 @@ class Participant(object):
         # the list of donations this participant has - see donations()
         self._donations = None
 
+    def donate_link(self):
+        """ Direct donate link """
+        return "https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % \
+               self.participant_id
+
     @classmethod
     @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def from_url(cls, participant_id):

@@ -50,10 +50,7 @@ def random_participant():
     """ Add a random participant to use for donation links to all page contexts """
     from .extralife import participants
     from random import choice
-    p = participants(app.config['EXTRALIFE_TEAMID'])
-    participant = choice(
-        ["https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % i.participant_id for i
-         in p])
+    participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
     return dict(
         random_participant=participant,
     )
