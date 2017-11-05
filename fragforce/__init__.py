@@ -51,7 +51,9 @@ def random_participant():
     from .extralife import participants
     from random import choice
     p = participants(app.config['EXTRALIFE_TEAMID'])
-    participant = choice(p)
+    participant = choice(
+        ["https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % i.participant_id for i
+         in p])
     return dict(
         random_participant=participant,
     )
