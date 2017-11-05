@@ -52,7 +52,9 @@ def random_participant():
     from random import choice
     participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
     return dict(
-        random_participant=participant,
+        rnd_pct=participant,
+        rnd_pct_link=participant.donate_link(),
+        rnd_pct_name="%s %s"%(participant.first_name,participant.last_name),
     )
 
 
