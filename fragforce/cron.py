@@ -1,10 +1,14 @@
 """ Run periodically """
-from fragforce import app, sched
+from fragforce import app, sched, high, q, low
 
 
 ### Put cron entries here
 
 @sched.scheduled_job('interval', minutes=60)
+def _update_team():
+    result = q.enqueue(update_team)
+
+
 def update_team():
     """ """
     from .extralife import team
@@ -12,6 +16,10 @@ def update_team():
 
 
 @sched.scheduled_job('interval', minutes=60)
+def _update_participants():
+    result = q.enqueue(update_participants)
+
+
 def update_participants():
     """ """
     from .extralife import participants
