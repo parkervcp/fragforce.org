@@ -5,6 +5,7 @@ Flask
 Flask-FlatPages
 Flask-Images
 Flask-SQLAlchemy
+Flask-SSLify
 flask-limiter
 flask-login
 Genshi
@@ -16,8 +17,8 @@ Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
-lxml==3.4
-psycopg2==2.6.1
+lxml
+psycopg2
 alembic==0.8.8
 passlib==1.6.5
 ipy
