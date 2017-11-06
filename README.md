@@ -40,3 +40,4 @@
 8. Restart nginx
 9. Run uwsgi in the project directory via ```uwsgi -s /tmp/fragforce.sock --module fragforce --callable app -H <PATH TO VIRTUALENV ENV DIRECTORY>```
 10. ```chmod 777 /tmp/fragforce.sock```
+
