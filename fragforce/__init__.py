@@ -1,10 +1,10 @@
 from flask import Flask, render_template_string, request
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
-from flask.ext.images import Images
+from flask_images import Images
 import requests
-
-import fragforce.extralife as extralife
+import os
+from flask_cache import Cache
 
 
 def jinja_renderer(text):
@@ -14,10 +14,16 @@ def jinja_renderer(text):
 
 app = Flask(__name__)
 
-# Default Values for config
 app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
-app.config.from_object('config')
+app.config['DEBUG'] = bool(os.environ.get('DEBUG', 'False').lower() == 'true')
+app.config['BASE_DIR'] = os.path.abspath(os.path.dirname(__file__))
+app.config['THREADS_PER_PAGE'] = 2
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
+app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
+app.config['DATABASE_CONNECT_OPTIONS'] = {}
+app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
+
 pages = FlatPages(app)
 images = Images(app)
 
@@ -28,9 +34,17 @@ from fragforce.views import pages
 app.register_blueprint(general.mod)
 app.register_blueprint(pages.mod)
 
-
+# Init cache
+if app.config['REDIS_URL']:
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
+                               'CACHE_REDIS_URL': app.config['REDIS_URL']})
+else:
+    # fallback for local testing
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
+app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 @app.context_processor
 def tracker_data():
+
     def is_active(endpoint=None, section=None, noclass=False):
         rtn = ""
         if noclass:
@@ -48,6 +62,7 @@ def tracker_data():
                 return rtn if request.view_args['section'] == section else ''
         return ''
 
+    @cache.memoize(timeout=app.config['CACHE_DONATIONS_TIME'])
     def print_bar(goal, total, percent, label):
         return '   <div>' + \
                '     <div class="progress-text">' + \
@@ -66,6 +81,7 @@ def tracker_data():
                '     </div>' + \
                '   </div>'
 
+    @cache.cached(timeout=app.config['CACHE_DONATIONS_TIME'], key_prefix='tracker_data.print_bars')
     def print_bars():
         extralife_total = 0
         extralife_goal = 0
@@ -113,3 +129,6 @@ def tracker_data():
         extralife_link="http://team.fragforce.org",
         childsplay_link="https://tiltify.com/teams/fragforce",
         is_active=is_active)
+
+
+import fragforce.extralife as extralife
