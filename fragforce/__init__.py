@@ -2,6 +2,7 @@ from flask import Flask, render_template_string, request
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
 from flask_images import Images
+from flask_sslify import SSLify
 import requests
 import os
 from flask_cache import Cache
@@ -13,6 +14,7 @@ def jinja_renderer(text):
 
 
 app = Flask(__name__)
+sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
