@@ -23,7 +23,7 @@ class Location(Base):
     country_code = Column(String(255), nullable=False)
     address = Column(Text(), nullable=False)
     primary_contact_id = Column(Integer, ForeignKey('contacts.id'))
-    #primary_contact = relation(Contacts, backref=backref('is_primary_for', order_by=code))
+    # primary_contact = relation(Contacts, backref=backref('is_primary_for', order_by=code))
 
 
 class Contacts(Base):
@@ -38,11 +38,9 @@ class Contacts(Base):
 
 class Firewall(Base):
     """ A Fragforce Firewall """
-
-    class HardwareType(enum.Enum):
-        HARDWARE_TYPE_STANDARD_V0_LOW = 1
-        HARDWARE_TYPE_STANDARD_V0_HIGH = 2
-        HARDWARE_TYPE_CUSTOM = 3
+    HARDWARE_TYPE_STANDARD_V0_LOW = 'Standard v0 Low'
+    HARDWARE_TYPE_STANDARD_V0_HIGH = 'Standard v0 High'
+    HARDWARE_TYPE_CUSTOM = 'Custom'
 
     __tablename__ = 'firewalls'
     id = Column(Integer, primary_key=True)
@@ -50,7 +48,8 @@ class Firewall(Base):
     name = Column(String(255), unique=True, nullable=False)
     fqdn = Column(String(4096), nullable=False)
     alt_fqdns = Column(ARRAY(String(4096)), nullable=False, default=[])
-    hardware_type = Column(Enum(HardwareType,name='hardware_types'), nullable=True, default=HardwareType.HARDWARE_TYPE_CUSTOM)
+    hardware_type = Column(Enum(HARDWARE_TYPE_STANDARD_V0_LOW, HARDWARE_TYPE_STANDARD_V0_HIGH, HARDWARE_TYPE_CUSTOM,
+                                name='hardware_types'), nullable=True, default=HARDWARE_TYPE_CUSTOM)
     last_seen = Column(DateTime(), nullable=True, default=None)
 
 
@@ -100,14 +99,12 @@ class HostInterface(Interface):
 
 class PortGroup(Base):
     """ A group of port(s) """
-
-    class ProtoType(enum.Enum):
-        TCP = 1
-        UDP = 2
+    TCP = 'TCP'
+    UDP = 'UDP'
 
     __tablename__ = 'port_groups'
     id = Column(Integer, primary_key=True)
     guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
     name = Column(String(255), unique=True, nullable=False)
-    ports = Column(ARRAY(Integer,dimensions=2), nullable=False, default=[])
-    proto = Column(Enum(ProtoType,name='protocol_types'), nullable=True)
+    ports = Column(ARRAY(Integer, dimensions=2), nullable=False, default=[])
+    proto = Column(Enum(TCP,UDP, name='protocol_types'), nullable=True)
