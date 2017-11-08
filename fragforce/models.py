@@ -1,6 +1,8 @@
 """ Database schema
 
 WARNING: DON'T FORGET TO RUN 'alembic revision --autogenerate -m "<message>"' AFTER ANY CHANGES TO THE SCHEMA!!!!
+
+Also need to run ```heroku run --app=<APP NAME> bash upgrade_db.sh``` on all apps
 """
 import datetime
 from sqlalchemy import *
