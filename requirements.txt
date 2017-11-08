@@ -11,7 +11,7 @@ flask-login
 Genshi
 Jinja2
 Pygments
-gunicorn==19.4.5
+gunicorn>=19.4.5
 SQLAlchemy>=1.0.15
 Werkzeug
 uwsgi
