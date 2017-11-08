@@ -2,6 +2,7 @@ from flask import Flask, render_template_string, request
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
 from flask_images import Images
+from flask_sslify import SSLify
 import requests
 import os
 from flask_cache import Cache
@@ -13,6 +14,7 @@ def jinja_renderer(text):
 
 
 app = Flask(__name__)
+sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
@@ -23,6 +25,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
 app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
 app.config['DATABASE_CONNECT_OPTIONS'] = {}
 app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
+app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
 
 pages = FlatPages(app)
 images = Images(app)
@@ -42,9 +45,23 @@ else:
     # fallback for local testing
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
+
+
+@app.context_processor
+def random_participant():
+    """ Add a random participant to use for donation links to all page contexts """
+    from .extralife import participants
+    from random import choice
+    participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
+    return dict(
+        rnd_pct=participant,
+        rnd_pct_link=participant.donate_link(),
+        rnd_pct_name=participant.display_name,
+    )
+
+
 @app.context_processor
 def tracker_data():
-
     def is_active(endpoint=None, section=None, noclass=False):
         rtn = ""
         if noclass:
@@ -93,7 +110,7 @@ def tracker_data():
         full_goal = 0
         full_percent = 0
         try:
-            team = extralife.Team.from_url(33118)
+            team = extralife.Team.from_url(app.config['EXTRALIFE_TEAMID'])
             extralife_total = team.raised
             extralife_goal = team.goal
 
@@ -132,3 +149,12 @@ def tracker_data():
 
 
 import fragforce.extralife as extralife
+
+from apscheduler.schedulers.blocking import BlockingScheduler
+from rq import Queue
+from worker import conn
+
+sched = BlockingScheduler()
+high = Queue('high', connection=conn)
+q = Queue('default', connection=conn)
+low = Queue('low', connection=conn)

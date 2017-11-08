@@ -5,6 +5,7 @@ Flask
 Flask-FlatPages
 Flask-Images
 Flask-SQLAlchemy
+Flask-SSLify
 flask-limiter
 flask-login
 Genshi
@@ -16,8 +17,8 @@ Werkzeug
 uwsgi
 requests[security]
 beautifulsoup4
-lxml==3.4
-psycopg2==2.6.1
+lxml
+psycopg2
 alembic==0.8.8
 passlib==1.6.5
 ipy
@@ -27,3 +28,5 @@ flask-restful==0.3.5
 marshmallow==2.10.1
 ipython==5.1.0
 Flask-Cache
+apscheduler
+rq
