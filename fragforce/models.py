@@ -23,7 +23,7 @@ class Location(Base):
     country_code = Column(String(255), nullable=False)
     address = Column(Text(), nullable=False)
     primary_contact_id = Column(Integer, ForeignKey('contacts.id'))
-    # primary_contact = relation(Contacts, backref=backref('is_primary_for', order_by=code))
+    primary_contact = relation('Contacts')
 
 
 class Contacts(Base):
