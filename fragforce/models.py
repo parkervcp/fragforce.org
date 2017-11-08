@@ -21,7 +21,7 @@ class Location(Base):
     country_code = Column(String(255), nullable=False)
     address = Column(Text(), nullable=False)
     primary_contact_id = Column(Integer, ForeignKey('contacts.id'))
-    primary_contact = relation(Contacts, backref=backref('is_primary_for', order_by=code))
+    #primary_contact = relation(Contacts, backref=backref('is_primary_for', order_by=code))
 
 
 class Contacts(Base):
@@ -107,5 +107,5 @@ class PortGroup(Base):
     id = Column(Integer, primary_key=True)
     guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
     name = Column(String(255), unique=True, nullable=False)
-    ports = Column(ARRAY(ARRAY(Integer)), nullable=False, default=[])
+    ports = Column(ARRAY(Integer,dimensions=2), nullable=False, default=[])
     proto = Column(Enum(ProtoType), nullable=True)
