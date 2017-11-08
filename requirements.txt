@@ -30,3 +30,4 @@ ipython==5.1.0
 Flask-Cache
 apscheduler
 rq
+Flask-Migrate>=1.8.0

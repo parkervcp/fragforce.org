@@ -6,6 +6,7 @@ from flask_sslify import SSLify
 import requests
 import os
 from flask_cache import Cache
+from flask.ext.sqlalchemy import SQLAlchemy
 
 
 def jinja_renderer(text):
@@ -22,7 +23,7 @@ app.config['DEBUG'] = bool(os.environ.get('DEBUG', 'False').lower() == 'true')
 app.config['BASE_DIR'] = os.path.abspath(os.path.dirname(__file__))
 app.config['THREADS_PER_PAGE'] = int(os.environ.get('THREADS_PER_PAGE', 2))
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
-app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
+app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/fragforce')
 app.config['DATABASE_CONNECT_OPTIONS'] = {}
 app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
@@ -32,6 +33,7 @@ app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTI
 
 pages = FlatPages(app)
 images = Images(app)
+db = SQLAlchemy(app)
 
 from fragforce.views import general
 # from fragforce.views import events
