@@ -37,7 +37,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/fragforce')
     context.configure(
         url=url, target_metadata=target_metadata, literal_binds=True)
 
@@ -52,10 +52,13 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    url = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/fragforce')
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix='sqlalchemy.',
-        poolclass=pool.NullPool)
+        poolclass=pool.NullPool,
+        url=url,
+    )
 
     with connectable.connect() as connection:
         context.configure(
@@ -65,6 +68,7 @@ def run_migrations_online():
 
         with context.begin_transaction():
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
