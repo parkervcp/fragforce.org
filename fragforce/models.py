@@ -50,7 +50,7 @@ class Firewall(Base):
     name = Column(String(255), unique=True, nullable=False)
     fqdn = Column(String(4096), nullable=False)
     alt_fqdns = Column(ARRAY(String(4096)), nullable=False, default=[])
-    hardware_type = Column(Enum(HardwareType), nullable=True, default=HardwareType.HARDWARE_TYPE_CUSTOM)
+    hardware_type = Column(Enum(HardwareType,name='hardware_types'), nullable=True, default=HardwareType.HARDWARE_TYPE_CUSTOM)
     last_seen = Column(DateTime(), nullable=True, default=None)
 
 
@@ -110,4 +110,4 @@ class PortGroup(Base):
     guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
     name = Column(String(255), unique=True, nullable=False)
     ports = Column(ARRAY(Integer,dimensions=2), nullable=False, default=[])
-    proto = Column(Enum(ProtoType), nullable=True)
+    proto = Column(Enum(ProtoType,name='protocol_types'), nullable=True)
