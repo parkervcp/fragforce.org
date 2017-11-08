@@ -1,3 +1,7 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.schema import MetaData
 from flask import Flask, render_template_string, request
 from flask_flatpages import FlatPages
 from flask_flatpages.utils import pygmented_markdown
@@ -35,7 +39,37 @@ app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTI
 
 pages = FlatPages(app)
 images = Images(app)
-db = SQLAlchemy(app)
+
+engine = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'), convert_unicode=True)
+db_session = scoped_session(sessionmaker(autocommit=True,
+                                         autoflush=True,
+                                         bind=engine))
+BaseMeta = MetaData(schema='public')
+Base = declarative_base(metadata=BaseMeta)
+Base.query = db_session.query_property()
+
+RemoteBaseMeta = MetaData(schema='gus')
+
+
+def init_db():
+    # import all modules here that might define models so that
+    # they will be registered properly on the metadata.  Otherwise
+    # you will have to import them first before calling init_db()
+    import fragforce.models
+    Base.metadata.create_all(bind=engine)
+
+
+def drop_all():
+    import fragforce.models
+    Base.metadata.drop_all(bind=engine)
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
+
+init_db()
 
 from fragforce.views import general
 # from fragforce.views import events
