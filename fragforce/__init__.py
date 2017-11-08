@@ -6,7 +6,7 @@ from flask_sslify import SSLify
 import requests
 import os
 from flask_cache import Cache
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 
 def jinja_renderer(text):
