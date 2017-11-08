@@ -31,3 +31,4 @@ Flask-Cache
 apscheduler
 rq
 Flask-Migrate>=1.8.0
+Flask-Script
