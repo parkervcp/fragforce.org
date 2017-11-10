@@ -4,7 +4,7 @@ from fragforce import app, sched, high, q, low
 
 ### Put cron entries here
 
-@sched.scheduled_job('interval', minutes=60)
+@sched.scheduled_job('interval', minutes=2)
 def _update_team():
     result = q.enqueue(update_team)
 
@@ -15,7 +15,7 @@ def update_team():
     t = team(app.config['EXTRALIFE_TEAMID'])
 
 
-@sched.scheduled_job('interval', minutes=60)
+@sched.scheduled_job('interval', minutes=2)
 def _update_participants():
     result = q.enqueue(update_participants)
 
