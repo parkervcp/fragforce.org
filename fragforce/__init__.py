@@ -20,12 +20,15 @@ app.config['SECTION_MAX_LINKS'] = 10
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config['DEBUG'] = bool(os.environ.get('DEBUG', 'False').lower() == 'true')
 app.config['BASE_DIR'] = os.path.abspath(os.path.dirname(__file__))
-app.config['THREADS_PER_PAGE'] = 2
+app.config['THREADS_PER_PAGE'] = int(os.environ.get('THREADS_PER_PAGE', 2)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
 app.config['DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/postgres')
 app.config['DATABASE_CONNECT_OPTIONS'] = {}
 app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
+app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 300))
+app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2)
+app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2)
 
 pages = FlatPages(app)
 images = Images(app)
@@ -44,8 +47,6 @@ if app.config['REDIS_URL']:
 else:
     # fallback for local testing
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
-app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
-
 
 @app.context_processor
 def random_participant():
