@@ -11,6 +11,7 @@ import requests
 import os
 from flask_cache import Cache
 from flask_sqlalchemy import SQLAlchemy
+from contextlib import contextmanager
 
 
 def jinja_renderer(text):
@@ -69,14 +70,28 @@ def shutdown_session(exception=None):
     db_session.remove()
 
 
+@contextmanager
+def session_scope(parent=db_session):
+    """Provide a transactional scope around a series of operations."""
+    session = parent.session_factory()
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+
 init_db()
 
 from fragforce.views import general
-# from fragforce.views import events
 from fragforce.views import pages
+from fragforce.views import fw
 
 app.register_blueprint(general.mod)
 app.register_blueprint(pages.mod)
+app.register_blueprint(fw.mod)
 
 # Init cache
 if app.config['REDIS_URL']:

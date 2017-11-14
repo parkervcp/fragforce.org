@@ -41,6 +41,8 @@ def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
 
 
+
+### Going to depericate below here ###
 @mod.route('/firewalls/tables/<string:table_type>/<string:folder>/<string:fname>')
 def firewall_tables_nets(table_type, folder, fname):
     if table_type not in ['ports', 'nets']:
