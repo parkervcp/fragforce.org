@@ -22,11 +22,11 @@ def jinja_renderer(text):
 app = Flask(__name__)
 sslify = SSLify(app)
 
-app.config['SECTION_MAX_LINKS'] = 10
+app.config['SECTION_MAX_LINKS'] = int(os.environ.get('SECTION_MAX_LINKS', '10'))
 app.config['FLATPAGES_HTML_RENDERE'] = jinja_renderer
 app.config['DEBUG'] = bool(os.environ.get('DEBUG', 'False').lower() == 'true')
 app.config['BASE_DIR'] = os.path.abspath(os.path.dirname(__file__))
-app.config['THREADS_PER_PAGE'] = 2
+app.config['THREADS_PER_PAGE'] = int(os.environ.get('THREADS_PER_PAGE', '2'))
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'insecure')
 app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL', 'postgres://postgres@localhost:5432/fragforce')
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URL']
