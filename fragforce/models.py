@@ -87,12 +87,14 @@ class Interface(Base):
 
 
 class FirewallInterface(Interface):
+    __tablename__ = "fw_interfaces"
     mac_whitelisted = Column(Boolean, nullable=True, default=None)
     firewall_id = Column(Integer, ForeignKey('firewalls.id'), nullable=False)
     firewall = relation(Firewall, backref=backref('interfaces', order_by=Interface.name))
 
 
 class HostInterface(Interface):
+    __tablename__ = "host_interfaces"
     host_id = Column(Integer, ForeignKey('hosts.id'), nullable=False)
     host = relation(Host, backref=backref('interfaces', order_by=Interface.name))
 
