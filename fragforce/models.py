@@ -71,9 +71,8 @@ class Network(Base):
     trusted_network = Column(Boolean, nullable=True)
 
 
-class Interface(Base):
-    """ A firewall's network interface """
-    __tablename__ = "interfaces"
+class FirewallInterface(Base):
+    __tablename__ = "fw_interfaces"
     id = Column(Integer, primary_key=True)
     guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
     name = Column(String(255), nullable=False)
@@ -84,19 +83,25 @@ class Interface(Base):
     mac_address = Column(String(255), nullable=False)
     network_id = Column(Integer, ForeignKey('networks.id'), nullable=False)
     network = relation(Network, backref=backref('interfaces', order_by=ip_address))
-
-
-class FirewallInterface(Interface):
-    #__tablename__ = "fw_interfaces"
     mac_whitelisted = Column(Boolean, nullable=True, default=None)
     firewall_id = Column(Integer, ForeignKey('firewalls.id'), nullable=False)
-    firewall = relation(Firewall, backref=backref('interfaces', order_by=Interface.name))
+    firewall = relation(Firewall, backref=backref('interfaces', order_by=name))
 
 
-class HostInterface(Interface):
-    #__tablename__ = "host_interfaces"
+class HostInterface(Base):
+    __tablename__ = "host_interfaces"
+    id = Column(Integer, primary_key=True)
+    guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
+    name = Column(String(255), nullable=False)
+    fqdn = Column(String(4096), nullable=False)
+    alt_fqdns = Column(ARRAY(String(4096)), nullable=False, default=[])
+    ip_address = Column(String(255), nullable=False)
+    netmask = Column(String(255), nullable=False)
+    mac_address = Column(String(255), nullable=False)
+    network_id = Column(Integer, ForeignKey('networks.id'), nullable=False)
+    network = relation(Network, backref=backref('interfaces', order_by=ip_address))
     host_id = Column(Integer, ForeignKey('hosts.id'), nullable=False)
-    host = relation(Host, backref=backref('interfaces', order_by=Interface.name))
+    host = relation(Host, backref=backref('interfaces', order_by=name))
 
 
 class PortGroup(Base):
@@ -109,4 +114,4 @@ class PortGroup(Base):
     guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
     name = Column(String(255), unique=True, nullable=False)
     ports = Column(ARRAY(Integer, dimensions=2), nullable=False, default=[])
-    proto = Column(Enum(TCP,UDP, name='protocol_types'), nullable=True)
+    proto = Column(Enum(TCP, UDP, name='protocol_types'), nullable=True)
