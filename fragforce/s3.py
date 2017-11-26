@@ -51,15 +51,19 @@ def upload(data, s3path, acl='private'):
     sml.set_acl(acl)
 
 
-def upload_image_form_f(img_form,page):
+def upload_image_form_f(img_form, page):
     """ Process an image upload form """
     _file_uploads_enabled()  # Make sure image uploads are enabled
 
     assert not img_form.validate_on_submit(), 'Expected form to already be validated'
 
     # Get the file ext
-    fname=img_form.img.data.filename
-    ext=''
+    # https://docs.python.org/2/library/os.path.html#os.path.splitext
+    # Not a simple text split!
+    ext=os.path.splitext(secure_filename(img_form.img.data.filename))[1]
+    if not EXT_MATCH.match(ext):
+        raise BadExtensionError("Bad Extension")
+    filename = "%s%s" % (uuid.uuid4(), ext)
 
     with session_scope(parent=db_session) as session:
         pfile = PageFile(
@@ -67,7 +71,7 @@ def upload_image_form_f(img_form,page):
             desc=img_form.desc,
             published=img_form.published,
             ftype=PageFile.FILE_TYPE_IMAGE,
-            filename=str(uuid.uuid4()),
+            filename=filename,
             page=page,
         )
 
@@ -75,7 +79,7 @@ def upload_image_form_f(img_form,page):
         session.commit()
 
         upload(img_form.img.data.read(), s3path=pfile.guid)
-        return pfile.id,pfile.guid,pfile.filename
+        return pfile.id, pfile.guid, pfile.filename
 
 
 @fcache.memoize()
