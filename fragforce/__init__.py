@@ -37,15 +37,20 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 300))
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
+app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 
 # S3
-app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME',None)
-app.config['BUCKETEER_AWS_SECRET_ACCESS_KEY'] = os.environ.get('BUCKETEER_AWS_SECRET_ACCESS_KEY',None)
-app.config['BUCKETEER_AWS_REGION'] = os.environ.get('BUCKETEER_AWS_REGION',None)
-app.config['BUCKETEER_AWS_ACCESS_KEY_ID'] = os.environ.get('BUCKETEER_AWS_ACCESS_KEY_ID',None)
+app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME', None)
+app.config['BUCKETEER_AWS_SECRET_ACCESS_KEY'] = os.environ.get('BUCKETEER_AWS_SECRET_ACCESS_KEY', None)
+app.config['BUCKETEER_AWS_REGION'] = os.environ.get('BUCKETEER_AWS_REGION', None)
+app.config['BUCKETEER_AWS_ACCESS_KEY_ID'] = os.environ.get('BUCKETEER_AWS_ACCESS_KEY_ID', None)
 
 # Image Uploads
-app.config['IMAGE_UPLOADS'] = bool(os.environ.get('IMAGE_UPLOADS', 'False').lower() == 'true')
+app.config['FILE_UPLOADS'] = bool(os.environ.get('FILE_UPLOADS', 'False').lower() == 'true')
+# Make sure the redis backend is set to auto evect
+# FIXME: Automate redis to auto evect
+app.config['FILE_CACHE_NAME'] = os.environ.get('FILE_CACHE_NAME', 'CYAN')
+app.config['FILE_CACHE_URL'] = os.environ.get('HEROKU_REDIS_%s_URL' % app.config['FILE_CACHE_NAME'], None)
 
 pages = FlatPages(app)
 images = Images(app)
@@ -92,6 +97,7 @@ def session_scope(parent=db_session):
     finally:
         session.close()
 
+
 init_db()
 
 from fragforce.views import general
@@ -102,14 +108,26 @@ app.register_blueprint(general.mod)
 app.register_blueprint(pages.mod)
 app.register_blueprint(fw.mod)
 
-# Init cache
+# Init cache (general)
 if app.config['REDIS_URL']:
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
                                'CACHE_REDIS_URL': app.config['REDIS_URL']})
 else:
     # fallback for local testing
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
-app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
+
+# Init cache (files)
+if app.config['FILE_UPLOADS']:
+    if app.config['FILE_CACHE_URL']:
+        fcache = Cache(app, config={'CACHE_KEY_PREFIX': 'fcache', 'CACHE_TYPE': 'redis',
+                                    'CACHE_REDIS_URL': app.config['FILE_CACHE_URL'],
+                                    'CACHE_DEFAULT_TIMEOUT': 60 * 60 * 24 * 30,
+                                    })
+    else:
+        # fallback for local testing
+        fcache = Cache(app, config={'CACHE_KEY_PREFIX': 'fcache', 'CACHE_TYPE': 'simple',
+                                    'CACHE_THRESHOLD': 8,
+                                    })
 
 
 @app.context_processor

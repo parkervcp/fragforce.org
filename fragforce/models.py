@@ -115,3 +115,20 @@ class PortGroup(Base):
     name = Column(String(255), unique=True, nullable=False)
     ports = Column(ARRAY(Integer, dimensions=2), nullable=False, default=[])
     proto = Column(Enum(TCP, UDP, name='protocol_types'), nullable=True)
+
+
+class PageFile(Base):
+    FILE_TYPE_IMAGE = 'image'
+    FILE_TYPE_BIN = 'binary'
+
+    __tablename__ = 'page_file'
+    id = Column(Integer, primary_key=True)
+    guid = Column(UUID, unique=True, default=lambda: str(uuid.uuid4()), index=True)
+    filename = Column(String(255), unique=False, nullable=False)
+    page = Column(String(255), unique=False, nullable=False)
+    title = Column(String(255), unique=False, nullable=False)
+    desc = Column(Text, nullable=False, default='')
+    uploaded_at = Column(DateTime(), nullable=False, default=datetime.datetime.utcnow())
+    s3path = Column(String(8192), nullable=False) # May be the guid - for now - don't assume this will always be the case
+    published = Column(Boolean, nullable=False, default=False)
+    ftype = Column(String(255), nullable=False, default=FILE_TYPE_IMAGE)

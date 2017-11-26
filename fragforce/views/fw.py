@@ -1,5 +1,5 @@
-from fragforce import app, session_scope
-from flask import Blueprint, render_template, session, redirect, url_for, \
+from fragforce import app, session_scope, db_session
+from flask import Blueprint, render_template, redirect, url_for, \
     request, abort, Response
 from flask_flatpages import FlatPages, pygments_style_defs
 import re
@@ -13,9 +13,9 @@ class InvalidFWID(ValueError):
     """ Given an invalid firewall id """
 
 
-def validate_firewall(fw_id, session):
+def validate_firewall(fw_id, p_session=db_session):
     """ Ensure it's a valid firewall. If so, return a Firewall object """
-    with session_scope(parent=session) as session:
+    with session_scope(parent=p_session) as session:
         fw = session.query(Firewall).filter(guid=fw_id).first()
         if not fw:
             raise InvalidFWID("%r isn't a valid firewall guid" % fw_id)
@@ -28,7 +28,7 @@ def validate_firewall(fw_id, session):
 
 @mod.route('/firewalls/<uuid:fw_id>/tables/ports/<string:name>.<string:proto>')
 def tables_ports(fw_id, name, proto):
-    with session_scope() as session:
+    with session_scope(parent=db_session) as session:
         fw = validate_firewall(fw_id=fw_id, session=session)
 
 
@@ -37,7 +37,7 @@ def tables_ports(fw_id, name, proto):
 def alias_backup_gen(fw_id):
     """ Return an XML doc that can be restored via the pfsense backup interface. It
     will load all aliases. """
-    with session_scope() as session:
+    with session_scope(parent=db_session) as session:
         fw = validate_firewall(fw_id=fw_id, session=session)
 
     from fragforce.pfsense import AliasBackup
