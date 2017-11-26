@@ -79,6 +79,7 @@ def page(path):
 
     form = ImageUploadForm()
     if request.method == 'POST':
+        raise NotImplementedError("No uploads yet")
         if form.validate_on_submit():
             output = upload(form.img)
 
