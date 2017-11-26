@@ -38,6 +38,13 @@ app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
 
+# S3
+app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME',None)
+app.config['BUCKETEER_AWS_SECRET_ACCESS_KEY'] = os.environ.get('BUCKETEER_AWS_SECRET_ACCESS_KEY',None)
+app.config['BUCKETEER_AWS_REGION'] = os.environ.get('BUCKETEER_AWS_REGION',None)
+app.config['BUCKETEER_AWS_ACCESS_KEY_ID'] = os.environ.get('BUCKETEER_AWS_ACCESS_KEY_ID',None)
+
+
 pages = FlatPages(app)
 images = Images(app)
 
