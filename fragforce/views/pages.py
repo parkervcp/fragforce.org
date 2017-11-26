@@ -79,7 +79,9 @@ def page(path):
 
     form = ImageUploadForm()
     if request.method == 'POST':
-        raise NotImplementedError("No uploads yet")
+        # Fail out if image uploads are disabled
+        if not app.config['IMAGE_UPLOADS']:
+            abort(404)
         if form.validate_on_submit():
             output = upload(form.img)
 
@@ -100,7 +102,8 @@ def page(path):
         else:
             for raw_image in raw_images:
                 rtn_images.append(os.path.join('images', path, raw_image))
-    return render_template(templates, page=page, section=section, images=rtn_images, form=form)
+    return render_template(templates, page=page, section=section, images=rtn_images, img_form=form,
+                           image_uploads=app.config['IMAGE_UPLOADS'])
 
 
 @mod.route('/<string:section>/')

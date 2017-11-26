@@ -44,6 +44,8 @@ app.config['BUCKETEER_AWS_SECRET_ACCESS_KEY'] = os.environ.get('BUCKETEER_AWS_SE
 app.config['BUCKETEER_AWS_REGION'] = os.environ.get('BUCKETEER_AWS_REGION',None)
 app.config['BUCKETEER_AWS_ACCESS_KEY_ID'] = os.environ.get('BUCKETEER_AWS_ACCESS_KEY_ID',None)
 
+# Image Uploads
+app.config['IMAGE_UPLOADS'] = bool(os.environ.get('IMAGE_UPLOADS', 'False').lower() == 'true')
 
 pages = FlatPages(app)
 images = Images(app)
