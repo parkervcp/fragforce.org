@@ -38,7 +38,7 @@ fmt_verbose = logging.Formatter('%(levelname)s %(asctime)s %(module)s %(process)
 
 # Any K:V pairs that should be included in all log lines
 fixed_info = dict(
-    appCode='fragforce.org',
+    appCode='ff',
 )
 
 # Add env var into fixed_info
