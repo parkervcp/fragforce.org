@@ -2,7 +2,7 @@ import logging,logging.config
 import os
 import redis
 from rq import Worker, Queue, Connection
-from .logs import root_logger
+from fragforce.logs import root_logger
 
 log = root_logger.getChild('fragforce.worker')
 listen = ['high', 'default', 'low']
