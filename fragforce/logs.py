@@ -57,7 +57,7 @@ if os.getenv('LOGZIO_API_KEY', None):
         url='https://listener.logz.io:8071',  # Is the default but let's set to ensure it's always https
     )
     logz.setLevel(3)
-    logz.setFromatter(fmt_logzio)
+    logz.setFormatter(fmt_logzio)
     root_logger.addHandler(logz)
     root_logger.info("logz.io logging enabled")
 else:
