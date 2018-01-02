@@ -10,7 +10,7 @@ from flask_images import Images
 from flask_sslify import SSLify
 import requests
 import os
-from flask_cache import Cache
+from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from contextlib import contextmanager
 
