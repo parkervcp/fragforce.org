@@ -52,7 +52,7 @@ console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 console.setFormatter(fmt_basic)
 root_logger.addHandler(console)
-root_logger.info("Console logging enabled")
+root_logger.debug("Console logging enabled")
 
 if os.getenv('LOGZIO_API_KEY', None):
     logz = logzio.handler.LogzioHandler(
@@ -63,7 +63,7 @@ if os.getenv('LOGZIO_API_KEY', None):
     logz.setLevel(3)
     logz.setFormatter(fmt_logzio)
     root_logger.addHandler(logz)
-    root_logger.info("logz.io logging enabled")
+    root_logger.debug("logz.io logging enabled")
 else:
-    root_logger.info("logz.io logging disabled")
+    root_logger.debug("logz.io logging disabled")
 
