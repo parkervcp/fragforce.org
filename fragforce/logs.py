@@ -4,6 +4,7 @@ import os
 import json
 import logzio.handler
 
+
 COPY_FROM_ENV = set([
     'DEBUG',
     'EXTRALIFE_TEAMID',
