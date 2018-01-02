@@ -38,7 +38,7 @@ fixed_info = dict(
 
 # Add env var into fixed_info
 for env_name in COPY_FROM_ENV:
-    fixed_info[env_name] = os.environ.get(env_name, None),
+    fixed_info[env_name] = os.environ.get(env_name, None)
 
 fmt_logzio = logging.Formatter(json.dumps(fixed_info))
 
