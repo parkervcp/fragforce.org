@@ -65,7 +65,8 @@ def section_exists(section):
 @mod.route('/<path:path>', methods=['POST', 'GET'])
 def page(path):
     from ..forms import ImageUploadForm
-    from ..s3 import upload_form_f
+    if app.config['FILE_UPLOADS']:
+        from ..s3 import upload_form_f
 
     section = path.split('/')[0]
     page = pages.get_or_404(path)
@@ -77,13 +78,16 @@ def page(path):
     if not app.debug and not page.meta.get('published', False):
         abort(404)
 
-    form = ImageUploadForm()
-    if request.method == 'POST':
-        # Fail out if image uploads are disabled
-        if not app.config['IMAGE_UPLOADS']:
-            abort(404)
-        if form.validate_on_submit():
-            output = upload_form_f(form)
+    if app.config['FILE_UPLOADS']:
+        form = ImageUploadForm()
+        if request.method == 'POST':
+            # Fail out if image uploads are disabled
+            if not app.config['IMAGE_UPLOADS']:
+                abort(404)
+            if form.validate_on_submit():
+                output = upload_form_f(form)
+    else:
+        form=None
 
     templates = []
     templates.append(page.meta.get('template', '%s/page.html' % section))
