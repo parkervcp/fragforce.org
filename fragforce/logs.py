@@ -27,8 +27,9 @@ if DEBUG:
 else:
     root_logger.setLevel(logging.INFO)
 
-urllib3_conn_logger = root_logger.getChild('urllib3')
+urllib3_conn_logger = root_logger.getChild('urllib3.connectionpool')
 urllib3_conn_logger.setLevel(logging.INFO)
+urllib3_conn_logger.propagate = False
 
 ##### Formatters #####
 fmt_basic = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
