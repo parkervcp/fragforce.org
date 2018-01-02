@@ -62,7 +62,7 @@ if os.getenv('LOGZIO_API_KEY', None):
         url='https://listener.logz.io:8071',  # Is the default but let's set to ensure it's always https
     )
     if DEBUG:
-        # Log pratically everything - even sub-debug
+        # Log piratically everything - even sub-debug
         logz.setLevel(3)
     else:
         # Only log debug and above
