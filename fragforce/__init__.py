@@ -1,5 +1,4 @@
 from .logs import root_logger # Needs to be FIRST!
-from flask.logging import default_handler
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -25,7 +24,7 @@ def jinja_renderer(text):
 app = Flask(__name__)
 # Enable manual logging
 # http://flask.pocoo.org/docs/dev/logging/#removing-the-default-handler
-app.logger.removeHandler(default_handler)
+#app.logger.removeHandler(default_handler)
 sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = int(os.environ.get('SECTION_MAX_LINKS', '10'))
