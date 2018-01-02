@@ -27,6 +27,9 @@ if DEBUG:
 else:
     root_logger.setLevel(logging.INFO)
 
+urllib3_conn_logger = root_logger.getChild('urllib3')
+urllib3_conn_logger.setLevel(logging.INFO)
+
 ##### Formatters #####
 fmt_basic = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fmt_verbose = logging.Formatter('%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s')
@@ -62,3 +65,4 @@ if os.getenv('LOGZIO_API_KEY', None):
     root_logger.info("logz.io logging enabled")
 else:
     root_logger.info("logz.io logging disabled")
+
