@@ -2,7 +2,7 @@ import logging
 import logging.config
 import os
 import json
-import logzio
+import logzio.handler
 
 COPY_FROM_ENV = set([
     'DEBUG',
