@@ -61,7 +61,12 @@ if os.getenv('LOGZIO_API_KEY', None):
         debug=False,  # Don't need to debug the logger itself
         url='https://listener.logz.io:8071',  # Is the default but let's set to ensure it's always https
     )
-    logz.setLevel(3)
+    if DEBUG:
+        # Log pratically everything - even sub-debug
+        logz.setLevel(3)
+    else:
+        # Only log debug and above
+        logz.setLevel(logging.DEBUG)
     logz.setFormatter(fmt_logzio)
     root_logger.addHandler(logz)
     root_logger.debug("logz.io logging enabled")
