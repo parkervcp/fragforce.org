@@ -34,3 +34,4 @@ Flask-Migrate>=1.8.0
 Flask-Script
 flask-wtf
 boto
+logzio-python-handler

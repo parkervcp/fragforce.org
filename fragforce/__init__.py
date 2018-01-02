@@ -1,3 +1,5 @@
+from .logs import root_logger # Needs to be FIRST!
+from flask.logging import default_handler
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -13,6 +15,7 @@ from flask_cache import Cache
 from flask_sqlalchemy import SQLAlchemy
 from contextlib import contextmanager
 
+log = root_logger.getChild('fragforce')
 
 def jinja_renderer(text):
     prerendered_body = render_template_string(text)
@@ -20,6 +23,9 @@ def jinja_renderer(text):
 
 
 app = Flask(__name__)
+# Enable manual logging
+# http://flask.pocoo.org/docs/dev/logging/#removing-the-default-handler
+app.logger.removeHandler(default_handler)
 sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = int(os.environ.get('SECTION_MAX_LINKS', '10'))
@@ -38,6 +44,7 @@ app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
+app.config['LOGZIO_API_KEY'] = os.environ.get('LOGZIO_API_KEY', None)
 
 # S3
 app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME', None)
