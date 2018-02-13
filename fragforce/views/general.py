@@ -41,6 +41,7 @@ def pygments_css():
     return pygments_style_defs(), 200, {'Content-Type': 'text/css'}
 
 
+### Going to depericate below here ###
 @mod.route('/firewalls/tables/<string:table_type>/<string:folder>/<string:fname>')
 def firewall_tables_nets(table_type, folder, fname):
     if table_type not in ['ports', 'nets']:
@@ -73,11 +74,13 @@ def alias_backup_gen():
     import os, os.path
     import urllib
 
-    root_url = FW_ALIAS_PATH_FIXER.match(request.base_url).groups()[0]
+    root_url = request.url_root
+    # FW_ALIAS_PATH_FIXER.match(request.base_url).groups()[0]
 
-    port_path = os.path.join(app.config['BASE_DIR'], 'fragforce', 'templates', 'fwaliases', 'ports')
-    nets_path = os.path.join(app.config['BASE_DIR'], 'fragforce', 'templates', 'fwaliases', 'nets')
-
+    port_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'ports')
+    nets_path = os.path.join(app.config['BASE_DIR'], 'templates', 'fwaliases', 'nets')
+    app.logger.debug('port_path: ' + port_path)
+    app.logger.debug('nets_path: ' + nets_path)
     ab = AliasBackup()
 
     def visit_port(aba, dirname, names):
