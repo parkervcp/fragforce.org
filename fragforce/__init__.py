@@ -251,16 +251,28 @@ def event_info():
         import datetime
         from .models import account, ff_events
         # TODO: Mark currently active ones as special
-        return db_session.query(account).all(), db_session.query(ff_events)\
-            .filter(ff_events.columns.event_end_date__c>=datetime.datetime.utcnow())\
-            .order_by('event_start_date__c')\
+        events = db_session.query(ff_events) \
+            .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
+            .order_by('event_start_date__c') \
             .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
+        accounts = db_session.query(account).all()
+        e_by_a = []
+        for acc in accounts:
+            e_by_a.append(
+                db_session.query(ff_events) \
+                    .filter_by(site__c=acc.sfid) \
+                    .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
+                    .order_by('event_start_date__c') \
+                    .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
+            )
+        return accounts, events, e_by_a
 
-    accounts, events = get_events()
+    accounts, events, e_by_a = get_events()
 
     return dict(
         events=events,
         accounts=accounts,
+        events_by_acc=e_by_a,
     )
 
 
