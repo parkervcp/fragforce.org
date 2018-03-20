@@ -19,16 +19,23 @@
             <li {{is_active('general.donate')}}><a href="{{ url_for('general.donate') }}">Donate</a></li>
             <li {{is_active('general.join')}}><a href="{{ url_for('general.join') }}">Join</a></li>
             <li {{is_active(section='blog')}}><a href="{{ url_for('pages.section', section='blog') }}">Blog</a></li>
+
             <li class="dropdown {{is_active(section='events', noclass=True)}}">
-            <a class="dropdown" href="{{ url_for('pages.section', section='events') }}">Events<span class="caret"></span></a>
+              <a class="dropdown" href="{{ url_for('pages.section', section='events') }}">Events<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li {{is_active('pages.section_upcoming', section='events')}}><a href="{{ url_for('pages.section_upcoming', section='events') }}">Upcoming</a></li>
-                <li {{is_active('pages.section_past', section='events')}}><a href="{{ url_for('pages.section_past', section='events') }}">Past</a></li>
-                  {% for event in events %}
-                  <li {{is_active('pages.by_sfid', sfid=event.sfid, section='events')}}><a href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a></li>
-                  {% endfor %}
-            </ul>
-            </li> 
+                {% for account in events_by_acc %}
+                  <li class="dropdown {{is_active('pages.by_sfid', sfid=account.sfid, section='accounts')}}">
+                    <a class="dropdown" href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      {% for event in events_by_acc[account] %}
+                        <li {{is_active('pages.by_sfid', sfid=event.sfid, section='events')}}><a href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+
             <li {{is_active('general.contact')}}><a href="{{ url_for('general.contact') }}">Contact</a></li>
           </ul>
         </div> 
