@@ -135,5 +135,5 @@ class PageFile(Base):
     ftype = Column(String(255), nullable=False, default=FILE_TYPE_IMAGE)
 
 
-account = Table('account', RemoteBaseMeta, autoload=True)
-ff_events = Table('fragforce_event__c', RemoteBaseMeta, autoload=True)
+account = Table('account', RemoteBaseMeta(engine), autoload=True)
+ff_events = Table('fragforce_event__c', RemoteBaseMeta(engine), autoload=True)
