@@ -253,7 +253,7 @@ def event_info():
         # TODO: Mark currently active ones as special
         return db_session.query(account).all(), db_session.query(ff_events)\
             .filter(ff_events.columns.event_end_date__c>=datetime.datetime.utcnow())\
-            .order_by('event_start_date_c')\
+            .order_by('event_start_date__c')\
             .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
 
     accounts, events = get_events()
