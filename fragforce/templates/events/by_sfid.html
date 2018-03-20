@@ -11,9 +11,9 @@
   </div>
   <div class="col-sm-4">
     <div class="well">
-      {% if site.description %}
+      {% if account.description %}
       <div class="event_info">
-        Site Description: {{ site.description }}
+        Site Description: {{ account.description }}
       </div>
       {% endif %}
       {% if event.event_start_date__c %}
@@ -24,16 +24,6 @@
   </div>
 </div>
 <div class="row"><br /></div>
-{% if images %}
-<div class="row text-center" id="links">
-  {% for image in images %}
-  <div class="col-lg-3 col-sm-4 col-xs-6 text-center">
-    <a href="{{ url_for('images.fit', filename=image, width=2048) }}" data-gallery>
-      <img class="img-responsive well" src="{{ url_for('images.fit', filename=image, width=400) }}" />
-    </a>
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
+
 
 {% endblock %}
