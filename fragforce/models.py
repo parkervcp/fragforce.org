@@ -129,6 +129,11 @@ class PageFile(Base):
     title = Column(String(255), unique=False, nullable=False)
     desc = Column(Text, nullable=False, default='')
     uploaded_at = Column(DateTime(), nullable=False, default=datetime.datetime.utcnow())
-    s3path = Column(String(8192), nullable=False) # May be the guid - for now - don't assume this will always be the case
+    s3path = Column(String(8192),
+                    nullable=False)  # May be the guid - for now - don't assume this will always be the case
     published = Column(Boolean, nullable=False, default=False)
     ftype = Column(String(255), nullable=False, default=FILE_TYPE_IMAGE)
+
+
+account = Table('account', RemoteBaseMeta, autoload=True)
+ff_events = Table('fragforce_event__c', RemoteBaseMeta, autoload=True)
