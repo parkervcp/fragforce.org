@@ -44,6 +44,8 @@ app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 app.config['LOGZIO_API_KEY'] = os.environ.get('LOGZIO_API_KEY', None)
+app.config['REMOTE_SCHEMA'] = os.environ.get('REMOTE_SCHEMA', 'org')
+app.config['MAIN_SCHEMA'] = os.environ.get('MAIN_SCHEMA', 'public')
 
 # S3
 app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME', None)
@@ -65,11 +67,11 @@ engine = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'), convert_unicod
 db_session = scoped_session(sessionmaker(autocommit=True,
                                          autoflush=True,
                                          bind=engine))
-BaseMeta = MetaData(schema='public')
+BaseMeta = MetaData(schema=app.config['MAIN_SCHEMA'])
 Base = declarative_base(metadata=BaseMeta)
 Base.query = db_session.query_property()
 
-RemoteBaseMeta = MetaData(schema='gus')
+RemoteBaseMeta = MetaData(schema=app.config['REMOTE_SCHEMA'])
 
 
 def init_db():
