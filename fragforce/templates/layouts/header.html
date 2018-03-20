@@ -25,9 +25,7 @@
                 <li {{is_active('pages.section_upcoming', section='events')}}><a href="{{ url_for('pages.section_upcoming', section='events') }}">Upcoming</a></li>
                 <li {{is_active('pages.section_past', section='events')}}><a href="{{ url_for('pages.section_past', section='events') }}">Past</a></li>
                   {% for event in events %}
-                  <li {{is_active(
-                  'pages.section_upcoming', section='events')}}><a href="{{ url_for(event.sfid, section='events') }}">{{
-                  event.name }}</a></li>
+                  <li {{is_active('pages.section_upcoming', section='events')}}><a href="{{ url_for(event.sfid, section='events') }}">{{ event.name }}</a></li>
                   {% endfor %}
             </ul>
             </li> 
