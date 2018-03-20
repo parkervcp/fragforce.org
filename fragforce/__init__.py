@@ -247,8 +247,7 @@ def event_info():
     def get_events():
         """ Return a list of events"""
         from .models import account, ff_events
-        with session_scope(parent=db_session) as session:
-            return session.query(account).all(), session.query(ff_events).all()
+        return db_session.query(account).all(), db_session.query(ff_events).all()
 
     accounts, events = get_events()
 
