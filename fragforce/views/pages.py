@@ -87,7 +87,7 @@ def page(path):
             if form.validate_on_submit():
                 output = upload_form_f(form)
     else:
-        form=None
+        form = None
 
     templates = []
     templates.append(page.meta.get('template', '%s/page.html' % section))
@@ -108,6 +108,17 @@ def page(path):
                 rtn_images.append(os.path.join('images', path, raw_image))
     return render_template(templates, page=page, section=section, images=rtn_images, img_form=form,
                            image_uploads=app.config['FILE_UPLOADS'])
+
+
+@mod.route('/<string:section>/<string:sfid>/')
+def by_sfid(section, sfid):
+    if not section_exists(section):
+        abort(404)
+    templates = []
+    templates.append('%s/by_sfid.html' % section)
+    templates.append('default_templates/by_sfid.html')
+    # FIXME: Add in event info
+    return render_template(templates, section=section)
 
 
 @mod.route('/<string:section>/')
