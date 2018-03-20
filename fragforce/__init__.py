@@ -1,4 +1,4 @@
-from .logs import root_logger # Needs to be FIRST!
+from .logs import root_logger  # Needs to be FIRST!
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,6 +16,7 @@ from contextlib import contextmanager
 
 log = root_logger.getChild('fragforce')
 
+
 def jinja_renderer(text):
     prerendered_body = render_template_string(text)
     return pygmented_markdown(prerendered_body)
@@ -24,7 +25,7 @@ def jinja_renderer(text):
 app = Flask(__name__)
 # Enable manual logging
 # http://flask.pocoo.org/docs/dev/logging/#removing-the-default-handler
-#app.logger.removeHandler(default_handler)
+# app.logger.removeHandler(default_handler)
 sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = int(os.environ.get('SECTION_MAX_LINKS', '10'))
@@ -40,6 +41,7 @@ app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 300))
+app.config['CACHE_EVENTS_TIME'] = int(os.environ.get('CACHE_EVENTS_TIME', 5))
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
@@ -237,6 +239,23 @@ def tracker_data():
         extralife_link="http://team.fragforce.org",
         childsplay_link="https://tiltify.com/teams/fragforce",
         is_active=is_active)
+
+
+@app.context_processor
+def event_info():
+    @cache.cached(timeout=app.config['CACHE_EVENTS_TIME'], key_prefix='event_info.get_events')
+    def get_events():
+        """ Return a list of events"""
+        from .models import account, ff_events
+        with session_scope(parent=db_session) as session:
+            return session.query(account).all(), session.query(ff_events).all()
+
+    accounts, events = get_events()
+
+    return dict(
+        events=events,
+        accounts=accounts,
+    )
 
 
 import fragforce.extralife as extralife
