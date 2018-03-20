@@ -155,7 +155,8 @@ def random_participant():
 
 @app.context_processor
 def tracker_data():
-    def is_active(endpoint=None, section=None, noclass=False):
+    def is_active(endpoint=None, section=None, noclass=False, sfid=None):
+        # FIXME: Handle sfid to check if it's a real, active page
         rtn = ""
         if noclass:
             rtn = 'active'
