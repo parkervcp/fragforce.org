@@ -48,6 +48,7 @@ app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 
 app.config['LOGZIO_API_KEY'] = os.environ.get('LOGZIO_API_KEY', None)
 app.config['REMOTE_SCHEMA'] = os.environ.get('REMOTE_SCHEMA', 'org')
 app.config['MAIN_SCHEMA'] = os.environ.get('MAIN_SCHEMA', 'public')
+app.config['EVENTS_DROPDOWN_MAX_SOON'] = int(os.environ.get('EVENTS_DROPDOWN_MAX_SOON', 10))
 
 # S3
 app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME', None)
@@ -247,8 +248,13 @@ def event_info():
     @cache.cached(timeout=app.config['CACHE_EVENTS_TIME'], key_prefix='event_info.get_events')
     def get_events():
         """ Return a list of events"""
+        import datetime
         from .models import account, ff_events
-        return db_session.query(account).all(), db_session.query(ff_events).all()
+        # TODO: Mark currently active ones as special
+        return db_session.query(account).all(), db_session.query(ff_events)\
+            .filter(ff_events.columns.event_end_date__c>=datetime.datetime.utcnow())\
+            .order_by('event_start_date_c')\
+            .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
 
     accounts, events = get_events()
 
