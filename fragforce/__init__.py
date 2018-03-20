@@ -256,15 +256,15 @@ def event_info():
             .order_by('event_start_date__c') \
             .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
         accounts = db_session.query(account).all()
-        e_by_a = []
+        e_by_a = {}
         for acc in accounts:
-            e_by_a.append(
-                db_session.query(ff_events) \
-                    .filter_by(site__c=acc.sfid) \
-                    .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
-                    .order_by('event_start_date__c') \
-                    .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
-            )
+            fnd=db_session.query(ff_events) \
+                .filter_by(site__c=acc.sfid) \
+                .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
+                .order_by('event_start_date__c') \
+                .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
+            if len(fnd)>0:
+                e_by_a[acc]=fnd
         return accounts, events, e_by_a
 
     accounts, events, e_by_a = get_events()
