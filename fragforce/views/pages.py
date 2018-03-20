@@ -112,13 +112,18 @@ def page(path):
 
 @mod.route('/<string:section>/<string:sfid>/')
 def by_sfid(section, sfid):
+    from fragforce import db_session
+    from ..models import ff_events,account
     if not section_exists(section):
         abort(404)
     templates = []
     templates.append('%s/by_sfid.html' % section)
     templates.append('default_templates/by_sfid.html')
-    # FIXME: Add in event info
-    return render_template(templates, section=section)
+
+    evt = db_session.query(ff_events).filter_by(sfid=sfid).first()
+    act = db_session.query(account).filter_by(sfid=evt.site__c).first()
+
+    return render_template(templates, section=section,event=evt,account=act)
 
 
 @mod.route('/<string:section>/')
