@@ -25,7 +25,7 @@
               <ul class="dropdown-menu">
                 {% for account in events_by_acc %}
                   <li class="dropdown-submenu {{is_active('pages.by_sfid', sfid=account.sfid, section='accounts')}}">
-                    <a class="dropdown-submenu" href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></span></a>
+                    <a class="dropdown" href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       {% for event in events_by_acc[account] %}
                         <li {{is_active('pages.by_sfid', sfid=event.sfid, section='events')}}><a href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a></li>
