@@ -1,10 +1,12 @@
 import requests
+import fragforce
 
 
 class WebServiceException(Exception):
     pass
 
 
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def team(team_id):
     """Convenience method to instantiate a Team
 
@@ -18,6 +20,7 @@ def team(team_id):
     return t
 
 
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participants(team_id):
     """Convenience method to retrieve a Team's participants
 
@@ -31,6 +34,7 @@ def participants(team_id):
     return p
 
 
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participant(participant_id):
     """Convenience method to retrieve a Participant
 
@@ -44,6 +48,7 @@ def participant(participant_id):
     return p
 
 
+@fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
 def participant_donations(participant_id):
     """Convenience method to retrieve a Participant's donations
 
@@ -82,6 +87,7 @@ class Team(object):
         self._participants = None
 
     @classmethod
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def from_url(cls, team_id):
         """Constructs an ExtraLifeTeam from the team web service.
 
@@ -106,6 +112,7 @@ class Team(object):
 
         return cls(team_id, name, raised, goal, avatar_url, created)
 
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def participants(self, force=False):
         """Returns the list of participants for the team using the
         teamParticipants web service call. This call is cached. To force a
@@ -129,8 +136,7 @@ class Team(object):
         for pdata in data:
             participant_id = pdata.get("participantID", None)
             created = pdata.get("createdOn", None)
-            last_name = pdata.get("lastName", None)
-            first_name = pdata.get("firstName", None)
+            display_name = pdata.get("displayName", None)
             avatar_url = pdata.get("avatarImageURL", None)
             team_captain = pdata.get("isTeamCaptain", False)
 
@@ -139,7 +145,7 @@ class Team(object):
             goal = None
 
             p = Participant(participant_id, self.team_id,
-                            team_captain, first_name, last_name,
+                            team_captain, display_name,
                             raised, goal, avatar_url, created)
             self._participants.append(p)
 
@@ -150,8 +156,7 @@ class Team(object):
 
 
 class Participant(object):
-    def __init__(self, participant_id, team_id, is_team_captain, first_name,
-                 last_name, raised, goal, avatar_url, created):
+    def __init__(self, participant_id, team_id, is_team_captain, display_name, raised, goal, avatar_url, created):
 
         # extra-life assigned participant ID
         self.participant_id = participant_id
@@ -161,10 +166,6 @@ class Participant(object):
 
         # is this person a team captain?
         self.is_team_captain = is_team_captain
-
-        # participant-entered name data
-        self.first_name = first_name
-        self.last_name = last_name
 
         # how much money this person has raised
         self.raised = raised
@@ -181,7 +182,16 @@ class Participant(object):
         # the list of donations this participant has - see donations()
         self._donations = None
 
+        # Participant entered name
+        self.display_name = display_name
+
+    def donate_link(self):
+        """ Direct donate link """
+        return "https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % \
+               self.participant_id
+
     @classmethod
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def from_url(cls, participant_id):
         """Constructs an Participant from the participant web service.
         
@@ -201,18 +211,18 @@ class Participant(object):
 
         team_id = data.get("teamID", None)
         is_team_captain = data.get("isTeamCaptain", False)
-        first_name = data.get("firstName", "John")
-        last_name = data.get("lastName", "Doe")
+        display_name = data.get("displayName", "John Doe")
         raised = data.get("totalRaisedAmount", 0.0)
         goal = data.get("fundraisingGoal", 0.0)
         avatar_url = data.get("avatarImageURL", None)
         created = data.get("createdOn", None)
 
-        participant = cls(participant_id, team_id, is_team_captain, first_name,
-                          last_name, raised, goal, avatar_url, created)
+        participant = cls(participant_id, team_id, is_team_captain, display_name,
+                          raised, goal, avatar_url, created)
 
         return participant
 
+    @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
     def donations(self, force=False):
         """Returns the list of donations for the participant using the
         participantDonations web service call. This call is cached. To force a

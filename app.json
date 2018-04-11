@@ -1,0 +1,38 @@
+{
+  "name": "fragforce.org",
+  "description": "Fragforce Dev PR",
+  "scripts": {},
+  "env": {
+    "CACHE_DONATIONS_TIME": {
+      "required": true
+    },
+    "DEBUG": {
+      "required": true
+    },
+    "EXTRALIFE_TEAMID": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "SECRET_KEY": {
+      "required": true
+    },
+    "SECTION_MAX_LINKS": {
+      "required": true
+    },
+    "THREADS_PER_PAGE": {
+      "required": true
+    }
+  },
+  "formation": {},
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}

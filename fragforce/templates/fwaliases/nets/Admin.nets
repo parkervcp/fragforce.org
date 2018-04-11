@@ -1,7 +1,0 @@
-{% include "fwaliases/nets/PrimeAdmin.nets" %}
-{% include "fwaliases/nets/SecundusAdmin.nets" %}
-{% include "fwaliases/nets/TertiusAdmin.nets" %}
-{% include "fwaliases/nets/4Admin.nets" %}
-{% include "fwaliases/nets/FifthAdmin.nets" %}
-{% include "fwaliases/nets/NumberSixAdmin.nets" %}
-{% include "fwaliases/nets/FW2Admin.nets" %}
