@@ -28,7 +28,7 @@
                     <a href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></span></a>
                     <ul class="dropdown-submenu">
                       {% for event in events_by_acc[account] %}
-                        <li {{is_active('pages.by_sfid', sfid=event.sfid, section='events')}}><a class="fa fa-lg" href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a></li>
+                        <li {{is_active('pages.by_sfid', sfid=event.sfid, section='events')}}><a href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a></li>
                       {% endfor %}
                     </ul>
                   </li>
