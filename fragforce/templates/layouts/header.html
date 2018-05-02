@@ -20,7 +20,7 @@
             <li {{is_active('general.join')}}><a href="{{ url_for('general.join') }}">Join</a></li>
             <li {{is_active(section='blog')}}><a href="{{ url_for('pages.section', section='blog') }}">Blog</a></li>
 
-            <li class="dropdown-menu">
+            <li class="dropdown-menu active">
               <a href="{{ url_for('pages.section', section='events') }}">Events<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 {% for account in events_by_acc %}
