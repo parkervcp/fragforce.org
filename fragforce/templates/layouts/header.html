@@ -24,7 +24,7 @@
               <a href="{{ url_for('pages.section', section='events') }}">Events<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 {% for account in events_by_acc %}
-                  <li class="dropdown-submenu">
+                  <li class="dropdown">
                     <a tabindex="-1" href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       {% for event in events_by_acc[account] %}
