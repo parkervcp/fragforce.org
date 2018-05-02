@@ -22,11 +22,11 @@
 
             <li class="dropdown active">
               <a href="{{ url_for('pages.section', section='events') }}">Events<span class="caret"></span></a>
-              <ul class="dropdown-menu active" role="menu">
+              <ul class="dropdown-menu" role="menu">
                 {% for account in events_by_acc %}
                   <li class="dropdown-submenu active">
                     <a tabindex="-1" href="{{ url_for('pages.section', section='events') }}">{{ account.name }}<span class="caret"></a>
-                    <ul class="dropdown-menu active">
+                    <ul class="dropdown-menu">
                       {% for event in events_by_acc[account] %}
                         <li>
                           <a tabindex="-1" href="{{ url_for('pages.by_sfid', sfid=event.sfid, section='events') }}">{{ event.event_start_date__c }} | {{ event.name }}</a>
