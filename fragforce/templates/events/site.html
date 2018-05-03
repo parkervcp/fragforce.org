@@ -4,15 +4,17 @@
 
     <ul>
         {% for event in events %}
-            <div>
-                <h3><a href="{{ url_for('pages.by_sfid', sfid=event.sfid) }}">{{ event.name }}</a></h3>
-                <ul>
+            <div class="well">
+                <h2><a href="{{ url_for('pages.by_sfid', sfid=event.sfid) }}">{{ event.name }}</a></h2>
+                <q itemprop="description">
+                    <ul>
                     <li>Name: {{ event.name }}</li>
                     <li>Site: {{ event.site__c.name }}</li>
                     <li>Start: {{ event.event_start_date__c }}</li>
                     <li>End: {{ event.event_end_date__c }}</li>
                     FIXME
-                </ul>
+                    </ul>
+                </q>
             </div>
         {% endfor %}
     </ul>
