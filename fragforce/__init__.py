@@ -111,14 +111,6 @@ def session_scope(parent=db_session):
 
 init_db()
 
-from fragforce.views import general
-from fragforce.views import pages
-from fragforce.views import fw
-
-app.register_blueprint(general.mod)
-app.register_blueprint(pages.mod)
-app.register_blueprint(fw.mod)
-
 # Init cache (general)
 if app.config['REDIS_URL']:
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
@@ -139,6 +131,16 @@ if app.config['FILE_UPLOADS']:
         fcache = Cache(app, config={'CACHE_KEY_PREFIX': 'fcache', 'CACHE_TYPE': 'simple',
                                     'CACHE_THRESHOLD': 8,
                                     })
+
+from fragforce.views import general
+from fragforce.views import pages
+from fragforce.views import fw
+
+app.register_blueprint(general.mod)
+app.register_blueprint(pages.mod)
+app.register_blueprint(fw.mod)
+
+
 
 
 @app.context_processor
