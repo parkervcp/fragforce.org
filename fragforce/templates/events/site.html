@@ -1,0 +1,10 @@
+{% extends 'events/base.html' %}
+{% block title %}Fragforce Events For {{ act.name }}{% endblock %}
+{% block content %}
+
+    <ul>
+        {% for evt in evts %}
+            <li><a href="{{ url_for('pages.by_sfid', sfid=evt.sfid) }}">{{ evt.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
