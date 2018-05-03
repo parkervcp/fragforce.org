@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from fragforce import app
+from fragforce import app, cache
 from flask import Blueprint, render_template, session, redirect, url_for, \
     request, abort
 from flask_flatpages import FlatPages
@@ -112,9 +112,13 @@ def page(path):
 
 @mod.route('/<string:section>/')
 def section(section):
-    if not section_exists(section):
-        abort(404)
     templates = []
+    if section == 'events':
+        templates.append('%s/index.html' % section)
+        templates.append('default_templates/index.html')
+        return render_template(templates, section=section)
+    elif not section_exists(section):
+        abort(404)
     templates.append('%s/index.html' % section)
     templates.append('default_templates/index.html')
     things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
@@ -123,6 +127,7 @@ def section(section):
 
 
 @mod.route('/events/<string:sfid>/')
+@cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def by_sfid(sfid):
     from fragforce import db_session
     from ..models import ff_events, account
@@ -137,6 +142,7 @@ def by_sfid(sfid):
 
 
 @mod.route('/sites/<string:sfid>/')
+@cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def by_site(sfid):
     from fragforce import db_session
     from ..models import ff_events, account
