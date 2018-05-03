@@ -154,7 +154,8 @@ def by_site(sfid):
     # templates.append('default_templates/site.html')
 
     act = db_session.query(account).filter_by(sfid=sfid).first()
-    evts = db_session.query(ff_events).filter_by(site__c=act.sfid).order_by('event_start_date__c').all()
+    evts = db_session.query(ff_events).filter_by(site__c=act.sfid).filter(
+        ff_events.event_end_date__c >= datetime.datetime.now()).order_by('event_start_date__c').all()
 
     return render_template(templates, section='events', events=evts, account=act)
 
