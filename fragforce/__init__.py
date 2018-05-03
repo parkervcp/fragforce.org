@@ -257,7 +257,7 @@ def event_info():
             .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
             .order_by('event_start_date__c') \
             .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
-        accounts = db_session.query(account).all()
+        accounts = db_session.query(account).order_by('name').all()
         e_by_a = {}
         for acc in accounts:
             fnd=db_session.query(ff_events) \
