@@ -110,65 +110,30 @@ def page(path):
                            image_uploads=app.config['FILE_UPLOADS'])
 
 
-@mod.route('/<string:section>/<string:sfid>/')
-def by_sfid(section, sfid):
+@mod.route('/events/<string:sfid>/')
+def by_sfid(sfid):
     from fragforce import db_session
     from ..models import ff_events,account
-    if not section_exists(section):
-        abort(404)
     templates = []
-    templates.append('%s/by_sfid.html' % section)
+    templates.append('events/by_sfid.html')
     templates.append('default_templates/by_sfid.html')
 
     evt = db_session.query(ff_events).filter_by(sfid=sfid).first()
     act = db_session.query(account).filter_by(sfid=evt.site__c).first()
 
-    return render_template(templates, section=section,event=evt,account=act)
+    return render_template(templates, section='events',event=evt,account=act)
 
 
-@mod.route('/<string:section>/')
-def section(section):
-    if not section_exists(section):
-        abort(404)
+@mod.route('/sites/<string:sfid>/')
+def by_site(sfid):
+    from fragforce import db_session
+    from ..models import ff_events,account
     templates = []
-    templates.append('%s/index.html' % section)
-    templates.append('default_templates/index.html')
-    things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
-    years = get_years(get_pages(pages, section=section))
-    return render_template(templates, pages=things, section=section, years=years)
+    templates.append('events/site.html')
+    #templates.append('default_templates/site.html')
 
+    act = db_session.query(account).filter_by(sfid=sfid).first()
+    evts = db_session.query(ff_events).fitler_by(site__c=act.sfid).all()
 
-@mod.route('/<string:section>/upcoming/')
-def section_upcoming(section):
-    if not section_exists(section):
-        abort(404)
-    templates = []
-    templates.append('%s/upcoming.html' % section)
-    templates.append('default_templates/upcoming.html')
-    things = get_pages(pages, section=section, after=date.today())
-    years = get_years(get_pages(pages, section=section))
-    return render_template(templates, pages=things, section=section, years=years)
+    return render_template(templates, section='events',events=evts,account=act)
 
-
-@mod.route('/<string:section>/past/')
-def section_past(section):
-    if not section_exists(section):
-        abort(404)
-    templates = []
-    templates.append('%s/past.html' % section)
-    templates.append('default_templates/past.html')
-    things = get_pages(pages, section=section, before=date.today())
-    years = get_years(get_pages(pages, section=section))
-    return render_template(templates, pages=things, section=section, years=years)
-
-
-@mod.route('/<string:section>/<int:year>/')
-def section_archives_year(section, year):
-    if not section_exists(section):
-        abort(404)
-    templates = []
-    templates.append('%s/archives.html' % section)
-    templates.append('default_templates/archives.html')
-    years = get_years(get_pages(pages, section=section))
-    things = get_pages(pages, section=section, year=year)
-    return render_template(templates, pages=things, section=section, years=years, year=year)
