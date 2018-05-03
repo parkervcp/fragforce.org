@@ -157,3 +157,15 @@ def by_site(sfid):
     evts = db_session.query(ff_events).filter_by(site__c=act.sfid).order_by('event_start_date__c').all()
 
     return render_template(templates, section='events', events=evts, account=act)
+
+
+@mod.route('/<string:section>/<int:year>/')
+def section_archives_year(section, year):
+    if not section_exists(section):
+        abort(404)
+    templates = []
+    templates.append('%s/archives.html' % section)
+    templates.append('default_templates/archives.html')
+    years = get_years(get_pages(pages, section=section))
+    things = get_pages(pages, section=section, year=year)
+    return render_template(templates, pages=things, section=section, years=years, year=year)
