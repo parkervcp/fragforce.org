@@ -110,10 +110,22 @@ def page(path):
                            image_uploads=app.config['FILE_UPLOADS'])
 
 
+@mod.route('/<string:section>/')
+def section(section):
+    if not section_exists(section):
+        abort(404)
+    templates = []
+    templates.append('%s/index.html' % section)
+    templates.append('default_templates/index.html')
+    things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
+    years = get_years(get_pages(pages, section=section))
+    return render_template(templates, pages=things, section=section, years=years)
+
+
 @mod.route('/events/<string:sfid>/')
 def by_sfid(sfid):
     from fragforce import db_session
-    from ..models import ff_events,account
+    from ..models import ff_events, account
     templates = []
     templates.append('events/by_sfid.html')
     templates.append('default_templates/by_sfid.html')
@@ -121,19 +133,18 @@ def by_sfid(sfid):
     evt = db_session.query(ff_events).filter_by(sfid=sfid).first()
     act = db_session.query(account).filter_by(sfid=evt.site__c).first()
 
-    return render_template(templates, section='events',event=evt,account=act)
+    return render_template(templates, section='events', event=evt, account=act)
 
 
 @mod.route('/sites/<string:sfid>/')
 def by_site(sfid):
     from fragforce import db_session
-    from ..models import ff_events,account
+    from ..models import ff_events, account
     templates = []
     templates.append('events/site.html')
-    #templates.append('default_templates/site.html')
+    # templates.append('default_templates/site.html')
 
     act = db_session.query(account).filter_by(sfid=sfid).first()
     evts = db_session.query(ff_events).fitler_by(site__c=act.sfid).all()
 
-    return render_template(templates, section='events',events=evts,account=act)
-
+    return render_template(templates, section='events', events=evts, account=act)
