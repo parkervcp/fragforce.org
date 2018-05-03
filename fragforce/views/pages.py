@@ -1,10 +1,12 @@
 from datetime import date, datetime
-from fragforce import app, cache
+from fragforce import app
 from flask import Blueprint, render_template, session, redirect, url_for, \
     request, abort
 from flask_flatpages import FlatPages
 from random import choice, sample
 import os
+# Needed for cache - can't use import from
+import fragforce
 
 mod = Blueprint('pages', __name__)
 pages = FlatPages(app)
@@ -111,6 +113,7 @@ def page(path):
 
 
 @mod.route('/<string:section>/')
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def section(section):
     templates = []
     if section == 'events':
@@ -127,7 +130,7 @@ def section(section):
 
 
 @mod.route('/events/<string:sfid>/')
-@cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def by_sfid(sfid):
     from fragforce import db_session
     from ..models import ff_events, account
@@ -142,7 +145,7 @@ def by_sfid(sfid):
 
 
 @mod.route('/sites/<string:sfid>/')
-@cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def by_site(sfid):
     from fragforce import db_session
     from ..models import ff_events, account
