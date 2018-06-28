@@ -40,30 +40,7 @@
         </div>
       {% endif %}
     </div>
-   {% if page.youtube_id %}
-      <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ page.youtube_id }}" allowfullscreen></iframe>
-      </div>
-    {% endif %}
   </div>
 </div>
 <div class="row"><br /></div>
-{% if images %}
-<div class="row text-center" id="links">
-{% for image in images %}
-  <div class="col-lg-3 col-sm-4 col-xs-6 text-center">
-    <a href="{{ url_for('images.fit', filename=image, width=2048) }}" data-gallery>
-      <img class="img-responsive well" src="{{ url_for('images.fit', filename=image, width=400) }}" />
-    </a>
-  </div>
-{% endfor %}
-</div>
-{% endif %}
-  {% if page.prev -%}
-  <a class="prev" href="{{ url_for("pages.page", path=page.prev.path) }}">&lt;&lt; {{ page.prev.title }} - {{page.prev.date}}</a>
-  {%- endif %}
-  {% if page.prev and page.next %} | {% endif %}
-  {% if page.next -%}
-  <a class="next" href="{{ url_for("pages.page", path=page.next.path) }}">{{ page.next.title }} - {{page.next.date}} &gt;&gt;</a>
-  {%- endif %} 
 {% endblock content %}
