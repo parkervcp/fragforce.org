@@ -7,6 +7,7 @@ from random import choice, sample
 import os
 # Needed for cache - can't use import from
 import fragforce
+from sqlalchemy import desc
 
 mod = Blueprint('pages', __name__)
 pages = FlatPages(app)
@@ -157,7 +158,7 @@ def by_site(sfid):
     evts = db_session.query(ff_events).filter_by(site__c=act.sfid).filter(
         ff_events.columns.event_end_date__c >= datetime.utcnow()).order_by('event_start_date__c').all()
     old_evts = db_session.query(ff_events).filter_by(site__c=act.sfid).filter(
-        ff_events.columns.event_end_date__c < datetime.utcnow()).order_by('event_start_date__c').reverse().all()
+        ff_events.columns.event_end_date__c < datetime.utcnow()).order_by(desc('event_start_date__c')).all()
     return render_template(templates, section='events', events=evts, old=old_evts, account=act)
 
 
