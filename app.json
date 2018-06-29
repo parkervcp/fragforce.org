@@ -17,7 +17,12 @@
       "generator": "secret"
     }
   },
-  "formation": {},
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
   "addons": [
     {
       "plan": "heroku-postgresql:standard-0",
@@ -29,14 +34,14 @@
       "plan": "heroku-redis:premium-0",
       "as": "FILE",
       "options": {
-        "maxmemory-policy":"allkeys-lru"
+        "maxmemory-policy": "allkeys-lru"
       }
     },
     {
       "plan": "heroku-redis:premium-0",
       "as": "CACHE",
       "options": {
-        "maxmemory-policy":"allkeys-lru"
+        "maxmemory-policy": "allkeys-lru"
       }
     },
     {
