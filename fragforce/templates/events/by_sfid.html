@@ -12,13 +12,25 @@
             {% if event.use_secondary_address %}
                 {% if account.shippingstreet %}
                 <div class="event_info">
-                    <b>Event Location:</b> {{account.shippingstreet}}
+                    <b>Event Location:</b>
+                    <p>
+                        {{ account.shippingstreet }}
+                        {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}
+                        {{ account.shippingcountry }}
+                        {{ account.shippinglatitude }},{{ account.shippinglongitude }}
+                    </p>
                 </div>
                 {% endif %}
             {% else %}
                 {% if account.billingstreet %}
                 <div class="event_info">
-                    <b>Event Location:</b> {{account.billingstreet}}
+                    <b>Event Location:</b>
+                    <p>
+                        {{ account.billingstreet }}
+                        {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}
+                        {{ account.billingcountry }}
+                        {{ account.billinglatitude }},{{ account.billinglongitude }}
+                    </p>
                 </div>
                 {% endif %}
             {% endif %}
