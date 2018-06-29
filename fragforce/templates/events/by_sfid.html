@@ -10,18 +10,6 @@
             <div><b>Event Name: </b>{{ event.name }}</div>
 
             {% if event.use_secondary_address %}
-                {% if account.shippingstreet %}
-                    <div class="event_info">
-                        <b>Event Location:</b>
-                        <p>
-                            {{ account.shippingstreet }}
-                            {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}
-                            {{ account.shippingcountry }}
-                            {{ account.shippinglatitude }},{{ account.shippinglongitude }}
-                        </p>
-                    </div>
-                {% endif %}
-            {% else %}
                 {% if account.billingstreet %}
                     <div class="event_info">
                         <b>Event Location:</b>
@@ -30,8 +18,22 @@
                             {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}<br/>
                             {{ account.billingcountry }}<br/>
                             {% if account.billinglatitude and account.billinglongitude %}
-                                <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b>
-                            {% endif %}}
+                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b><br/>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% else %}
+                {% if account.shippingstreet %}
+                    <div class="event_info">
+                        <b>Event Location:</b>
+                        <p>
+                            {{ account.shippingstreet }}<br/>
+                            {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}<br/>
+                            {{ account.shippingcountry }}<br/>
+                            {% if account.billinglatitude and account.billinglongitude %}
+                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b><br/>
+                            {% endif %}
                         </p>
                     </div>
                 {% endif %}
