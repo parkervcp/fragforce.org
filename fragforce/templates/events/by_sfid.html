@@ -26,10 +26,12 @@
                     <div class="event_info">
                         <b>Event Location:</b>
                         <p>
-                            {{ account.billingstreet }}
-                            {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}
-                            {{ account.billingcountry }}
-                            {{ account.billinglatitude }},{{ account.billinglongitude }}
+                            {{ account.billingstreet }}<br/>
+                            {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}<br/>
+                            {{ account.billingcountry }}<br/>
+                            {% if account.billinglatitude && account.billinglongitude %}
+                                <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b>
+                            {% endif %}}
                         </p>
                     </div>
                 {% endif %}
