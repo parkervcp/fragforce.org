@@ -277,6 +277,11 @@ def event_info():
         events_by_acc=e_by_a,
     )
 
+@app.context_processor
+def page_build():
+    import datetime
+    return dict(now=str(datetime.datetime.utcnow()))
+
 
 import fragforce.extralife as extralife
 
