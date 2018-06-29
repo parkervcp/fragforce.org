@@ -17,12 +17,12 @@
     <div class="well">
       {% if page.address %}
         <div class="event_info">
-          Event Location: {{page.address}}
+          <b>Event Location:</b> {{page.address}}
         </div>
       {% endif %}
       {% if page.start_time %}
         <div class="event_info">
-          Event starts at: {{page.start_time}}
+          <b>Event starts at:</b> {{page.start_time}}
         </div>
       {% endif %}
       {% if page.hours_per_day and page.number_days %}
@@ -31,12 +31,12 @@
         </div>
       {% elif page.hours_per_day %}
         <div class="event_info">
-          Event lasts for {{page.hours_per_day}}
+          Event lasts for <b>{{page.hours_per_day}} hours</b> per day.
         </div>
       {% endif %}
       {% if page.start_location %}
         <div class="event_info">
-          Meet at {{page.start_location}} to get started at the event!
+          Meet at <b>{{page.start_location}}</b> to get started at the event!
         </div>
       {% endif %}
     </div>
