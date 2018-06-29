@@ -47,11 +47,6 @@
       "options": {
         "maxmemory-policy": "allkeys-lru"
       }
-    },
-    {
-      "plan": "herokuconnect:danketsu",
-      "options": {
-      }
     }
   ],
   "buildpacks": [
