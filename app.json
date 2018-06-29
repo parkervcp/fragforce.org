@@ -1,7 +1,9 @@
 {
   "name": "fragforce.org",
   "description": "Fragforce Dev PR",
-  "scripts": {},
+  "scripts": {
+    "postdeploy": "python manage.py migrate"
+  },
   "env": {
     "DEBUG": {
       "required": true
@@ -9,23 +11,50 @@
     "EXTRALIFE_TEAMID": {
       "required": true
     },
-    "REDIS_URL": {
-      "required": true
-    },
     "SECRET_KEY": {
-      "required": true
+      "required": true,
+      "description": "A secret key used by Django for various tasks",
+      "generator": "secret"
     }
   },
   "formation": {},
   "addons": [
-    "heroku-postgresql:standard-0",
-    "heroku-redis:premium-0",
-    "heroku-redis:premium-0",
-    "herokuconnect:danketsu"
+    {
+      "plan": "heroku-postgresql:standard-0",
+      "as": "DB",
+      "options": {
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "FILE",
+      "options": {
+        "maxmemory-policy":"allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "CACHE",
+      "options": {
+        "maxmemory-policy":"allkeys-lru"
+      }
+    },
+    {
+      "plan": "herokuconnect:danketsu",
+      "options": {
+      }
+    }
   ],
   "buildpacks": [
     {
       "url": "heroku/python"
     }
-  ]
+  ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "python manage.py test"
+      }
+    }
+  }
 }
