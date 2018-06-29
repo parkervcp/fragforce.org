@@ -12,6 +12,9 @@
     "EXTRALIFE_TEAMID": {
       "required": true
     },
+    "HC_RO_URL": {
+      "required": true
+    },
     "SECRET_KEY": {
       "required": true,
       "description": "A secret key used by Django for various tasks",
