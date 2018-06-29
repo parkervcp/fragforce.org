@@ -14,7 +14,7 @@
     },
     "SECRET_KEY": {
       "required": true
-    },
+    }
   },
   "formation": {},
   "addons": [
