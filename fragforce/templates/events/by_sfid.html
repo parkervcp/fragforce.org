@@ -8,10 +8,18 @@
             It's Fragforce time!...<br/>
             <div><b>Event Name: </b>{{ event.name }}</div>
 
-            {% if account.shippingstreet %}
-            <div class="event_info">
-                <b>Event Location:</b> {{account.shippingstreet}}
-            </div>
+            {% if event.use_secondary_address %}
+                {% if account.shippingstreet %}
+                <div class="event_info">
+                    <b>Event Location:</b> {{account.shippingstreet}}
+                </div>
+                {% endif %}
+            {% else %}
+                {% if account.billingstreet %}
+                <div class="event_info">
+                    <b>Event Location:</b> {{account.billingstreet}}
+                </div>
+                {% endif %}
             {% endif %}
 
             {% if event.event_start_date__c %}
