@@ -3,9 +3,10 @@
 {% block pagetitle %}{{ event.name }} On {{ event.event_start_date__c }}{% endblock pagetitle %}
 {% block content %}
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <div class="well">
-            It's Fragforce time!...<br/>
+            <p>It's Fragforce time!...</p>
+
             <div><b>Event Name: </b>{{ event.name }}</div>
 
             {% if event.use_secondary_address %}
