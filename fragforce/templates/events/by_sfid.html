@@ -11,55 +11,46 @@
 
             {% if event.use_secondary_address %}
                 {% if account.shippingstreet %}
-                <div class="event_info">
-                    <b>Event Location:</b>
-                    <p>
-                        {{ account.shippingstreet }}
-                        {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}
-                        {{ account.shippingcountry }}
-                        {{ account.shippinglatitude }},{{ account.shippinglongitude }}
-                    </p>
-                </div>
+                    <div class="event_info">
+                        <b>Event Location:</b>
+                        <p>
+                            {{ account.shippingstreet }}
+                            {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}
+                            {{ account.shippingcountry }}
+                            {{ account.shippinglatitude }},{{ account.shippinglongitude }}
+                        </p>
+                    </div>
                 {% endif %}
             {% else %}
                 {% if account.billingstreet %}
-                <div class="event_info">
-                    <b>Event Location:</b>
-                    <p>
-                        {{ account.billingstreet }}
-                        {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}
-                        {{ account.billingcountry }}
-                        {{ account.billinglatitude }},{{ account.billinglongitude }}
-                    </p>
-                </div>
+                    <div class="event_info">
+                        <b>Event Location:</b>
+                        <p>
+                            {{ account.billingstreet }}
+                            {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}
+                            {{ account.billingcountry }}
+                            {{ account.billinglatitude }},{{ account.billinglongitude }}
+                        </p>
+                    </div>
                 {% endif %}
             {% endif %}
 
             {% if event.event_start_date__c %}
-            <div class="event_info">
-                <b>Event Start:</b> {{event.event_start_date__c}}
-            </div>
+                <div class="event_info">
+                    <b>Event Start:</b> {{event.event_start_date__c}}
+                </div>
             {% endif %}
 
             {% if event.event_end_date__c %}
-            <div class="event_info">
-                <b>Event Ends:</b> {{event.event_end_date__c}}
-            </div>
+                <div class="event_info">
+                    <b>Event Ends:</b> {{event.event_end_date__c}}
+                </div>
             {% endif %}
 
-            {% if event.hours_per_day and event.number_days %}
-            <div class="event_info">
-                Event lasts for {{event.number_days}} day{% if event.number_days >1%}s{%endif%}, for {{event.hours_per_day}} hours each day!
-            </div>
-            {% elif event.hours_per_day %}
-            <div class="event_info">
-                Event lasts for <b>{{event.hours_per_day}} hours</b> per day.
-            </div>
-            {% endif %}
-            {% if event.start_location %}
-            <div class="event_info">
-                Meet at <b>{{event.start_location}}</b> to get started at the event!
-            </div>
+            {% if event.volunteerforce_link__c %}
+                <div class="event_info">
+                    <b>Volunteer Force (SFDC Internal Only):</b> {{event.volunteerforce_link__c}}
+                </div>
             {% endif %}
         </div>
     </div>
