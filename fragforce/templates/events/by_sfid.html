@@ -9,6 +9,18 @@
 
             <div><b>Event Name: </b>{{ event.name }}</div>
 
+            {% if event.event_start_date__c %}
+                <div class="event_info">
+                    <b>Event Start:</b> {{event.event_start_date__c}}
+                </div>
+            {% endif %}
+
+            {% if event.event_end_date__c %}
+                <div class="event_info">
+                    <b>Event Ends:</b> {{event.event_end_date__c}}
+                </div>
+            {% endif %}
+
             {% if event.use_secondary_address %}
                 {% if account.billingstreet %}
                     <div class="event_info">
@@ -37,18 +49,6 @@
                         </p>
                     </div>
                 {% endif %}
-            {% endif %}
-
-            {% if event.event_start_date__c %}
-                <div class="event_info">
-                    <b>Event Start:</b> {{event.event_start_date__c}}
-                </div>
-            {% endif %}
-
-            {% if event.event_end_date__c %}
-                <div class="event_info">
-                    <b>Event Ends:</b> {{event.event_end_date__c}}
-                </div>
             {% endif %}
 
             {% if event.volunteerforce_link__c %}
