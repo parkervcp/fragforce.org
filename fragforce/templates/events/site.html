@@ -1,26 +1,50 @@
 {% extends 'events/base.html' %}
 {% block title %}Fragforce Events For {{ account.name }}{% endblock %}
 {% block content %}
-
-<div class="row">
-    {% for event in events %}
-    <div class="well">
-        <h2><a href="{{ url_for('pages.by_sfid', sfid=event.sfid) }}">{{ event.name }}</a></h2>
-        <ul>
-            <li>Site: {{ account.name }}</li>
-            <li>Start:
-                <time datetime="{{ event.event_start_date__c }}">{{ event.event_start_date__c }}</time>
-            </li>
-            <li>End:
-                <time datetime="{{ event.event_end_date__c }}">{{ event.event_end_date__c }}</time>
-            </li>
-        </ul>
-    </div>
-    {% else %}
-        <div class="well">
-            <h2>No Events!</h2>
+    {% if events %}
+        <div class="row">
+            <h1>Upcoming Events</h1>
+            {% for event in events %}
+            <div class="well">
+                <h2><a href="{{ url_for('pages.by_sfid', sfid=event.sfid) }}">{{ event.name }}</a></h2>
+                <ul>
+                    <li>Site: {{ account.name }}</li>
+                    <li>Start:
+                        <time datetime="{{ event.event_start_date__c }}">{{ event.event_start_date__c }}</time>
+                    </li>
+                    <li>End:
+                        <time datetime="{{ event.event_end_date__c }}">{{ event.event_end_date__c }}</time>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+                <div class="well">
+                    <h2>No Events!</h2>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
-
+    {% endif %}
+    {% if old %}
+        <div class="row">
+            <h1>Previous Events</h1>
+            {% for event in old %}
+            <div class="well">
+                <h2><a href="{{ url_for('pages.by_sfid', sfid=event.sfid) }}">{{ event.name }}</a></h2>
+                <ul>
+                    <li>Site: {{ account.name }}</li>
+                    <li>Start:
+                        <time datetime="{{ event.event_start_date__c }}">{{ event.event_start_date__c }}</time>
+                    </li>
+                    <li>End:
+                        <time datetime="{{ event.event_end_date__c }}">{{ event.event_end_date__c }}</time>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="well">
+                <h2>No Events!</h2>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
