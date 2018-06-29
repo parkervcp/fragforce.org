@@ -17,15 +17,21 @@ import django_heroku
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "**^hljuk77ta7##*kriwu=zuz^-=@^$cf1p-!7)f!eqzoaj=z+"
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', True).lower() == 'true')
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
+if SECRET_KEY == 'INSECURE':
+    if DEBUG:
+        import warnings
+
+        warnings.warn('INSECURE SECRET_KEY!', RuntimeWarning)
+    else:
+        raise ValueError("SECRET_KEY env var must be defined when not in DEBUG=True")
 
 # Application definition
 
@@ -73,7 +79,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fforg.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
