@@ -25,7 +25,7 @@
               <ul class="dropdown-menu" role="menu">
                 {% for account in accounts %}
                   <li class="dropdown-submenu">
-                    <a tabindex="-1" href="{{ url_for('pages.by_site', sfid=account.sfid) }}">{{ account.name }}</a>
+                    {% if account in events_by_acc %}<b>{% endif %}<a tabindex="-1" href="{{ url_for('pages.by_site', sfid=account.sfid) }}">{{ account.name }}</a>{% if account in events_by_acc %}</b>{% endif %}
                   </li>
                 {% endfor %}
               </ul>

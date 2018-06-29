@@ -5,7 +5,7 @@
 <ul>
     {% for account in accounts %}
         <li>
-            <a href="{{ url_for('pages.by_site', sfid=account.sfid) }}">{{ account.name }}</a>
+            {% if account in events_by_acc %}<b>{% endif %}<a href="{{ url_for('pages.by_site', sfid=account.sfid) }}">{{ account.name }}</a>{% if account in events_by_acc %}</b>{% endif %}
         </li>
     {% endfor %}
 </ul>
