@@ -31,8 +31,8 @@
                             {{ account.shippingstreet }}<br/>
                             {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}<br/>
                             {{ account.shippingcountry }}<br/>
-                            {% if account.billinglatitude and account.billinglongitude %}
-                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b><br/>
+                            {% if account.shippinglatitude and account.shippinglongitude %}
+                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.shippinglatitude }},{{ account.shippinglongitude }}">Google Maps</a></b><br/>
                             {% endif %}
                         </p>
                     </div>
