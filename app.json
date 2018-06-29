@@ -18,10 +18,10 @@
   },
   "formation": {},
   "addons": [
-    "heroku-postgresql",
-    "heroku-redis",
-    "heroku-redis",
-    "herokuconnect"
+    "heroku-postgresql:standard-0",
+    "heroku-redis:premium-0",
+    "heroku-redis:premium-0",
+    "herokuconnect:danketsu"
   ],
   "buildpacks": [
     {
