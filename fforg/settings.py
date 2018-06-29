@@ -138,5 +138,9 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost/0')
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())
