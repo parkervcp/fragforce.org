@@ -5,16 +5,27 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="well">
-            {% if event.address %}
+            It's Fragforce time!...<br/>
+            <div><b>Event Name: </b>{{ event.name }}</div>
+
+            {% if account.shippingstreet %}
             <div class="event_info">
-                <b>Event Location:</b> {{event.address}}
+                <b>Event Location:</b> {{account.shippingstreet}}
             </div>
             {% endif %}
-            {% if event.start_time %}
+
+            {% if event.event_start_date__c %}
             <div class="event_info">
-                <b>Event starts at:</b> {{event.start_time}}
+                <b>Event Start:</b> {{event.event_start_date__c}}
             </div>
             {% endif %}
+
+            {% if event.event_end_date__c %}
+            <div class="event_info">
+                <b>Event Ends:</b> {{event.event_end_date__c}}
+            </div>
+            {% endif %}
+
             {% if event.hours_per_day and event.number_days %}
             <div class="event_info">
                 Event lasts for {{event.number_days}} day{% if event.number_days >1%}s{%endif%}, for {{event.hours_per_day}} hours each day!
