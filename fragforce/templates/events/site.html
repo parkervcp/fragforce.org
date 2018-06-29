@@ -39,7 +39,7 @@
             {% endfor %}
         </div>
     {% endif %}
-    {% if events or old %}
+    {% if not events and not old %}
     <div class="well">
         <h2>No Events!</h2>
     </div>
