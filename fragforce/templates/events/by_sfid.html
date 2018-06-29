@@ -29,7 +29,7 @@
                             {{ account.billingstreet }}<br/>
                             {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}<br/>
                             {{ account.billingcountry }}<br/>
-                            {% if account.billinglatitude && account.billinglongitude %}
+                            {% if account.billinglatitude and account.billinglongitude %}
                                 <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b>
                             {% endif %}}
                         </p>
