@@ -17,10 +17,6 @@
                     </li>
                 </ul>
             </div>
-            {% else %}
-                <div class="well">
-                    <h2>No Events!</h2>
-                </div>
             {% endfor %}
         </div>
     {% endif %}
@@ -40,11 +36,12 @@
                     </li>
                 </ul>
             </div>
-            {% else %}
-            <div class="well">
-                <h2>No Events!</h2>
-            </div>
             {% endfor %}
         </div>
+    {% endif %}
+    {% if events or old %}
+    <div class="well">
+        <h2>No Events!</h2>
+    </div>
     {% endif %}
 {% endblock %}
