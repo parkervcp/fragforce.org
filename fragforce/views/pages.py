@@ -136,7 +136,7 @@ def by_sfid(sfid):
     from ..models import ff_events, account
     templates = []
     templates.append('events/by_sfid.html')
-    templates.append('default_templates/by_sfid.html')
+    #templates.append('default_templates/by_sfid.html')
 
     evt = db_session.query(ff_events).filter_by(sfid=sfid).first()
     act = db_session.query(account).filter_by(sfid=evt.site__c).first()

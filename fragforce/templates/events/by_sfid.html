@@ -2,28 +2,34 @@
 {% block title %}{{ event.name }} On {{ event.event_start_date__c }}{% endblock %}
 {% block pagetitle %}{{ event.name }} On {{ event.event_start_date__c }}{% endblock pagetitle %}
 {% block content %}
-
 <div class="row">
-  <div class="col-sm-8">
-    <div class="well">
- FIXME
+    <div class="col-sm-4">
+        <div class="well">
+            {% if event.address %}
+            <div class="event_info">
+                <b>Event Location:</b> {{event.address}}
+            </div>
+            {% endif %}
+            {% if event.start_time %}
+            <div class="event_info">
+                <b>Event starts at:</b> {{event.start_time}}
+            </div>
+            {% endif %}
+            {% if event.hours_per_day and event.number_days %}
+            <div class="event_info">
+                Event lasts for {{event.number_days}} day{% if event.number_days >1%}s{%endif%}, for {{event.hours_per_day}} hours each day!
+            </div>
+            {% elif event.hours_per_day %}
+            <div class="event_info">
+                Event lasts for <b>{{event.hours_per_day}} hours</b> per day.
+            </div>
+            {% endif %}
+            {% if event.start_location %}
+            <div class="event_info">
+                Meet at <b>{{event.start_location}}</b> to get started at the event!
+            </div>
+            {% endif %}
+        </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="well">
-      {% if account.description %}
-      <div class="event_info">
-        Site Description: {{ account.description }}
-      </div>
-      {% endif %}
-      {% if event.event_start_date__c %}
-      <div class="event_info">
-        Event starts at: {{ event.event_start_date__c }}
-      </div>
-      {% endif %}
-  </div>
 </div>
-<div class="row"><br /></div>
-
-
 {% endblock %}
