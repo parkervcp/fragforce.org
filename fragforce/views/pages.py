@@ -5,6 +5,9 @@ from flask import Blueprint, render_template, session, redirect, url_for, \
 from flask_flatpages import FlatPages
 from random import choice, sample
 import os
+# Needed for cache - can't use import from
+import fragforce
+from sqlalchemy import desc
 
 mod = Blueprint('pages', __name__)
 pages = FlatPages(app)
@@ -87,7 +90,7 @@ def page(path):
             if form.validate_on_submit():
                 output = upload_form_f(form)
     else:
-        form=None
+        form = None
 
     templates = []
     templates.append(page.meta.get('template', '%s/page.html' % section))
@@ -111,10 +114,15 @@ def page(path):
 
 
 @mod.route('/<string:section>/')
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
 def section(section):
-    if not section_exists(section):
-        abort(404)
     templates = []
+    if section == 'events':
+        templates.append('%s/index.html' % section)
+        templates.append('default_templates/index.html')
+        return render_template(templates, section=section)
+    elif not section_exists(section):
+        abort(404)
     templates.append('%s/index.html' % section)
     templates.append('default_templates/index.html')
     things = get_pages(pages, limit=app.config['SECTION_MAX_LINKS'], section=section)
@@ -122,28 +130,36 @@ def section(section):
     return render_template(templates, pages=things, section=section, years=years)
 
 
-@mod.route('/<string:section>/upcoming/')
-def section_upcoming(section):
-    if not section_exists(section):
-        abort(404)
+@mod.route('/events/<string:sfid>/')
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
+def by_sfid(sfid):
+    from fragforce import db_session
+    from ..models import ff_events, account
     templates = []
-    templates.append('%s/upcoming.html' % section)
-    templates.append('default_templates/upcoming.html')
-    things = get_pages(pages, section=section, after=date.today())
-    years = get_years(get_pages(pages, section=section))
-    return render_template(templates, pages=things, section=section, years=years)
+    templates.append('events/by_sfid.html')
+    #templates.append('default_templates/by_sfid.html')
+
+    evt = db_session.query(ff_events).filter_by(sfid=sfid).first()
+    act = db_session.query(account).filter_by(sfid=evt.site__c).first()
+
+    return render_template(templates, section='events', event=evt, account=act)
 
 
-@mod.route('/<string:section>/past/')
-def section_past(section):
-    if not section_exists(section):
-        abort(404)
+@mod.route('/sites/<string:sfid>/')
+@fragforce.cache.memoize(timeout=app.config['CACHE_EVENTS_TIME'])
+def by_site(sfid):
+    from fragforce import db_session
+    from ..models import ff_events, account
     templates = []
-    templates.append('%s/past.html' % section)
-    templates.append('default_templates/past.html')
-    things = get_pages(pages, section=section, before=date.today())
-    years = get_years(get_pages(pages, section=section))
-    return render_template(templates, pages=things, section=section, years=years)
+    templates.append('events/site.html')
+    # templates.append('default_templates/site.html')
+
+    act = db_session.query(account).filter_by(sfid=sfid).first()
+    evts = db_session.query(ff_events).filter_by(site__c=act.sfid).filter(
+        ff_events.columns.event_end_date__c >= datetime.utcnow()).order_by('event_start_date__c').all()
+    old_evts = db_session.query(ff_events).filter_by(site__c=act.sfid).filter(
+        ff_events.columns.event_end_date__c < datetime.utcnow()).order_by(desc('event_start_date__c')).all()
+    return render_template(templates, section='events', events=evts, old=old_evts, account=act)
 
 
 @mod.route('/<string:section>/<int:year>/')

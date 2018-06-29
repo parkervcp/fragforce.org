@@ -1,4 +1,4 @@
-from .logs import root_logger # Needs to be FIRST!
+from .logs import root_logger  # Needs to be FIRST!
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,6 +16,7 @@ from contextlib import contextmanager
 
 log = root_logger.getChild('fragforce')
 
+
 def jinja_renderer(text):
     prerendered_body = render_template_string(text)
     return pygmented_markdown(prerendered_body)
@@ -24,7 +25,7 @@ def jinja_renderer(text):
 app = Flask(__name__)
 # Enable manual logging
 # http://flask.pocoo.org/docs/dev/logging/#removing-the-default-handler
-#app.logger.removeHandler(default_handler)
+# app.logger.removeHandler(default_handler)
 sslify = SSLify(app)
 
 app.config['SECTION_MAX_LINKS'] = int(os.environ.get('SECTION_MAX_LINKS', '10'))
@@ -40,10 +41,14 @@ app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 300))
+app.config['CACHE_EVENTS_TIME'] = int(os.environ.get('CACHE_EVENTS_TIME', 5))
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 120))
 app.config['LOGZIO_API_KEY'] = os.environ.get('LOGZIO_API_KEY', None)
+app.config['REMOTE_SCHEMA'] = os.environ.get('REMOTE_SCHEMA', 'org')
+app.config['MAIN_SCHEMA'] = os.environ.get('MAIN_SCHEMA', 'public')
+app.config['EVENTS_DROPDOWN_MAX_SOON'] = int(os.environ.get('EVENTS_DROPDOWN_MAX_SOON', 10))
 
 # S3
 app.config['BUCKETEER_BUCKET_NAME'] = os.environ.get('BUCKETEER_BUCKET_NAME', None)
@@ -65,11 +70,11 @@ engine = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'), convert_unicod
 db_session = scoped_session(sessionmaker(autocommit=True,
                                          autoflush=True,
                                          bind=engine))
-BaseMeta = MetaData(schema='public')
+BaseMeta = MetaData(schema=app.config['MAIN_SCHEMA'])
 Base = declarative_base(metadata=BaseMeta)
 Base.query = db_session.query_property()
 
-RemoteBaseMeta = MetaData(schema='gus')
+RemoteBaseMeta = MetaData(schema=app.config['REMOTE_SCHEMA'])
 
 
 def init_db():
@@ -106,14 +111,6 @@ def session_scope(parent=db_session):
 
 init_db()
 
-from fragforce.views import general
-from fragforce.views import pages
-from fragforce.views import fw
-
-app.register_blueprint(general.mod)
-app.register_blueprint(pages.mod)
-app.register_blueprint(fw.mod)
-
 # Init cache (general)
 if app.config['REDIS_URL']:
     cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
@@ -135,6 +132,16 @@ if app.config['FILE_UPLOADS']:
                                     'CACHE_THRESHOLD': 8,
                                     })
 
+from fragforce.views import general
+from fragforce.views import pages
+from fragforce.views import fw
+
+app.register_blueprint(general.mod)
+app.register_blueprint(pages.mod)
+app.register_blueprint(fw.mod)
+
+
+
 
 @app.context_processor
 def random_participant():
@@ -151,7 +158,8 @@ def random_participant():
 
 @app.context_processor
 def tracker_data():
-    def is_active(endpoint=None, section=None, noclass=False):
+    def is_active(endpoint=None, section=None, noclass=False, sfid=None):
+        # FIXME: Handle sfid to check if it's a real, active page
         rtn = ""
         if noclass:
             rtn = 'active'
@@ -235,6 +243,44 @@ def tracker_data():
         extralife_link="http://team.fragforce.org",
         childsplay_link="https://tiltify.com/teams/fragforce",
         is_active=is_active)
+
+
+@app.context_processor
+def event_info():
+    @cache.cached(timeout=app.config['CACHE_EVENTS_TIME'], key_prefix='event_info.get_events')
+    def get_events():
+        """ Return a list of events"""
+        import datetime
+        from .models import account, ff_events
+        # TODO: Mark currently active ones as special
+        events = db_session.query(ff_events) \
+            .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
+            .order_by('event_start_date__c') \
+            .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
+        accounts = db_session.query(account).order_by('name').all()
+        e_by_a = {}
+        for acc in accounts:
+            fnd=db_session.query(ff_events) \
+                .filter_by(site__c=acc.sfid) \
+                .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
+                .order_by('event_start_date__c') \
+                .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
+            if len(fnd)>0:
+                e_by_a[acc]=fnd
+        return accounts, events, e_by_a
+
+    accounts, events, e_by_a = get_events()
+
+    return dict(
+        events=events,
+        accounts=accounts,
+        events_by_acc=e_by_a,
+    )
+
+@app.context_processor
+def page_build():
+    import datetime
+    return dict(now=str(datetime.datetime.utcnow()))
 
 
 import fragforce.extralife as extralife

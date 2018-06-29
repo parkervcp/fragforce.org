@@ -1,0 +1,62 @@
+{% extends 'events/base.html' %}
+{% block title %}{{ event.name }} On {{ event.event_start_date__c }}{% endblock %}
+{% block pagetitle %}{{ event.name }} On {{ event.event_start_date__c }}{% endblock pagetitle %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-10">
+        <div class="well">
+            <p>It's Fragforce time!...</p>
+
+            <div><b>Event Name: </b>{{ event.name }}</div>
+
+            {% if event.event_start_date__c %}
+                <div class="event_info">
+                    <b>Event Start:</b> {{event.event_start_date__c}}
+                </div>
+            {% endif %}
+
+            {% if event.event_end_date__c %}
+                <div class="event_info">
+                    <b>Event Ends:</b> {{event.event_end_date__c}}
+                </div>
+            {% endif %}
+
+            {% if event.use_secondary_address %}
+                {% if account.billingstreet %}
+                    <div class="event_info">
+                        <b>Event Location:</b>
+                        <p>
+                            {{ account.billingstreet }}<br/>
+                            {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}<br/>
+                            {{ account.billingcountry }}<br/>
+                            {% if account.billinglatitude and account.billinglongitude %}
+                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b><br/>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% else %}
+                {% if account.shippingstreet %}
+                    <div class="event_info">
+                        <b>Event Location:</b>
+                        <p>
+                            {{ account.shippingstreet }}<br/>
+                            {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}<br/>
+                            {{ account.shippingcountry }}<br/>
+                            {% if account.shippinglatitude and account.shippinglongitude %}
+                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.shippinglatitude }},{{ account.shippinglongitude }}">Google Maps</a></b><br/>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if event.volunteerforce_link__c %}
+                <div class="event_info">
+                    <b><a href="{{event.volunteerforce_link__c}}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
