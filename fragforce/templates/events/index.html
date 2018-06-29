@@ -3,7 +3,7 @@
 {% block content %}
 
 <ul>
-  {% for account in events_by_acc %}
+  {% for account in accounts %}
   <li>
     <a href="{{ url_for('pages.by_site', sfid=account.sfid) }}">{{ account.name }}</a>
   </li>
