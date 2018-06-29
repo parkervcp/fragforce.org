@@ -5,7 +5,7 @@
     "postdeploy": "pg_dump --schema=$HC_SCHEMA $HC_RO_URL | psql $DATABASE_URL && bundle exec rake db:migrate"
   },
   "env": {
-    "HC_SCHEMA":"org",
+    "HC_SCHEMA": "org",
     "DEBUG": {
       "required": true
     },
@@ -64,3 +64,4 @@
     }
   }
 }
+
