@@ -19,9 +19,9 @@
             <ul>
                 {% for site in allsites %}
                 <li><a href="{% url 'org_site' sfid=site.sfid %}">{{ site.name }}</a>
-                    {% if site.has_events %}}
+                    {% if site.has_events %}
                     <i>**</i>
-                    {% endif %}}
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
