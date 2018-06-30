@@ -68,13 +68,14 @@ class TriggerLogArchive(models.Model):
         db_table = '_trigger_log_archive'
 
 
-class Account(models.Model):
+class SiteAccount(models.Model):
     jigsaw = models.CharField(max_length=20, blank=True, null=True)
     shippinglongitude = models.FloatField(blank=True, null=True)
     shippingstate = models.CharField(max_length=80, blank=True, null=True)
     youtubeid = models.CharField(db_column='youtubeid__c', max_length=80, blank=True, null=True)
     numberofemployees = models.IntegerField(blank=True, null=True)
-    parent = models.ForeignKey('Account', to_field='sfid', db_column='parentid', on_delete=models.CASCADE,
+    parent = models.ForeignKey('ffsfdc.models.SiteAccount', to_field='sfid', db_column='parentid',
+                               on_delete=models.CASCADE,
                                max_length=18, blank=True, null=True)
     recordtypeid = models.CharField(max_length=18, blank=True, null=True)
     shippingpostalcode = models.CharField(max_length=20, blank=True, null=True)
@@ -145,7 +146,7 @@ class Contact(models.Model):
     mailingstate = models.CharField(max_length=80, blank=True, null=True)
     user_el_raised = models.FloatField(db_column='user_el_raised__c', blank=True, null=True)
     twitch_tv_user = models.CharField(db_column='twitch_tv_user__c', max_length=80, blank=True, null=True)
-    account = models.ForeignKey(Account, to_field='sfid', db_column='accountid', on_delete=models.CASCADE,
+    account = models.ForeignKey(SiteAccount, to_field='sfid', db_column='accountid', on_delete=models.CASCADE,
                                 max_length=18, blank=True, null=True)
     lastvieweddate = models.DateTimeField(blank=True, null=True)
     contact_type = models.CharField(db_column='contact_type__c', max_length=255, blank=True, null=True)
@@ -208,7 +209,7 @@ class Contact(models.Model):
         db_table = 'contact'
 
 
-class ElHistoryC(models.Model):
+class ELHistory(models.Model):
     currencyisocode = models.CharField(max_length=3, blank=True, null=True)
     contact = models.ForeignKey(Contact, to_field='sfid', db_column='contact__c', on_delete=models.CASCADE,
                                 max_length=18, blank=True, null=True)
@@ -226,7 +227,7 @@ class ElHistoryC(models.Model):
     islocked = models.NullBooleanField()
     createddate = models.DateTimeField(blank=True, null=True)
     createdbyid = models.CharField(max_length=18, blank=True, null=True)
-    site = models.ForeignKey(Account, to_field='sfid', db_column='site__c', on_delete=models.CASCADE, max_length=18,
+    site = models.ForeignKey(SiteAccount, to_field='sfid', db_column='site__c', on_delete=models.CASCADE, max_length=18,
                              blank=True, null=True)
     sfid = models.CharField(unique=True, max_length=18, blank=True, null=True)
     field_hc_lastop = models.CharField(db_column='_hc_lastop', max_length=32, blank=True, null=True)
@@ -250,7 +251,7 @@ class Event(models.Model):
     event_start_date = models.DateTimeField(db_column='event_start_date__c', blank=True, null=True)
     createddate = models.DateTimeField(blank=True, null=True)
     createdbyid = models.CharField(max_length=18, blank=True, null=True)
-    site = models.ForeignKey(Account, to_field='sfid', db_column='site__c', on_delete=models.CASCADE, max_length=18,
+    site = models.ForeignKey(SiteAccount, to_field='sfid', db_column='site__c', on_delete=models.CASCADE, max_length=18,
                              blank=True, null=True)
     lastreferenceddate = models.DateTimeField(blank=True, null=True)
     sfid = models.CharField(unique=True, max_length=18, blank=True, null=True)
