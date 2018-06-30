@@ -261,7 +261,7 @@ class Event(models.Model):
     createddate = models.DateTimeField(blank=True, null=True)
     createdbyid = models.CharField(max_length=18, blank=True, null=True)
     site = models.ForeignKey(SiteAccount, to_field='sfid', db_column='site__c', on_delete=models.CASCADE, max_length=18,
-                             blank=True, null=True)
+                             blank=True, null=True, related_name='events')
     lastreferenceddate = models.DateTimeField(blank=True, null=True)
     sfid = models.CharField(unique=True, max_length=18, blank=True, null=True)
     field_hc_lastop = models.CharField(db_column='_hc_lastop', max_length=32, blank=True, null=True)
