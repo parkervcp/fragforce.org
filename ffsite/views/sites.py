@@ -6,7 +6,7 @@ from ffsite.models import *
 def sites(request):
     """ Sites page """
     return render(request, 'ff/sites/index.html', {
-        'sites': SiteAccount.objects.order_by('name').first(),
+        'sites': SiteAccount.objects.order_by('name').all(),
     })
 
 
