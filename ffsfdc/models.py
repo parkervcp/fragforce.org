@@ -131,15 +131,16 @@ class SiteAccount(models.Model):
 
     def has_events(self):
         """ Return True if this account has upcoming events """
-        return Event.objects.filter(site=self).count() > 0
+        import datetime
+        return Event.objects.filter(event_start_date__gte=datetime.datetime.now(), site=self).count() > 0
 
     def upcoming(self):
         import datetime
-        return self.events.filter(event_start_date__gte=datetime.datetime.now())
+        return self.events.filter(event_start_date__gte=datetime.datetime.now()).all()
 
     def past(self):
         import datetime
-        return self.events.filter(event_start_date__lt=datetime.datetime.now())
+        return self.events.filter(event_start_date__lt=datetime.datetime.now()).all()
 
 
 class Contact(models.Model):
