@@ -10,7 +10,10 @@
                 <ul>
                     <li>Site: {{ account.name }}</li>
                     <li>Start:
-                        <time datetime="{{ event.event_start_date__c }}.000Z">{{ event.event_start_date__c }} UTC</time>
+                        <time id="asdfasdf"></time>
+                        <script>
+                            updateTimeValue("#asdfasdf","{{ event.event_start_date__c }}.000Z");
+                        </script>
                     </li>
                     <li>End:
                         <time datetime="{{ event.event_end_date__c }}.000Z">{{ event.event_end_date__c }} UTC</time>
