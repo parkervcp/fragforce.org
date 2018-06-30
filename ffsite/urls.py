@@ -25,4 +25,6 @@ urlpatterns = [
     path('contact', contact),
     path('site', sites, name='org_sites'),
     path('site/<slug:sfid>', site, name='org_site'),
+    path('event', events, name='org_events'),
+    path('event/<slug:sfid>', event, name='org_event'),
 ]
