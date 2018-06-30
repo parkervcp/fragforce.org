@@ -133,6 +133,14 @@ class SiteAccount(models.Model):
         """ Return True if this account has upcoming events """
         return Event.objects.filter(site=self).count() > 0
 
+    def upcoming(self):
+        import datetime
+        return self.events.filter(event_start_date__gte=datetime.datetime.now())
+
+    def past(self):
+        import datetime
+        return self.events.filter(event_start_date__lt=datetime.datetime.now())
+
 
 class Contact(models.Model):
     middlename = models.CharField(max_length=40, blank=True, null=True)

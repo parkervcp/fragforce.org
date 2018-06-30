@@ -6,12 +6,26 @@
 
 Name: {{ site.name }}
 
-<ul>
-    {% for event in site.events %}
-    <li>
-        Name: {{ event.name }}
-    </li>
+<div>
+    <h2>Upcoming</h2>
+    {% for event in site.events.upcoming %}
+    <div>
+        <h3>{{ event.name }}</h3>
+        <div>
+            asldfkjasdlfj
+        </div>
+    </div>
     {% endfor %}
-</ul>
-
+</div>
+<div>
+    <h2>Past</h2>
+    {% for event in site.events.past %}
+    <div>
+        <h3>{{ event.name }}</h3>
+        <div>
+            asldfkjasdlfj
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
