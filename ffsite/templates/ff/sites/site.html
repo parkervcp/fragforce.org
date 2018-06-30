@@ -8,7 +8,7 @@ Name: {{ site.name }}
 
 <div>
     <h2>Upcoming</h2>
-    {% for event in site.events.upcoming %}
+    {% for event in site.upcoming %}
     <div>
         <h3>{{ event.name }}</h3>
         <div>
@@ -21,7 +21,7 @@ Name: {{ site.name }}
 </div>
 <div>
     <h2>Past</h2>
-    {% for event in site.events.past %}
+    {% for event in site.past %}
     <div>
         <h3>{{ event.name }}</h3>
         <div>
