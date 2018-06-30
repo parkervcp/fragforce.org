@@ -293,7 +293,7 @@ def format_datetime(value, eid=None):
     return """
 <time id="{id}"></time>
 <script>
-    updateTimeValue("#{id}","{dt}");
+    updateTimeValue("#{id}","{dt}.000Z");
 </script>
     """.format(id=eid, dt=value)
 
