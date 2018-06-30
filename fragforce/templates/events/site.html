@@ -10,10 +10,10 @@
                 <ul>
                     <li>Site: {{ account.name }}</li>
                     <li>Start:
-                        {{ event.event_start_date__c|localtime }}
+                        {{ event.event_start_date__c|localtime|noescape }}
                     </li>
                     <li>End:
-                        {{ event.event_end_date__c|localtime }}
+                        {{ event.event_end_date__c|localtime|noescape }}
                     </li>
                 </ul>
             </div>
