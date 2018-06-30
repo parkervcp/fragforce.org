@@ -33,10 +33,14 @@
                 <ul>
                     <li>Site: {{ account.name }}</li>
                     <li>Start:
-                        <time datetime="{{ event.event_start_date__c }}.000Z">{{ event.event_start_date__c }} UTC</time>
+                        {% autoescape false %}
+                        {{ event.event_start_date__c|localtime }}
+                        {% endautoescape %}}
                     </li>
                     <li>End:
-                        <time datetime="{{ event.event_end_date__c }}.000Z">{{ event.event_end_date__c }} UTC</time>
+                        {% autoescape false %}
+                        {{ event.event_end_date__c|localtime }}
+                        {% endautoescape %}}
                     </li>
                 </ul>
             </div>
