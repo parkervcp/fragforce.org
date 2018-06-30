@@ -20,4 +20,7 @@ from ffsite.views import *
 
 urlpatterns = [
     path('', home),
+    path('donate', donate),
+    path('join', join),
+    path('contact', contact),
 ]
