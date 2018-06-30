@@ -10,10 +10,14 @@
                 <ul>
                     <li>Site: {{ account.name }}</li>
                     <li>Start:
-                        <time datetime="{{ event.event_start_date__c }}">{{ event.event_start_date__c }}</time>
+                        {% autoescape false %}
+                            {{ event.event_start_date__c|localtime }}
+                        {% endautoescape %}
                     </li>
                     <li>End:
-                        <time datetime="{{ event.event_end_date__c }}">{{ event.event_end_date__c }}</time>
+                        {% autoescape false %}
+                            {{ event.event_end_date__c|localtime }}
+                        {% endautoescape %}
                     </li>
                 </ul>
             </div>
@@ -29,10 +33,14 @@
                 <ul>
                     <li>Site: {{ account.name }}</li>
                     <li>Start:
-                        <time datetime="{{ event.event_start_date__c }}">{{ event.event_start_date__c }}</time>
+                        {% autoescape false %}
+                        {{ event.event_start_date__c|localtime }}
+                        {% endautoescape %}
                     </li>
                     <li>End:
-                        <time datetime="{{ event.event_end_date__c }}">{{ event.event_end_date__c }}</time>
+                        {% autoescape false %}
+                        {{ event.event_end_date__c|localtime }}
+                        {% endautoescape %}
                     </li>
                 </ul>
             </div>

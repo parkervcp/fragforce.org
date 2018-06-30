@@ -11,13 +11,19 @@
 
             {% if event.event_start_date__c %}
                 <div class="event_info">
-                    <b>Event Start:</b> {{event.event_start_date__c}}
+                    <b>Event Start:</b>
+                    {% autoescape false %}
+                        {{ event.event_start_date__c|localtime }}
+                    {% endautoescape %}
                 </div>
             {% endif %}
 
             {% if event.event_end_date__c %}
                 <div class="event_info">
-                    <b>Event Ends:</b> {{event.event_end_date__c}}
+                    <b>Event Ends:</b>
+                    {% autoescape false %}
+                        {{ event.event_end_date__c|localtime }}
+                    {% endautoescape %}
                 </div>
             {% endif %}
 
