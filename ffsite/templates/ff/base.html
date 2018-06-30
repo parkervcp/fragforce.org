@@ -6,7 +6,22 @@
     <title>{% block title %}Fragforce{% endblock %}</title>
 </head>
 <body>
-{% block body %}{% endblock %}
-{% block footer %}{% endblock %}
+<div>
+    <!-- Header -->
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/donate">Donate</a></li>
+        <li><a href="/join">Join</a></li>
+        <li><a href="/events">events</a></li>
+    </ul>
+</div>
+<div>
+    {% block body %}{% endblock %}
+</div>
+<div>
+    {% block footer %}{% endblock %}
+</div>
+
 </body>
 </html>
