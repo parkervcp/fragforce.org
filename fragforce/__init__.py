@@ -280,7 +280,7 @@ def event_info():
 @app.context_processor
 def page_build():
     import datetime
-    return dict(now=str(datetime.datetime.utcnow()))
+    return dict(now=datetime.datetime.utcnow())
 
 
 import fragforce.extralife as extralife
