@@ -69,3 +69,5 @@ target/
 /.idea/
 /fragforce.org.iml
 /fragforce-website.db
+/db-hc.sqlite3
+/db.sqlite3
