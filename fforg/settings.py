@@ -124,10 +124,9 @@ USE_TZ = True
 DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
 DATABASES['hc'].update(dj_database_url.config(conn_max_age=500, ssl_require=True, env="HC_RO_URL"))
 try:
-    DATABASES['hc']['OPTIONS']['options'] = '-c search_path=org'
+    DATABASES['hc']['OPTIONS']['options'] = '-c search_path=%s' % os.environ.get('HC_RO_SCHEMA', 'org')
 except KeyError as e:
     pass
-
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
