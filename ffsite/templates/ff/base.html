@@ -14,7 +14,14 @@
         <li><a href="/donate">Donate</a></li>
         <li><a href="/join">Join</a></li>
         <li><a href="/events">Events</a></li>
-        <li><a href="/site">Sites</a></li>
+        <li>
+            <a href="/site">Sites</a>
+            <ul>
+                {% for site in allsites %}
+                <li><a href="{% url 'org_site' sfid=site.sfid %}">{{ site.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
     </ul>
 </div>
 <div>

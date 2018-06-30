@@ -9,5 +9,5 @@ def common_org(request):
             'event_start_date').all(),
         past_events=Event.objects.filter(event_start_date__lt=datetime.datetime.now()).order_by(
             '-event_start_date').all(),
-        accounts=SiteAccount.objects.order_by('name').all(),
+        allsites=SiteAccount.objects.order_by('name').all(),
     )
