@@ -74,7 +74,7 @@ class SiteAccount(models.Model):
     shippingstate = models.CharField(max_length=80, blank=True, null=True)
     youtubeid = models.CharField(db_column='youtubeid__c', max_length=80, blank=True, null=True)
     numberofemployees = models.IntegerField(blank=True, null=True)
-    parent = models.ForeignKey('ffsfdc.models.SiteAccount', to_field='sfid', db_column='parentid',
+    parent = models.ForeignKey('SiteAccount', to_field='sfid', db_column='parentid',
                                on_delete=models.CASCADE,
                                max_length=18, blank=True, null=True)
     recordtypeid = models.CharField(max_length=18, blank=True, null=True)
