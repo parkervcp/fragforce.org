@@ -2,6 +2,8 @@
 
 {% block title %}Fragforce Sites{% endblock %}
 
+
+{% block body %}
 <ul>
     {% for site in sites %}
     <li>
@@ -11,7 +13,6 @@
         {% endif %}}
     </li>
     {% endfor %}
-{% block body %}
 </ul>
 
 {% endblock %}
