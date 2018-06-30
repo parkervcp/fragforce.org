@@ -19,10 +19,10 @@ from django.urls import path
 from ffsite.views import *
 
 urlpatterns = [
-    path('', home),
-    path('donate', donate),
-    path('join', join),
-    path('contact', contact),
+    path('', home, name='home'),
+    path('donate', donate, name='donate'),
+    path('join', join, name='join'),
+    path('contact', contact, name='contact'),
     path('site', sites, name='org_sites'),
     path('site/<slug:sfid>', site, name='org_site'),
     path('event', events, name='org_events'),

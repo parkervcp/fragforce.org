@@ -9,13 +9,13 @@
 <div>
     <!-- Header -->
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/donate">Donate</a></li>
-        <li><a href="/join">Join</a></li>
-        <li><a href="/event">Events</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        <li><a href="{% url 'donate' %}">Donate</a></li>
+        <li><a href="{% url 'join' %}">Join</a></li>
+        <li><a href="{% url 'org_events' %}">Events</a></li>
         <li>
-            <a href="/site">Sites</a>
+            <a href="{% url 'org_sites' %}">Sites</a>
             <ul>
                 {% for site in allsites %}
                 <li><a href="{% url 'org_site' sfid=site.sfid %}">{{ site.name }}</a>
