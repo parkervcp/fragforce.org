@@ -19,5 +19,5 @@ from django.urls import path
 from ffsite.views import *
 
 urlpatterns = [
-    path('^(?:/?)$', home),
+    path('', home),
 ]
