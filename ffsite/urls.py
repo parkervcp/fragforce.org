@@ -23,6 +23,6 @@ urlpatterns = [
     path('donate', donate),
     path('join', join),
     path('contact', contact),
-    path('site', sites),
-    path('site/<slug:sfid>', site),
+    path('site', sites, name='org_sites'),
+    path('site/<slug:sfid>', site, name='org_site'),
 ]
