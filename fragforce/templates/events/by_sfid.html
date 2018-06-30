@@ -11,13 +11,13 @@
 
             {% if event.event_start_date__c %}
                 <div class="event_info">
-                    <b>Event Start:</b> {{event.event_start_date__c}}
+                    <b>Event Start:</b> <time datetime="{{ event.event_start_date__c }}.000Z">{{ event.event_start_date__c }} UTC</time>
                 </div>
             {% endif %}
 
             {% if event.event_end_date__c %}
                 <div class="event_info">
-                    <b>Event Ends:</b> {{event.event_end_date__c}}
+                    <b>Event Ends:</b> <time datetime="{{ event.event_end_date__c }}.000Z">{{ event.event_end_date__c }} UTC</time>
                 </div>
             {% endif %}
 
