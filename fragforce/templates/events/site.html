@@ -13,7 +13,7 @@
                         {{ event.event_start_date__c|localtime }}
                     </li>
                     <li>End:
-                        <time datetime="{{ event.event_end_date__c }}.000Z">{{ event.event_end_date__c }} UTC</time>
+                        {{ event.event_end_date__c|localtime }}
                     </li>
                 </ul>
             </div>
