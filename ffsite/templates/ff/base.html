@@ -13,7 +13,15 @@
         <li><a href="{% url 'contact' %}">Contact</a></li>
         <li><a href="{% url 'donate' %}">Donate</a></li>
         <li><a href="{% url 'join' %}">Join</a></li>
-        <li><a href="{% url 'org_events' %}">Events</a></li>
+        <li><a href="{% url 'org_events' %}">All Events</a></li>
+        <li>
+            <a href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
+            <ul>
+                {% for event in upcoming_events %}
+                <li><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
         <li>
             <a href="{% url 'org_sites' %}">Sites</a>
             <ul>

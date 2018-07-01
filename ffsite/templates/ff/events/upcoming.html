@@ -6,7 +6,7 @@
 {% block body %}
 
 <div>
-    <h2>All Events</h2>
+    <h2>Upcoming Events</h2>
     {% for event in events %}
     <div>
         <h3>{{ event.name }}</h3>
@@ -18,5 +18,6 @@
     <div>None</div>
     {% endfor %}
 </div>
+
 
 {% endblock %}
