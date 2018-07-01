@@ -9,7 +9,7 @@
     <h2>All Events</h2>
     {% for event in events %}
     <div>
-        <h3>{{ event.name }}</h3>
+        <h3><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h3>
         <div>
             FIXME
         </div>
