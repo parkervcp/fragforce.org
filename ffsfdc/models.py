@@ -136,11 +136,11 @@ class SiteAccount(models.Model):
 
     def upcoming(self):
         import datetime
-        return self.events.filter(event_start_date__gte=datetime.datetime.now()).all()
+        return self.events.filter(event_start_date__gte=datetime.datetime.now()).order_by('event_start_date').all()
 
     def past(self):
         import datetime
-        return self.events.filter(event_start_date__lt=datetime.datetime.now()).all()
+        return self.events.filter(event_start_date__lt=datetime.datetime.now()).order_by('-event_start_date').all()
 
 
 class Contact(models.Model):
