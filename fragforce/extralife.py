@@ -8,7 +8,7 @@ class WebServiceException(Exception):
     pass
 
 
-def fetch_json(self, url, **kwargs):
+def fetch_json(url, **kwargs):
     """ Fetch JSON from the given url. Sleep extra if there have been failures or if there was one for the remote host.
     """
     timeout = fragforce.app.config['CACHE_NEG_TIME']
@@ -139,7 +139,7 @@ class Team(object):
         """
 
         data = fetch_json(
-            url="http://www.extra-life.org/index.cfm",
+            "http://www.extra-life.org/index.cfm",
             fuseaction="donerDrive.team",
             format="json",
             teamID=team_id,
@@ -167,7 +167,7 @@ class Team(object):
             return self._participants
 
         data = fetch_json(
-            url="http://www.extra-life.org/index.cfm",
+            "http://www.extra-life.org/index.cfm",
             fuseaction="donerDrive.teamParticipants",
             format="json",
             teamID=self.team_id,
@@ -242,7 +242,7 @@ class Participant(object):
         :param participant_id: The Extra-Life provided participant ID.
         """
         data = fetch_json(
-            url="http://www.extra-life.org/index.cfm",
+            "http://www.extra-life.org/index.cfm",
             fuseaction="donorDrive.participant",
             format="json",
             participantID=participant_id,
@@ -277,7 +277,7 @@ class Participant(object):
             return self._donations
 
         data = fetch_json(
-            url="http://www.extra-life.org/index.cfm",
+            "http://www.extra-life.org/index.cfm",
             fuseaction="donorDrive.participantDonations",
             format="json",
             participantID=self.participant_id,
