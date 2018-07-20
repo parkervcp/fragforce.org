@@ -41,6 +41,8 @@ app.config['REDIS_URL'] = os.environ.get('REDIS_URL', None)
 app.config['EXTRALIFE_TEAMID'] = os.environ.get('EXTRALIFE_TEAMID', None)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CACHE_DONATIONS_TIME'] = int(os.environ.get('CACHE_DONATIONS_TIME', 300))
+app.config['CACHE_NEG_TIME_MULT'] = int(os.environ.get('CACHE_NEG_TIME_MULT', 30))
+app.config['CACHE_NEG_BUFF'] = int(os.environ.get('CACHE_NEG_BUFF', 3))
 app.config['CACHE_EVENTS_TIME'] = int(os.environ.get('CACHE_EVENTS_TIME', 5))
 app.config['CRON_TEAM_REFRESH_MINUTES'] = int(os.environ.get('CRON_TEAM_REFRESH_MINUTES', 2))
 app.config['CRON_PARTICIPANTS_REFRESH_MINUTES'] = int(os.environ.get('CRON_PARTICIPANTS_REFRESH_MINUTES', 2))
@@ -146,12 +148,19 @@ def random_participant():
     """ Add a random participant to use for donation links to all page contexts """
     from .extralife import participants
     from random import choice
-    participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
-    return dict(
-        rnd_pct=participant,
-        rnd_pct_link=participant.donate_link(),
-        rnd_pct_name=participant.display_name,
-    )
+    try:
+        participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
+        return dict(
+            rnd_pct=participant,
+            rnd_pct_link=participant.donate_link(),
+            rnd_pct_name=participant.display_name,
+        )
+    except Exception as e:
+        return dict(
+            rnd_pct="Broken",
+            rnd_pct_link="https://fragforce.org",
+            rnd_pct_name="Broken",
+        )
 
 
 @app.context_processor

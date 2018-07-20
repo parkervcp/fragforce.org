@@ -1,9 +1,51 @@
 import requests
 import fragforce
+import urlparse
+from time import sleep
 
 
 class WebServiceException(Exception):
     pass
+
+
+def fetch_json(url, **kwargs):
+    """ Fetch JSON from the given url. Sleep extra if there have been failures or if there was one for the remote host.
+    """
+    timemult = fragforce.app.config['CACHE_NEG_TIME_MULT']
+    assert timemult > 0, "Expected CACHE_NEG_TIME_MULT[%r] to be > 0" % timemult
+    cache = fragforce.cache.cache
+    host = urlparse.urlparse(url).hostname
+    fail_key = str(host)
+
+    current = cache.get(fail_key)
+    if current is not None and current > 1024:
+        current = cache.dec(fail_key, delta=256)
+    if current is not None and current > 0:
+        # sleep(current)
+        return None
+
+    def final(ok=True):
+        if ok:
+            r = cache.dec(fail_key)
+            # Keep key at/above -CACHE_NEG_BUFF
+            # Only use atomic ops
+            while r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
+                r = cache.inc(fail_key)
+            return r
+        else:
+            r = cache.inc(fail_key)
+            #sleep(r * timemult)
+            return r
+
+    try:
+        r = requests.get(url, data=kwargs)
+        r.raise_for_status()
+        rj = r.json()
+        final(ok=True)
+        return rj
+    except Exception as e:
+        final(ok=False)
+        return None
 
 
 @fragforce.cache.memoize(timeout=fragforce.app.config['CACHE_DONATIONS_TIME'])
@@ -94,15 +136,14 @@ class Team(object):
         :param team_id: the Extra-Life assigned team ID
         """
 
-        url = ("http://www.extra-life.org/"
-               "index.cfm?fuseaction=donorDrive.team&teamID={}&format=json")
-
-        r = requests.get(url.format(team_id))
-        if r.status_code != 200:
-            raise WebServiceException("Could not retrieve Extra-Life team "
-                                      "information.")
-
-        data = r.json()
+        data = fetch_json(
+            "http://www.extra-life.org/index.cfm",
+            fuseaction="donerDrive.team",
+            format="json",
+            teamID=team_id,
+        )
+        if data is None:
+            raise WebServiceException("Could not retrieve Extra-Life team information.")
 
         name = data.get("name", "Extra-Life Team")
         raised = data.get("totalRaisedAmount", 0.0)
@@ -123,15 +164,16 @@ class Team(object):
         if self._participants is not None and not force:
             return self._participants
 
-        url = ("http://www.extra-life.org/index.cfm?"
-               "fuseaction=donorDrive.teamParticipants&teamID={}&format=json")
+        data = fetch_json(
+            "http://www.extra-life.org/index.cfm",
+            fuseaction="donerDrive.teamParticipants",
+            format="json",
+            teamID=self.team_id,
+        )
 
-        r = requests.get(url.format(self.team_id))
-        if r.status_code != 200:
-            raise WebServiceException("Could not retrieve Extra-Life team "
-                                      "participant information.")
+        if data is None:
+            raise WebServiceException("Could not retrieve Extra-Life team participant information.")
 
-        data = r.json()
         self._participants = []
         for pdata in data:
             participant_id = pdata.get("participantID", None)
@@ -197,17 +239,15 @@ class Participant(object):
         
         :param participant_id: The Extra-Life provided participant ID.
         """
-        url = ("http://www.extra-life.org/index.cfm?"
-               "fuseaction=donorDrive.participant&"
-               "participantID={}&format=json")
+        data = fetch_json(
+            "http://www.extra-life.org/index.cfm",
+            fuseaction="donorDrive.participant",
+            format="json",
+            participantID=participant_id,
+        )
 
-        r = requests.get(url.format(participant_id))
-
-        if r.status_code != 200:
-            raise WebServiceException("Could not retrieve Extra-Life "
-                                      "participant information.")
-
-        data = r.json()
+        if data is None:
+            raise WebServiceException("Could not retrieve Extra-Life participant information.")
 
         team_id = data.get("teamID", None)
         is_team_captain = data.get("isTeamCaptain", False)
@@ -234,18 +274,15 @@ class Participant(object):
         if self._donations is not None and not force:
             return self._donations
 
-        url = ("http://www.extra-life.org/index.cfm?"
-               "fuseaction=donorDrive.participantDonations&"
-               "participantID={}&"
-               "format=json")
+        data = fetch_json(
+            "http://www.extra-life.org/index.cfm",
+            fuseaction="donorDrive.participantDonations",
+            format="json",
+            participantID=self.participant_id,
+        )
 
-        r = requests.get(url.format(self.participant_id))
-
-        if r.status_code != 200:
-            raise WebServiceException("Could not retrieve Extra-Life participant "
-                                      "donation information.")
-
-        data = r.json()
+        if data is None:
+            raise WebServiceException("Could not retrieve Extra-Life participant donation information.")
 
         self._donations = []
         for d in data:
