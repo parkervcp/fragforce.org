@@ -67,6 +67,6 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 /.idea/
-/fragforce.org.iml
+*.iml
 /fragforce-website.db
 /venv
