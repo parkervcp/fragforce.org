@@ -60,7 +60,7 @@ def upload_image_form_f(img_form, page):
     # Get the file ext
     # https://docs.python.org/2/library/os.path.html#os.path.splitext
     # Not a simple text split!
-    ext=os.path.splitext(secure_filename(img_form.img.data.filename))[1]
+    ext = os.path.splitext(secure_filename(img_form.img.data.filename))[1]
     if not EXT_MATCH.match(ext):
         raise BadExtensionError("Bad Extension")
     filename = "%s%s" % (uuid.uuid4(), ext)

@@ -2,6 +2,10 @@ import requests
 import fragforce
 import urlparse
 from time import sleep
+from fragforce.logs import root_logger
+import random
+
+logger = root_logger.getChild('extralife')
 
 
 class WebServiceException(Exception):
@@ -11,39 +15,70 @@ class WebServiceException(Exception):
 def fetch_json(url, **kwargs):
     """ Fetch JSON from the given url. Sleep extra if there have been failures or if there was one for the remote host.
     """
+    log = logger.getChild('fetch_json')
     timemult = fragforce.app.config['CACHE_NEG_TIME_MULT']
     assert timemult > 0, "Expected CACHE_NEG_TIME_MULT[%r] to be > 0" % timemult
     cache = fragforce.cache.cache
     host = urlparse.urlparse(url).hostname
     fail_key = str(host)
-
+    extra = dict(fail_key=fail_key, host=host, timemult=timemult)
+    log.debug("Setup to fetch %r%r from %r using key %r", url, kwargs, host, fail_key, extra=extra)
     current = cache.get(fail_key)
-    if current is not None and current > 1024:
-        current = cache.dec(fail_key, delta=256)
+    log.debug("Going to fetch %r%r from %r using key %r: Current=%r", url, kwargs, host, fail_key, current, extra=extra)
+    if current is not None and current > fragforce.app.config['CACHE_NEG_MAX']:
+        current = cache.dec(fail_key, delta=fragforce.app.config['CACHE_NEG_DIV'])
+        log.debug("Going to fetch %r%r from %r using key %r: Current=%r LOWERED!", url, kwargs, host, fail_key, current,
+                  extra=extra)
+
     if current is not None and current > 0:
         # sleep(current)
-        return None
+        if random.randint(0, current) != 0:
+            log.debug("Not going to fetch %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key,
+                      current,
+                      extra=extra)
+            return None
+        else:
+            log.debug("Going to retry: Fetching %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host,
+                      fail_key, current,
+                      extra=extra)
 
-    def final(ok=True):
+    def final(ok=True, extra=extra):
+        extra = extra.copy()
+        extra['ok'] = ok
+        log.debug("Final for %r: ok=%r", host, ok, extra=extra)
         if ok:
             r = cache.dec(fail_key)
+            extra['r'] = r
+            log.debug("Ok - Decreased r to %r", r, extra=extra)
             # Keep key at/above -CACHE_NEG_BUFF
             # Only use atomic ops
-            while r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
-                r = cache.inc(fail_key)
+            if r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
+                delta = 1 + r - (-1 * fragforce.app.config['CACHE_NEG_BUFF'])
+                extra['delta'] = delta
+                log.debug("r below threashold %r | Raising by %r", fragforce.app.config['CACHE_NEG_BUFF'], r,
+                          extra=extra)
+                r = cache.inc(fail_key, delta=delta)
+                extra['r'] = r
+                log.debug("r is now %r", r, extra=extra)
             return r
         else:
             r = cache.inc(fail_key)
-            #sleep(r * timemult)
+            extra['r'] = r
+            log.debug("Not ok - Increased r to %r", r, extra=extra)
+            # sleep(r * timemult)
             return r
 
     try:
+        log.debug("Fetching %r%r", url, kwargs, extra=extra)
         r = requests.get(url, data=kwargs)
+        log.debug("Fetched %r%r with a status code of %r", url, kwargs, r.status_code, extra=extra)
         r.raise_for_status()
         rj = r.json()
+        log.debug("Converted %r%r to json", url, kwargs, extra=extra)
         final(ok=True)
         return rj
     except Exception as e:
+        log.warning("Failed to fetch %r%r with %r", url, kwargs, e, extra=extra, exc_info=True)
         final(ok=False)
         return None
 
@@ -136,20 +171,16 @@ class Team(object):
         :param team_id: the Extra-Life assigned team ID
         """
 
-        data = fetch_json(
-            "http://www.extra-life.org/index.cfm",
-            fuseaction="donerDrive.team",
-            format="json",
-            teamID=team_id,
-        )
+        data = fetch_json("http://www.extra-life.org/api/teams/%d" % int(team_id))
+
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life team information.")
 
         name = data.get("name", "Extra-Life Team")
-        raised = data.get("totalRaisedAmount", 0.0)
+        raised = data.get("sumDonations", 0.0)
         goal = data.get("fundraisingGoal", 0.0)
         avatar_url = data.get("avatarImageURL", None)
-        created = data.get("createdOn", None)
+        created = data.get("createdDateUTC", None)
 
         return cls(team_id, name, raised, goal, avatar_url, created)
 
@@ -164,12 +195,7 @@ class Team(object):
         if self._participants is not None and not force:
             return self._participants
 
-        data = fetch_json(
-            "http://www.extra-life.org/index.cfm",
-            fuseaction="donerDrive.teamParticipants",
-            format="json",
-            teamID=self.team_id,
-        )
+        data = fetch_json("http://www.extra-life.org/api/teams/%d/participants" % int(self.team_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life team participant information.")
@@ -177,7 +203,7 @@ class Team(object):
         self._participants = []
         for pdata in data:
             participant_id = pdata.get("participantID", None)
-            created = pdata.get("createdOn", None)
+            created = pdata.get("createdDateUTC", None)
             display_name = pdata.get("displayName", None)
             avatar_url = pdata.get("avatarImageURL", None)
             team_captain = pdata.get("isTeamCaptain", False)
@@ -239,12 +265,7 @@ class Participant(object):
         
         :param participant_id: The Extra-Life provided participant ID.
         """
-        data = fetch_json(
-            "http://www.extra-life.org/index.cfm",
-            fuseaction="donorDrive.participant",
-            format="json",
-            participantID=participant_id,
-        )
+        data = fetch_json("http://www.extra-life.org/api/participants/%d" % int(participant_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life participant information.")
@@ -252,10 +273,10 @@ class Participant(object):
         team_id = data.get("teamID", None)
         is_team_captain = data.get("isTeamCaptain", False)
         display_name = data.get("displayName", "John Doe")
-        raised = data.get("totalRaisedAmount", 0.0)
+        raised = data.get("sumDonations", 0.0)
         goal = data.get("fundraisingGoal", 0.0)
         avatar_url = data.get("avatarImageURL", None)
-        created = data.get("createdOn", None)
+        created = data.get("createdDateUTC", None)
 
         participant = cls(participant_id, team_id, is_team_captain, display_name,
                           raised, goal, avatar_url, created)
@@ -274,23 +295,18 @@ class Participant(object):
         if self._donations is not None and not force:
             return self._donations
 
-        data = fetch_json(
-            "http://www.extra-life.org/index.cfm",
-            fuseaction="donorDrive.participantDonations",
-            format="json",
-            participantID=self.participant_id,
-        )
+        data = fetch_json("http://www.extra-life.org/api/participants/%d/donations" % int(self.participant_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life participant donation information.")
 
         self._donations = []
         for d in data:
-            donor = d.get("donorName", None)
-            amount = d.get("donationAmount", None)
+            donor = d.get("displayName", None)
+            amount = d.get("amount", None)
             message = d.get("message", None)
             avatar_url = d.get("avatarImageURL", None)
-            created = d.get("created", None)
+            created = d.get("createdDateUTC", None)
 
             donation = Donation(self.participant_id, donor, amount,
                                 message, avatar_url, created)
