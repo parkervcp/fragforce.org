@@ -25,8 +25,8 @@ def fetch_json(url, **kwargs):
     log.debug("Setup to fetch %r%r from %r using key %r", url, kwargs, host, fail_key, extra=extra)
     current = cache.get(fail_key)
     log.debug("Going to fetch %r%r from %r using key %r: Current=%r", url, kwargs, host, fail_key, current, extra=extra)
-    if current is not None and current > 1024:
-        current = cache.dec(fail_key, delta=256)
+    if current is not None and current > fragforce.app.config['CACHE_NEG_MAX']:
+        current = cache.dec(fail_key, delta=fragforce.app.config['CACHE_NEG_DIV'])
         log.debug("Going to fetch %r%r from %r using key %r: Current=%r LOWERED!", url, kwargs, host, fail_key, current,
                   extra=extra)
 
