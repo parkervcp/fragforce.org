@@ -2,6 +2,9 @@ import requests
 import fragforce
 import urlparse
 from time import sleep
+from fragforce.logs import root_logger
+
+logger = root_logger.getChild('extralife')
 
 
 class WebServiceException(Exception):
@@ -11,39 +14,63 @@ class WebServiceException(Exception):
 def fetch_json(url, **kwargs):
     """ Fetch JSON from the given url. Sleep extra if there have been failures or if there was one for the remote host.
     """
+    log = logger.getChild('fetch_json')
     timemult = fragforce.app.config['CACHE_NEG_TIME_MULT']
     assert timemult > 0, "Expected CACHE_NEG_TIME_MULT[%r] to be > 0" % timemult
     cache = fragforce.cache.cache
     host = urlparse.urlparse(url).hostname
     fail_key = str(host)
-
+    extra = dict(fail_key=fail_key, host=host, timemult=timemult)
+    log.debug("Setup to fetch %r%r from %r using key %r", url, kwargs, host, fail_key, extra=extra)
     current = cache.get(fail_key)
+    log.debug("Going to fetch %r%r from %r using key %r: Current=%r", url, kwargs, host, fail_key, current, extra=extra)
     if current is not None and current > 1024:
         current = cache.dec(fail_key, delta=256)
+        log.debug("Going to fetch %r%r from %r using key %r: Current=%r LOWERED!", url, kwargs, host, fail_key, current,
+                  extra=extra)
+
     if current is not None and current > 0:
+        log.debug("Not going to fetch %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key, current,
+                  extra=extra)
         # sleep(current)
         return None
 
     def final(ok=True):
+        extra = extra.copy()
+        extra['ok'] = ok
+        log.debug("Final for %r: ok=%r", host, ok, extra=extra)
         if ok:
             r = cache.dec(fail_key)
+            extra['r']=r
+            log.debug("Ok - Decreased r to %r",r,extra=extra)
             # Keep key at/above -CACHE_NEG_BUFF
             # Only use atomic ops
-            while r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
-                r = cache.inc(fail_key)
+            if r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
+                delta=1+r-(-1 * fragforce.app.config['CACHE_NEG_BUFF'])
+                extra['delta']=delta
+                log.debug("r below threashold %r | Raising by %r",fragforce.app.config['CACHE_NEG_BUFF'],r,extra=extra)
+                r = cache.inc(fail_key,delta=delta)
+                extra['r']=r
+                log.debug("r is now %r",r,extra=extra)
             return r
         else:
             r = cache.inc(fail_key)
-            #sleep(r * timemult)
+            extra['r']=r
+            log.debug("Not ok - Increased r to %r",r,extra=extra)
+            # sleep(r * timemult)
             return r
 
     try:
+        log.debug("Fetching %r%r",url,kwargs,extra=extra)
         r = requests.get(url, data=kwargs)
+        log.debug("Fetched %r%r with a status code of %r",url,kwargs,r.status_code,extra=extra)
         r.raise_for_status()
         rj = r.json()
+        log.debug("Converted %r%r to json",url,kwargs,extra=extra)
         final(ok=True)
         return rj
     except Exception as e:
+        log.warning("Failed to fetch %r%r with %r",url,kwargs,e,extra=extra,exc_info=True)
         final(ok=False)
         return None
 
