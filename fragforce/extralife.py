@@ -18,6 +18,8 @@ def fetch_json(url, **kwargs):
     fail_key = str(host)
 
     current = cache.get(fail_key)
+    if current is not None and current > 1024:
+        current = cache.dec(fail_key, delta=256)
     if current is not None and current > 0:
         # sleep(current)
         return None
