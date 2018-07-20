@@ -116,29 +116,11 @@ init_db()
 
 # Init cache (general)
 if app.config['REDIS_URL']:
-    class IncCache(Cache):
-        def inc(self, key, delta=1):
-            return self._client.incr(name=self.key_prefix + key, amount=delta)
-
-        def dec(self, key, delta=1):
-            return self._client.decr(name=self.key_prefix + key, amount=delta)
-
-
-    cache = IncCache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'redis',
                                'CACHE_REDIS_URL': app.config['REDIS_URL']})
 else:
     # fallback for local testing
-    class IncCache(Cache):
-        def inc(self, key, delta=1):
-            value = (self.get(key) or 0) + delta
-            return value if self.set(key, value) else None
-
-        def dec(self, key, delta=1):
-            value = (self.get(key) or 0) - delta
-            return value if self.set(key, value) else None
-
-
-    cache = IncCache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
+    cache = Cache(app, config={'CACHE_KEY_PREFIX': 'cache', 'CACHE_TYPE': 'simple'})
 
 # Init cache (files)
 if app.config['FILE_UPLOADS']:
