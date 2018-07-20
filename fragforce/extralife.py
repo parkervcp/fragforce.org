@@ -40,7 +40,7 @@ def fetch_json(url, **kwargs):
             log.debug("Going to retry: Fetching %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key, current,
                       extra=extra)
 
-    def final(ok=True):
+    def final(ok=True,extra=extra):
         extra = extra.copy()
         extra['ok'] = ok
         log.debug("Final for %r: ok=%r", host, ok, extra=extra)
