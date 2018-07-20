@@ -18,11 +18,9 @@ def fetch_json(url, **kwargs):
     fail_key = str(host)
 
     current = cache.get(fail_key)
-    if current is None:
-        # Do nothing, we're all good!
-        current = 0
-    elif current > 0:
-        sleep(current)
+    if current is not None and current > 0:
+        # sleep(current)
+        return None
 
     def final(ok=True):
         if ok:
@@ -34,7 +32,7 @@ def fetch_json(url, **kwargs):
             return r
         else:
             r = cache.inc(fail_key)
-            sleep(r * timemult)
+            #sleep(r * timemult)
             return r
 
     try:
