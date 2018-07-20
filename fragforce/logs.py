@@ -4,7 +4,6 @@ import os
 import json
 import logzio.handler
 
-
 COPY_FROM_ENV = set([
     'DEBUG',
     'EXTRALIFE_TEAMID',
@@ -72,4 +71,3 @@ if os.getenv('LOGZIO_API_KEY', None):
     root_logger.debug("logz.io logging enabled")
 else:
     root_logger.debug("logz.io logging disabled")
-

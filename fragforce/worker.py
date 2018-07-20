@@ -1,4 +1,4 @@
-import logging,logging.config
+import logging, logging.config
 import os
 import redis
 from rq import Worker, Queue, Connection
