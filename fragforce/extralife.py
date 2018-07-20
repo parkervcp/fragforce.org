@@ -169,7 +169,7 @@ class Team(object):
         :param team_id: the Extra-Life assigned team ID
         """
 
-        data = fetch_json("http://www.extra-life.org/api/teams/%d" % team_id)
+        data = fetch_json("http://www.extra-life.org/api/teams/%d" % int(team_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life team information.")
@@ -193,7 +193,7 @@ class Team(object):
         if self._participants is not None and not force:
             return self._participants
 
-        data = fetch_json("http://www.extra-life.org/api/teams/%d/participants" % self.team_id)
+        data = fetch_json("http://www.extra-life.org/api/teams/%d/participants" % int(self.team_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life team participant information.")
@@ -263,7 +263,7 @@ class Participant(object):
         
         :param participant_id: The Extra-Life provided participant ID.
         """
-        data = fetch_json("http://www.extra-life.org/api/participants/%d" % participant_id)
+        data = fetch_json("http://www.extra-life.org/api/participants/%d" % int(participant_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life participant information.")
@@ -293,7 +293,7 @@ class Participant(object):
         if self._donations is not None and not force:
             return self._donations
 
-        data = fetch_json("http://www.extra-life.org/api/participants/%d/donations" % self.participant_id)
+        data = fetch_json("http://www.extra-life.org/api/participants/%d/donations" % int(self.participant_id))
 
         if data is None:
             raise WebServiceException("Could not retrieve Extra-Life participant donation information.")
