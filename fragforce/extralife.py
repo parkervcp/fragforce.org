@@ -32,15 +32,17 @@ def fetch_json(url, **kwargs):
 
     if current is not None and current > 0:
         # sleep(current)
-        if random.randint(0,current)!=0:
-            log.debug("Not going to fetch %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key, current,
+        if random.randint(0, current) != 0:
+            log.debug("Not going to fetch %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key,
+                      current,
                       extra=extra)
             return None
         else:
-            log.debug("Going to retry: Fetching %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key, current,
+            log.debug("Going to retry: Fetching %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host,
+                      fail_key, current,
                       extra=extra)
 
-    def final(ok=True,extra=extra):
+    def final(ok=True, extra=extra):
         extra = extra.copy()
         extra['ok'] = ok
         log.debug("Final for %r: ok=%r", host, ok, extra=extra)
