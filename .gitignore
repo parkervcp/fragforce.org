@@ -69,3 +69,4 @@ target/
 /.idea/
 /fragforce.org.iml
 /fragforce-website.db
+/venv
