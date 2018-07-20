@@ -11,8 +11,6 @@ class WebServiceException(Exception):
 def fetch_json(url, **kwargs):
     """ Fetch JSON from the given url. Sleep extra if there have been failures or if there was one for the remote host.
     """
-    timeout = fragforce.app.config['CACHE_NEG_TIME']
-    assert timeout > 0, "Expected CACHE_NEG_TIME[%r] to be > 0" % timeout
     timemult = fragforce.app.config['CACHE_NEG_TIME_MULT']
     assert timemult > 0, "Expected CACHE_NEG_TIME_MULT[%r] to be > 0" % timemult
     cache = fragforce.cache.cache
