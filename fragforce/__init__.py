@@ -148,12 +148,19 @@ def random_participant():
     """ Add a random participant to use for donation links to all page contexts """
     from .extralife import participants
     from random import choice
-    participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
-    return dict(
-        rnd_pct=participant,
-        rnd_pct_link=participant.donate_link(),
-        rnd_pct_name=participant.display_name,
-    )
+    try:
+        participant = choice(participants(app.config['EXTRALIFE_TEAMID']))
+        return dict(
+            rnd_pct=participant,
+            rnd_pct_link=participant.donate_link(),
+            rnd_pct_name=participant.display_name,
+        )
+    except Exception as e:
+        return dict(
+            rnd_pct="Broken",
+            rnd_pct_link="https://fragforce.org",
+            rnd_pct_name="Broken",
+        )
 
 
 @app.context_processor
