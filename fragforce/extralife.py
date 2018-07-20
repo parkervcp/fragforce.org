@@ -3,6 +3,7 @@ import fragforce
 import urlparse
 from time import sleep
 from fragforce.logs import root_logger
+import random
 
 logger = root_logger.getChild('extralife')
 
@@ -33,7 +34,8 @@ def fetch_json(url, **kwargs):
         log.debug("Not going to fetch %r%r from %r using key %r: Current[%r] > 0", url, kwargs, host, fail_key, current,
                   extra=extra)
         # sleep(current)
-        return None
+        if random.randint(0,current)!=0:
+            return None
 
     def final(ok=True):
         extra = extra.copy()
