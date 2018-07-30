@@ -10,7 +10,7 @@ def random_contact():
     baseQ = Q(extra_life_id__isnull=False)
     info = Contact.objects.filter(baseQ).all().aggregate(Min('id'), Max('id'))
     pk = randint(info['id__min'], info['id__max'])
-    r = Contact.objects.filter(pk=pk).first()
+    r = Contact.objects.filter(baseQ).filter(pk=pk).first()
     if r:
         return r
     else:
