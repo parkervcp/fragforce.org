@@ -51,11 +51,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'org_events_upcoming' %}" id="navbarDropdown"
                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Events
+                    Upcoming Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
-                    <div class="dropdown-divider"></div>
                     {% for event in upcoming_events %}
                     <a class="dropdown-item" href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
                     {% endfor %}
