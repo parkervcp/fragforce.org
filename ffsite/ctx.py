@@ -10,6 +10,6 @@ def common_org(request):
         past_events=Event.objects.filter(event_start_date__lt=datetime.datetime.now()).order_by(
             '-event_start_date').all()[:10],
         allsites=SiteAccount.objects.order_by('name').all(),
-        year=str(datetime.datetime.utcnow().year),
+        now=str(datetime.datetime.utcnow()),
         gaid=settings.GOOGLE_ANALYTICS_ID,
     )
