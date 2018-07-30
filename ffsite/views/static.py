@@ -9,8 +9,9 @@ def home(request):
 
 def donate(request):
     """ How to donate page """
+    from ..utils import random_contact
     return render(request, 'ff/root/donate.html', {
-        'rnd_pct': Contact.object.filter(extra_life_id__isnull=False),
+        'rnd_pct': random_contact(),
     })
 
 
