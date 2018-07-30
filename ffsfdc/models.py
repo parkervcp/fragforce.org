@@ -158,6 +158,13 @@ class Contact(models.Model):
     field_hc_lastop = models.CharField(db_column='_hc_lastop', max_length=32, blank=True, null=True)
     field_hc_err = models.TextField(db_column='_hc_err', blank=True, null=True)
 
+    def donate_link(self):
+        if self.extra_life_id:
+            return "https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % (
+                self.extra_life_id,
+            )
+        raise ValueError("No extra life id set for %r" % self)
+
     class Meta:
         managed = False
         db_table = 'contact'

@@ -3,18 +3,34 @@
 {% block title %}How To Donate{% endblock %}
 
 {% block body %}
-
-<pre>
-Donating to Fragforce via Extra-Life (US and Canada only)
-Donate to a random Fragforce team member: Jessica Ingrassellino
-Alternatively, instead of donating to someone else, you can Join the team and raise money yourself!
-You can donate to a user of your choice using http://team.fragforce.org
-Donating to Fragforce via Child's Play (International)
-Go to the FY19 Campaign and click "Donate Now" button, you can register on Tiltify or donate anonymously.
-Pay via PayPal.
-Pat yourself on the back for helping make kid's lives better!
-Alternatively go to our Tiltify Team page and click "Join Us", you'll need to register on the site and confirm the login.
-Then donate to the FY19 Campaign.
-</pre>
-
+<div class="row">
+    <div class="col-lg">
+        <h2>Donating to Fragforce via Extra-Life (US and Canada only)</h2>
+        <div>
+            <ul>
+                <li>Donate to a random Fragforce team member: <a href="{{ rnd_pct.donate_link }}">{{ rnd_pct.name
+                    }}}</a></li>
+                <li>Alternatively, instead of donating to someone else, you can Join the team and raise money
+                    yourself!
+                </li>
+                <li>You can donate to a user of your choice using http://team.fragforce.org</li>
+            </ul>
+        </div>
+        <h2>Donating to Fragforce via Child's Play (International)</h2>
+        <div>
+            <ul>
+                <li>Go to the FY19 Campaign and click "Donate Now" button, you can register on Tiltify or donate
+                    anonymously.
+                </li>
+                <li>Pay via PayPal.</li>
+                <li>Pat yourself on the back for helping make kid's lives better!</li>
+                <li>Alternatively go to our Tiltify Team page and click "Join Us", you'll need to register on the site
+                    and
+                    confirm the login.
+                </li>
+                <li>Then donate to the FY19 Campaign.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

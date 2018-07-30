@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from ffsfdc.models import *
 
 
 def home(request):
@@ -8,7 +9,9 @@ def home(request):
 
 def donate(request):
     """ How to donate page """
-    return render(request, 'ff/root/donate.html', {})
+    return render(request, 'ff/root/donate.html', {
+        'rnd_pct': Contact.object.filter(extra_life_id__isnull=False),
+    })
 
 
 def join(request):
