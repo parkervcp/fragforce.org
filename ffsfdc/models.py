@@ -161,7 +161,7 @@ class Contact(models.Model):
     def donate_link(self):
         if self.extra_life_id:
             return "https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=%d" % (
-                self.extra_life_id,
+                int(self.extra_life_id),
             )
         raise ValueError("No extra life id set for %r" % self)
 
