@@ -1,4 +1,7 @@
-# fragforce.org
+# Fragforce
+## About
+This is a rewrite of Fragforce.org using Django. 
+
 ## Who we are
 Fragforce is the global charity gaming team from Salesforce that is raising money to support kids facing scary stuff
 like social mistreatment and medical issues (i.e. cancer, cystic-fibrosise, accidents, etc). By rallying our
@@ -27,9 +30,12 @@ International team members can raise money for Child's Play, join our Tiltify Te
 participate in an international Fragforce event
 
 ## Packages
+
 ### ffsfdc
 Fragforce org to Fragforce.org linkage
+
 ### fforg
 Project files
+
 ### ffsite
 Fragforce.org pages
