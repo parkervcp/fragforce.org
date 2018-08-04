@@ -5,18 +5,29 @@
 
 {% block body %}
 
-<div>
-    <h2>All Events</h2>
-    {% for event in events %}
-    <div>
-        <h3><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h3>
+{% for event in events %}
+{% if loop.counter0 % 3 == 0 %}
+<div class="row">
+    {% endif %}
+    <div class="col-lg">
+        <h2><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h2>
         <div>
-            FIXME
+
         </div>
     </div>
-    {% empty %}
-    <div>None</div>
-    {% endfor %}
+    {% if loop.counter0 % 3 == 0 %}
 </div>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm">
+        <h2>None</h2>
+        <div>
+            No events :(
+        </div>
+    </div>
+</div>
+{% endfor %}
+
 
 {% endblock %}
