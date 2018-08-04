@@ -4,12 +4,12 @@
 
 
 {% block body %}
-
+<div class="card-group">
 {% for event in events %}
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
-<div class="row card-group">
+    <div class="card-group">
     {% endif %}
-    <div class="col-lg p-3 card">
+        <div class="p-3 card">
         <div class="card-header">
             <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
         </div>
@@ -30,8 +30,8 @@
 </div>
 {% endif %}
 {% empty %}
-<div class="row">
-    <div class="col-sm p-3 card">
+    <div class="card-group">
+        <div class="p-3 card">
         <div class="card-header">None</div>
         <div class="card-body">
             No events :(
@@ -40,5 +40,5 @@
 </div>
 {% endfor %}
 
-
+</div>
 {% endblock %}
