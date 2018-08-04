@@ -4,9 +4,10 @@
 
 
 {% block body %}
-
+<div class="card-group">
 {% for event in events %}
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
+
 <div class="row">
     {% endif %}
     <div class="col-lg p-3">
@@ -44,5 +45,5 @@
 </div>
 {% endfor %}
 
-
+</div>
 {% endblock %}
