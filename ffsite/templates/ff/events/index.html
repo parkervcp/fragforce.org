@@ -15,17 +15,16 @@
                 <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
             </div>
             <div class="card-body">
-                <ul>
-                    <li>{{ event.site.name }}</li>
-                    <li>
-                        {{ event.event_start_date}}<br>
-                        =><br>
-                        {{ event.event_end_date}}
-                    </li>
+                <div>{{ event.site.name }}</div>
+                <div>{{ event.event_start_date}}<br>
+                    =><br>
+                    {{ event.event_end_date}}
+                </div>
+                <div>
                     {% if event.volunteerforce_link %}
-                    <li><a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a></li>
+                    <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
                     {% endif %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>
