@@ -10,7 +10,7 @@
 <div class="row">
     {% endif %}
     <div class="col-lg">
-        <div class="well well-sm">
+        <div class="card bg-faded">
             <h2><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h2>
             <div>
                 <ul>
@@ -29,9 +29,11 @@
 {% empty %}
 <div class="row">
     <div class="col-sm">
-        <h2>None</h2>
-        <div>
-            No events :(
+        <div class="card bg-faded">
+            <h2>None</h2>
+            <div>
+                No events :(
+            </div>
         </div>
     </div>
 </div>
