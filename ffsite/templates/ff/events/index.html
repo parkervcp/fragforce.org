@@ -6,7 +6,7 @@
 {% block body %}
 
 {% for event in events %}
-{% if loop.counter0 % 3 == 0 %}
+{% if loop.counter0 % 3 %}
 <div class="row">
     {% endif %}
     <div class="col-lg">
@@ -24,7 +24,7 @@
             </ul>
         </div>
     </div>
-    {% if loop.counter0 % 3 == 0 %}
+    {% if loop.counter0 % 3 %}
 </div>
 {% endif %}
 {% empty %}
