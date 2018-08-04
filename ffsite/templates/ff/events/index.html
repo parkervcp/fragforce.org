@@ -16,11 +16,9 @@
                 <ul>
                     <li>Site: {{ event.site.name }}</li>
                     <li>Date: {{ event.event_start_date}} to {{ event.event_end_date}}</li>
-                    <li>
-                        {% if event.volunteerforce_link %}
-                        <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                        {% endif %}
-                    </li>
+                    {% if event.volunteerforce_link %}
+                    <li><a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
