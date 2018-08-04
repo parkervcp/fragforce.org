@@ -141,8 +141,6 @@ app.register_blueprint(pages.mod)
 app.register_blueprint(fw.mod)
 
 
-
-
 @app.context_processor
 def random_participant():
     """ Add a random participant to use for donation links to all page contexts """
@@ -260,13 +258,13 @@ def event_info():
         accounts = db_session.query(account).order_by('name').all()
         e_by_a = {}
         for acc in accounts:
-            fnd=db_session.query(ff_events) \
+            fnd = db_session.query(ff_events) \
                 .filter_by(site__c=acc.sfid) \
                 .filter(ff_events.columns.event_end_date__c >= datetime.datetime.utcnow()) \
                 .order_by('event_start_date__c') \
                 .limit(app.config['EVENTS_DROPDOWN_MAX_SOON']).all()
-            if len(fnd)>0:
-                e_by_a[acc]=fnd
+            if len(fnd) > 0:
+                e_by_a[acc] = fnd
         return accounts, events, e_by_a
 
     accounts, events, e_by_a = get_events()
@@ -276,6 +274,7 @@ def event_info():
         accounts=accounts,
         events_by_acc=e_by_a,
     )
+
 
 @app.context_processor
 def page_build():

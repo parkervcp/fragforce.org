@@ -2,6 +2,7 @@ from ffsfdc.models import *
 import datetime
 from django.conf import settings
 
+
 def common_org(request):
     """ Context processors for all ffsite pages """
     return dict(

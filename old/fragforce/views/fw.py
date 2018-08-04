@@ -32,7 +32,6 @@ def tables_ports(fw_id, name, proto):
         fw = validate_firewall(fw_id=fw_id, session=session)
 
 
-
 @mod.route('/firewalls/<uuid:fw_id>/backups/2.3/alias.xml')
 def alias_backup_gen(fw_id):
     """ Return an XML doc that can be restored via the pfsense backup interface. It
