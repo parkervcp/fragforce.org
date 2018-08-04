@@ -12,7 +12,7 @@
     <div class="col-lg">
         <div class="card">
             <div class="card-header">
-                <h2><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h2>
+                <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
             </div>
             <div class="card-body">
                 <ul>
@@ -32,7 +32,7 @@
 <div class="row">
     <div class="col-sm">
         <div class="card bg-faded">
-            <div class="card-header"><h2>None</h2></div>
+            <div class="card-header">None</div>
             <div class="card-body">
                 No events :(
             </div>
