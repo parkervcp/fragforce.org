@@ -11,6 +11,6 @@ def common_org(request):
         past_events=Event.objects.filter(event_start_date__lt=datetime.datetime.now()).order_by(
             '-event_start_date').all()[:settings.MAX_PAST_EVENTS],
         allsites=SiteAccount.objects.order_by('name').all(),
-        now=str(datetime.datetime.utcnow()),
+        now=datetime.datetime.utcnow(),
         gaid=settings.GOOGLE_ANALYTICS_ID,
     )
