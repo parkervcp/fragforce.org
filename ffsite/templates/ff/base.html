@@ -75,7 +75,7 @@
                     <a class="dropdown-item" href="{% url 'org_site' sfid=site.sfid %}">
                         {{ site.name }}
                         {% if site.has_events %}
-                        <i>**</i>
+                        **
                         {% endif %}</a>
                     {% endfor %}
                 </div>
