@@ -17,7 +17,11 @@
             <div class="card-body">
                 <ul>
                     <li>{{ event.site.name }}</li>
-                    <li>{{ event.event_start_date}} to {{ event.event_end_date}}</li>
+                    <li>
+                        {{ event.event_start_date}}<br>
+                        =><br>
+                        {{ event.event_end_date}}
+                    </li>
                     {% if event.volunteerforce_link %}
                     <li><a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a></li>
                     {% endif %}
