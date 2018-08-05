@@ -31,79 +31,81 @@
     {% endif %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Fragforce.org</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<main role="main" class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Fragforce.org</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            {# TODO: Add 'active' class back to nav-item class list #}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'donate' %}">Donate</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'join' %}">Join</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'org_events_upcoming' %}" id="navbarDropdown"
-                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Events
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
-                    <div class="dropdown-divider"></div>
-                    {% for event in upcoming_events %}
-                    <a class="dropdown-item" href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
-                    {% endfor %}
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'org_events' %}">All Events</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'org_sites' %}" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sites
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% for site in allsites %}
-                    <a class="dropdown-item" href="{% url 'org_site' sfid=site.sfid %}">
-                        {{ site.name }}
-                        {% if site.has_events %}
-                        **
-                        {% endif %}</a>
-                    {% endfor %}
-                </div>
-            </li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-            <!-- Left -->
-            <li class="nav-item">
-                <a class="fa fa-twitter fa-lg" href="https://twitter.com/fragforce" target="_blank"></a>
-            </li>
-            <li class="nav-item">
-                <a class="fa fa-facebook fa-lg" href="https://facebook.com/sfdc.fragforce" target="_blank"></a>
-            </li>
-            <li class="nav-item">
-                <a class="fa fa-twitch fa-lg" href="https://www.twitch.tv/fragforce" target="_blank"></a>
-            </li>
-            <li class="nav-item">
-                <a class="fa fa-github fa-lg" href="https://github.com/fragforce" target="_blank"></a>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {# TODO: Add 'active' class back to nav-item class list #}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'donate' %}">Donate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'join' %}">Join</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'org_events_upcoming' %}" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Events
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
+                        <div class="dropdown-divider"></div>
+                        {% for event in upcoming_events %}
+                        <a class="dropdown-item" href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'org_events' %}">All Events</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'org_sites' %}" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sites
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for site in allsites %}
+                        <a class="dropdown-item" href="{% url 'org_site' sfid=site.sfid %}">
+                            {{ site.name }}
+                            {% if site.has_events %}
+                            **
+                            {% endif %}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <!-- Left -->
+                <li class="nav-item">
+                    <a class="fa fa-twitter fa-lg" href="https://twitter.com/fragforce" target="_blank"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="fa fa-facebook fa-lg" href="https://facebook.com/sfdc.fragforce" target="_blank"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="fa fa-twitch fa-lg" href="https://www.twitch.tv/fragforce" target="_blank"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="fa fa-github fa-lg" href="https://github.com/fragforce" target="_blank"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        {% block body %}{% endblock %}
     </div>
-</nav>
-<div class="container-fluid">
-    {% block body %}{% endblock %}
-</div>
+</main>
 <footer class="card-footer text-muted footer">
     <div class="align-center">{% block footer %}{% endblock %}</div>
     <div class="align-center">&copy; Fragforce Elder Council{% if now.year %} 2015-{{ now.year }}{% endif %}</div>
