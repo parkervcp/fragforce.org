@@ -33,6 +33,8 @@ h3 {
 .footer {
     font-size: 60%;
     color: azure;
+    position: absolute;
+    bottom: 0;
 }
 
 .card {
