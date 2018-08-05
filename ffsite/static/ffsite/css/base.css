@@ -33,7 +33,7 @@ h3 {
 .footer {
     font-size: 60%;
     color: azure;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
