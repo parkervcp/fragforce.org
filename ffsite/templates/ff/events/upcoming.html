@@ -1,23 +1,43 @@
 {% extends "ff/base.html" %}
 
-{% block title %}Fragforce Events{% endblock %}
+{% block title %}Upcoming Fragforce Events{% endblock %}
 
 
 {% block body %}
-
-<div>
-    <h2>Upcoming Events</h2>
-    {% for event in events %}
-    <div>
-        <h3><a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a></h3>
-        <div>
-            FIXME
+{% for event in events %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row">
+    {% endif %}
+    <div class="col-lg">
+        <div class="card-header">
+            <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
+        </div>
+        <div class="card-body">
+            <div>{{ event.site.name }}</div>
+            <div>{{ event.event_start_date}}<br>
+                =><br>
+                {{ event.event_end_date}}
+            </div>
+            <div>
+                {% if event.volunteerforce_link %}
+                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                {% endif %}
+            </div>
         </div>
     </div>
-    {% empty %}
-    <div>None</div>
-    {% endfor %}
+    {% if forloop.last or forloop.counter|divisibleby:3 %}
 </div>
+{% endif %}
+{% empty %}
+<div class="card-group">
+    <div class="p-3 card">
+        <div class="card-header">None</div>
+        <div class="card-body">
+            No events :(
+        </div>
+    </div>
+</div>
+{% endfor %}
 
-
+</div>
 {% endblock %}
