@@ -4,15 +4,28 @@
 
 
 {% block body %}
-<ul>
-    {% for site in sites %}
-    <li>
-        <a href="{% url 'org_site' sfid=site.sfid %}">{{ site.name }}</a>
-        {% if site.has_events %}
-        <i>**</i>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+{% for site in sites %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row">
+    {% endif %}
+    <div class="col-sm">
+        <a href="{% url 'org_event' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
+        <div>
+            {{ site.description }}
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm">
+        <h2>None</h2>
+        <div>
+            No Sites :(
+        </div>
+    </div>
+</div>
+{% endfor %}
 
 {% endblock %}
