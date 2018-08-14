@@ -8,7 +8,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm">
+    <div class="col-sm-4">
         <a href="{% url 'org_event' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
         <div>
             {{ site.description }}
@@ -19,7 +19,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm">
+    <div class="col-sm-4">
         <h2>None</h2>
         <div>
             No Sites :(
