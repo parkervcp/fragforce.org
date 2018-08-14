@@ -8,10 +8,8 @@
         <h2>{{ event.name }}</h2>
         <div>
             <div>{{ event.site.name }}</div>
-            <div>{{ event.event_start_date}}<br>
-                =><br>
-                {{ event.event_end_date}}
-            </div>
+            <div>Start: {{ event.event_start_date}}</div>
+            <div>End: {{ event.event_end_date}}</div>
             <div>
                 {% if event.volunteerforce_link %}
                 <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
