@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 border">
         <h1>{{ site.name }}</h1>
         <div>
             {{ site.description }}
@@ -15,7 +15,7 @@
 
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 border">
         <h2>Upcoming Events</h2>
         <div></div>
     </div>
@@ -24,7 +24,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm-4">
+    <div class="col-sm-4 border">
         <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
             <div>{{ event.site.name }}</div>
@@ -44,7 +44,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 border">
         <h3>None</h3>
         <div>
             No Events :(
@@ -55,7 +55,7 @@
 
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 border">
         <h2>Past Events</h2>
         <div></div>
     </div>
@@ -65,7 +65,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm-4">
+    <div class="col-sm-4 border">
         <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
             <div>{{ event.site.name }}</div>
@@ -85,7 +85,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 border">
         <h3>None</h3>
         <div>
             No Events :(
