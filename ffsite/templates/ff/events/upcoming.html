@@ -9,10 +9,10 @@
 <div class="row">
     {% endif %}
     <div class="col-sm">
-        <div class="card-header">
+        <h2>
             <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
-        </div>
-        <div class="card-body">
+        </h2>
+        <div>
             <div>{{ event.site.name }}</div>
             <div>{{ event.event_start_date}}<br>
                 =><br>
@@ -29,15 +29,14 @@
 </div>
 {% endif %}
 {% empty %}
-<div class="card-group">
-    <div class="p-3 card">
-        <div class="card-header">None</div>
-        <div class="card-body">
-            No events :(
+<div class="row">
+    <div class="col-sm">
+        <h2>None</h2>
+        <div>
+            No Events :(
         </div>
     </div>
 </div>
 {% endfor %}
 
-</div>
 {% endblock %}
