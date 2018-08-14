@@ -4,32 +4,50 @@
 
 {% block body %}
 
-<h1>{{ site.name }}</h1>
+<div class="row">
+    <div class="col-lg">
+        <h1>{{ site.name }}</h1>
+        <div>
+            {{ site.description }}
+        </div>
+    </div>
+</div>
 
-<div>
-    <h2>Upcoming</h2>
-    {% for event in site.upcoming %}
-    <div>
-        <h3>{{ event.name }}</h3>
+{% for event in site.upcoming %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row">
+    {% endif %}
+    <div class="col-sm">
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div>
-            FIXME
+            <div>{{ event.site.name }}</div>
+            <div>{{ event.event_start_date}}<br>
+                =><br>
+                {{ event.event_end_date}}
+            </div>
+            <div>
+                {% if event.volunteerforce_link %}
+                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                {% endif %}
+            </div>
         </div>
     </div>
-    {% empty %}
-    <div>None</div>
-    {% endfor %}
+    {% if forloop.last or forloop.counter|divisibleby:3 %}
 </div>
-<div>
-    <h2>Past</h2>
-    {% for event in site.past %}
-    <div>
-        <h3>{{ event.name }}</h3>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm">
+        <h2>None</h2>
         <div>
-            FIXME
+            No Events :(
         </div>
     </div>
-    {% empty %}
-    <div>None</div>
-    {% endfor %}
 </div>
+{% endfor %}
+
+
+
+
+
 {% endblock %}
