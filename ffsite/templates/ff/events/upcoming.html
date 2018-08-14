@@ -9,9 +9,7 @@
 <div class="row">
     {% endif %}
     <div class="col-sm">
-        <h2>Test
-            <a href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
-        </h2>
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div>
             <div>{{ event.site.name }}</div>
             <div>{{ event.event_start_date}}<br>
