@@ -9,7 +9,7 @@
 <div class="row">
     {% endif %}
     <div class="col-sm-4">
-        <a href="{% url 'org_event' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
+        <a href="{% url 'org_site' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
         <div>
             {{ site.description }}
         </div>
