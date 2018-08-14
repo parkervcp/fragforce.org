@@ -7,7 +7,7 @@
     <div class="col-lg">
         <h2>{{ event.name }}</h2>
         <div>
-            <div>{{ event.site.name }}</div>
+            <div>Location: <a href="{% url 'org_site' sfid=event.site.sfid %}">{{ event.site.name }}</a></div>
             <div>Start: {{ event.event_start_date}}</div>
             <div>End: {{ event.event_end_date}}</div>
             <div>
