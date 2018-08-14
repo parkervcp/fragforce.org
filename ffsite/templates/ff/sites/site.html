@@ -13,12 +13,19 @@
     </div>
 </div>
 
+
+<div class="row">
+    <div class="col-lg">
+        <h2>Upcoming Events</h2>
+        <div></div>
+    </div>
+</div>
 {% for event in site.upcoming %}
 {% if forloop.first or forloop.counter0|divisibleby:3 %}
 <div class="row">
     {% endif %}
     <div class="col-sm">
-        <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
             <div>{{ event.site.name }}</div>
             <div>{{ event.event_start_date}}<br>
@@ -38,7 +45,7 @@
 {% empty %}
 <div class="row">
     <div class="col-sm">
-        <h2>None</h2>
+        <h3>None</h3>
         <div>
             No Events :(
         </div>
@@ -47,7 +54,45 @@
 {% endfor %}
 
 
+<div class="row">
+    <div class="col-lg">
+        <h2>Past Events</h2>
+        <div></div>
+    </div>
+</div>
 
+{% for event in site.past %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row">
+    {% endif %}
+    <div class="col-sm">
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
+        <div>
+            <div>{{ event.site.name }}</div>
+            <div>{{ event.event_start_date}}<br>
+                =><br>
+                {{ event.event_end_date}}
+            </div>
+            <div>
+                {% if event.volunteerforce_link %}
+                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm">
+        <h3>None</h3>
+        <div>
+            No Events :(
+        </div>
+    </div>
+</div>
+{% endfor %}
 
 
 {% endblock %}
