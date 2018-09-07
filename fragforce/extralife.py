@@ -55,7 +55,7 @@ def fetch_json(url, **kwargs):
             if r <= (-1 * fragforce.app.config['CACHE_NEG_BUFF']):
                 delta = 1 + r - (-1 * fragforce.app.config['CACHE_NEG_BUFF'])
                 extra['delta'] = delta
-                log.debug("r below threashold %r | Raising by %r", fragforce.app.config['CACHE_NEG_BUFF'], r,
+                log.debug("r below threshold %r | Raising by %r", fragforce.app.config['CACHE_NEG_BUFF'], r,
                           extra=extra)
                 if r > 60000:
                     cache.dec(fail_key, delta=50000)
