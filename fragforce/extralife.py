@@ -59,6 +59,9 @@ def fetch_json(url, **kwargs):
                           extra=extra)
                 if r > 60000:
                     cache.dec(fail_key, delta=50000)
+                if r < -60000:
+                    cache.inc(fail_key, delta=50000)
+
                 r = cache.inc(fail_key, delta=delta)
                 extra['r'] = r
                 log.debug("r is now %r", r, extra=extra)
