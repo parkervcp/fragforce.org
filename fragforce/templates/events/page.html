@@ -10,31 +10,46 @@
 <div class="row">
   <div class="col-sm-98">
     <div class="well">
-      {% if event.address %}
+        {{ event.name }}
+        {{ event.stream_recording_link__c }}
+        {{ event.participant_count__c }}
+        {{ event.open_for_preregistration__c }}
+        {{ event.signinurl__c }}
+        {{ event.event_address_lookup__c }}
+        {{ event.event_information__c }}
+        {{ event.open_for_registration__c }}
+        {% if event.address %}
         <div class="event_info">
-          <b>Event Location:</b> {{event.address}}
+            <b>Event Location:</b> {{event.address}}
         </div>
-      {% endif %}
-      {% if event.start_time %}
+        {% endif %}
+        {% if event.start_time %}
         <div class="event_info">
-          <b>Event starts at:</b> {{event.start_time}}
+            <b>Event starts at:</b> {{event.start_time}}
         </div>
-      {% endif %}
-      {% if event.hours_per_day and event.number_days %}
+        {% endif %}
+        {% if event.hours_per_day and event.number_days %}
         <div class="event_info">
             Event lasts for {{event.number_days}} day{% if event.number_days >1%}s{%endif%}, for {{event.hours_per_day}} hours each day!
         </div>
-      {% elif event.hours_per_day %}
+        {% elif event.hours_per_day %}
         <div class="event_info">
-          Event lasts for <b>{{event.hours_per_day}} hours</b> per day.
+            Event lasts for <b>{{event.hours_per_day}} hours</b> per day.
         </div>
-      {% endif %}
-      {% if event.start_location %}
+        {% endif %}
+        {% if event.start_location %}
         <div class="event_info">
-          Meet at <b>{{event.start_location}}</b> to get started at the event!
+            Meet at <b>{{event.start_location}}</b> to get started at the event!
         </div>
-      {% endif %}
+        {% endif %}
+        {% if event.volunteerforce_link__c %}
+        <div class="event_info">
+            <a href="{{event.volunteerforce_link__c}}">Volunteerforce Event</a>
+        </div>
+        {% endif %}
+
     </div>
   </div>
 </div>
 {% endblock content %}
+fra
