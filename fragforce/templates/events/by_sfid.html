@@ -41,6 +41,10 @@
             </div>
             {% endif %}
 
+            {% if event.participant_count__c > 0 %}
+            <div><b>Registered Participants: </b>{{ event.participant_count__c|round }}</div>
+            {% endif %}
+
             {% if event.volunteerforce_link__c %}
                 <div class="event_info">
                     <b><a href="{{ event.volunteerforce_link__c }}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
@@ -57,10 +61,6 @@
             <div class="event_info">
                 <b><a href="{{ event.stream_recording_link__c }}">Stream Recording</a></b>
             </div>
-            {% endif %}
-
-            {% if event.participant_count__c > 0 %}
-            <div><b>Registered Participants: </b>{{ event.participant_count__c|round }}</div>
             {% endif %}
         </div>
     </div>
