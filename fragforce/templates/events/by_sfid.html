@@ -8,7 +8,7 @@
             <div class="event_info">
                 <b>Information</b>
                 <p>
-                    {{ event.event_information__c|safe }}
+                    {{ event.event_information__c| replace("\n", "<br/>") }}
                 </p>
             </div>
             {% if event.event_start_date__c %}
