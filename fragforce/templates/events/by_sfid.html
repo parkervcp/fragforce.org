@@ -7,16 +7,16 @@
         <div class="well">
             <p>It's Fragforce time!...</p>
 
-            <div><b>Event Name: </b>{{ event.name }}</div>
+            <div><b>Name: </b>{{ event.name }}</div>
             <div class="event_info">
-                <b>Event Information</b>
+                <b>Information</b>
                 <p>
                     {{ event.event_information__c }}
                 </p>
             </div>
             {% if event.event_start_date__c %}
                 <div class="event_info">
-                    <b>Event Start:</b>
+                    <b>Start:</b>
                     {% autoescape false %}
                         {{ event.event_start_date__c|localtime }}
                     {% endautoescape %}
@@ -25,7 +25,7 @@
 
             {% if event.event_end_date__c %}
                 <div class="event_info">
-                    <b>Event Ends:</b>
+                    <b>Ends:</b>
                     {% autoescape false %}
                         {{ event.event_end_date__c|localtime }}
                     {% endautoescape %}
@@ -34,7 +34,7 @@
 
             {% if event.event_address_lookup__c %}
             <div class="event_info">
-                <b>Event Location:</b>
+                <b>Location:</b>
                 <p>
                     {{ event.event_address_lookup__c }}
                 </p>
@@ -60,7 +60,7 @@
             {% endif %}
 
             {% if event.participant_count__c > 0 %}
-            <div><b>Registered Participants: </b>{{ event.participant_count__c }}</div>
+            <div><b>Registered Participants: </b>{{ event.participant_count__c|round }}</div>
             {% endif %}
         </div>
     </div>
