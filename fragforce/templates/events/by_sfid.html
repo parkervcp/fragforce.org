@@ -8,7 +8,7 @@
             <div class="event_info">
                 <b>Information</b>
                 <p>
-                    {{ event.event_information__c }}
+                    {{ event.event_information__c|safe }}
                 </p>
             </div>
             {% if event.event_start_date__c %}
