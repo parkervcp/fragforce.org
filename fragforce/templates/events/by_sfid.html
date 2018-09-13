@@ -9,14 +9,8 @@
 
             <div><b>Event Name: </b>{{ event.name }}</div>
             <div>
-                {{ event.name }}
-                {{ event.stream_recording_link__c }}
-                {{ event.participant_count__c }}
-                {{ event.open_for_preregistration__c }}
-                {{ event.signinurl__c }}
-                {{ event.event_address_lookup__c }}
+                {{ }}
                 {{ event.event_information__c }}
-                {{ event.open_for_registration__c }}
             </div>
             {% if event.event_start_date__c %}
                 <div class="event_info">
@@ -36,40 +30,35 @@
                 </div>
             {% endif %}
 
-            {% if event.use_secondary_address %}
-                {% if account.billingstreet %}
-                    <div class="event_info">
-                        <b>Event Location:</b>
-                        <p>
-                            {{ account.billingstreet }}<br/>
-                            {{ account.billingcity }}, {{ account.billingstate }} {{ account.billingpostalcode }}<br/>
-                            {{ account.billingcountry }}<br/>
-                            {% if account.billinglatitude and account.billinglongitude %}
-                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.billinglatitude }},{{ account.billinglongitude }}">Google Maps</a></b><br/>
-                            {% endif %}
-                        </p>
-                    </div>
-                {% endif %}
-            {% else %}
-                {% if account.shippingstreet %}
-                    <div class="event_info">
-                        <b>Event Location:</b>
-                        <p>
-                            {{ account.shippingstreet }}<br/>
-                            {{ account.shippingcity }}, {{ account.shippingstate }} {{ account.shippingpostalcode }}<br/>
-                            {{ account.shippingcountry }}<br/>
-                            {% if account.shippinglatitude and account.shippinglongitude %}
-                            <b><a href="https://www.google.com/maps/search/?api=1&query={{ account.shippinglatitude }},{{ account.shippinglongitude }}">Google Maps</a></b><br/>
-                            {% endif %}
-                        </p>
-                    </div>
-                {% endif %}
+            {% if event.event_address_lookup__c %}
+            <div class="event_info">
+                <b>Event Location:</b>
+                <p>
+                    {{ event.event_address_lookup__c }}
+                </p>
+            </div>
             {% endif %}
 
             {% if event.volunteerforce_link__c %}
                 <div class="event_info">
-                    <b><a href="{{event.volunteerforce_link__c}}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
+                    <b><a href="{{ event.volunteerforce_link__c }}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
                 </div>
+            {% endif %}
+
+            {% if event.open_for_preregistration__c %}
+            <div class="event_info">
+                <b><a href="{{ event.prereg_url__c }}">Pre-Registration URL</a></b>
+            </div>
+            {% endif %}
+
+            {% if event.stream_recording_link__c %}
+            <div class="event_info">
+                <b><a href="{{ event.stream_recording_link__c }}">Stream Recording</a></b>
+            </div>
+            {% endif %}
+
+            {% if event.participant_count__c > 0 %}
+            <div><b>Registered Participants: </b>{{ event.participant_count__c }}</div>
             {% endif %}
         </div>
     </div>
