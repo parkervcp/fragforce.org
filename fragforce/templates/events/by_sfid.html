@@ -8,9 +8,11 @@
             <p>It's Fragforce time!...</p>
 
             <div><b>Event Name: </b>{{ event.name }}</div>
-            <div>
-                {{ }}
-                {{ event.event_information__c }}
+            <div class="event_info">
+                <b>Event Information</b>
+                <p>
+                    {{ event.event_information__c }}
+                </p>
             </div>
             {% if event.event_start_date__c %}
                 <div class="event_info">
