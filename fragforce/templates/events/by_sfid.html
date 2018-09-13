@@ -36,7 +36,7 @@
             <div class="event_info">
                 <b>Location:</b>
                 <p>
-                    {{ event.event_address_lookup__c }}
+                    {{ event.event_address_lookup__c|safe }}
                 </p>
             </div>
             {% endif %}
