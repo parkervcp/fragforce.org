@@ -8,7 +8,9 @@
             <div class="event_info">
                 <b>Information</b>
                 <p>
+                    {% autoescape false %}
                     {{ event.event_information__c }}
+                    {% endautoescape %}
                 </p>
             </div>
             {% if event.event_start_date__c %}
