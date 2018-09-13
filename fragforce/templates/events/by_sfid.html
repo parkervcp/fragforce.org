@@ -9,7 +9,7 @@
                 <b>Information</b>
                 <p>
                     {% autoescape false %}
-                    {{ event.event_information__c }}
+                    {{ event.event_information__c|e }}
                     {% endautoescape %}
                 </p>
             </div>
