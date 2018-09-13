@@ -8,7 +8,16 @@
             <p>It's Fragforce time!...</p>
 
             <div><b>Event Name: </b>{{ event.name }}</div>
-
+            <div>
+                {{ event.name }}
+                {{ event.stream_recording_link__c }}
+                {{ event.participant_count__c }}
+                {{ event.open_for_preregistration__c }}
+                {{ event.signinurl__c }}
+                {{ event.event_address_lookup__c }}
+                {{ event.event_information__c }}
+                {{ event.open_for_registration__c }}
+            </div>
             {% if event.event_start_date__c %}
                 <div class="event_info">
                     <b>Event Start:</b>
