@@ -49,5 +49,8 @@ a.nav-link {
 }
 
 img.center {
-    position: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
