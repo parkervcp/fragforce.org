@@ -44,7 +44,7 @@
             {% endif %}
 
             {% if event.participant_count > 0 %}
-            <div><b>Registered Participants: </b>{{ event.participant_count|round }}</div>
+            <div><b>Registered Participants: </b>{{ event.participant_count|floatformat }}</div>
             {% endif %}
 
             {% if event.volunteerforce_link %}
