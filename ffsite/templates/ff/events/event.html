@@ -7,12 +7,14 @@
     <div class="col-sm-12 border border-light rounded p-3 m-4 card">
         <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div class="well">
+            {% if event.description %}
             <div class="event_info">
-                <b>Information</b>
+                <b>Overview</b>
                 <p>
                     {{ event.description }}
                 </p>
             </div>
+            {% endif %}
             {% if event.event_start_date %}
             <div class="event_info">
                 <b>Start:</b>
@@ -68,7 +70,7 @@
 </div>
 <div class="row">
     <div class="col-sm-12 border border-light rounded p-3 m-4 card">
-        <h3>Information</h3>
+        <h3>Details</h3>
         <div class="well event_info">
             {% autoescape off %}
             {{ event.event_information }}
