@@ -32,8 +32,12 @@ h3 {
 
 a.nav-link {
     font-family: 'oswald';
-    /*color: #46a4e8; gets overridden*/
     font-size: 115%;
+}
+
+/* Set navbar link color */
+nav .navbar-nav li a {
+    color: #46a4e8 !important;
 }
 
 .footer {
