@@ -60,21 +60,6 @@
                     <a class="nav-link" href="{% url 'join' %}">Join</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{% url 'org_events_upcoming' %}" id="navbarDropdown"
-                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Events
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
-                        <div class="dropdown-divider"></div>
-                        {% for event in upcoming_events %}
-                        <a class="dropdown-item" href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
-                        {% endfor %}
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'org_events' %}">All Events</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="{% url 'org_sites' %}" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sites
@@ -89,6 +74,21 @@
                             **
                             {% endif %}</a>
                         {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'org_events_upcoming' %}" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Events
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'org_events_upcoming' %}">Upcoming Events</a>
+                        <div class="dropdown-divider"></div>
+                        {% for event in upcoming_events %}
+                        <a class="dropdown-item" href="{% url 'org_event' sfid=event.sfid %}">{{ event.name }}</a>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'org_events' %}">All Events</a>
                     </div>
                 </li>
                 <li class="nav-item">
