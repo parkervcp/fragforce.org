@@ -26,7 +26,7 @@
             {% if event.event_end_date %}
             <div class="event_info">
                 <b>Ends:</b>
-                {% autoescape false %}
+                {% autoescape off %}
                 {{ event.event_end_date }}
                 {% endautoescape %}
             </div>
