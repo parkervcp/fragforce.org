@@ -15,18 +15,21 @@ a, a:hover, a:visited, a:active, a:link {
 h1 {
     /*font-size: 110%;*/
     /*font-family: 'Press Start 2P', cursive;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
 }
 
 h2 {
     /*font-family: 'Press Start 2P', cursive;*/
     /*font-size: 100%;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
 }
 
 h3 {
     /*font-size: 80%;*/
     /*font-family: 'Press Start 2P', cursive;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
 }
 
@@ -34,7 +37,13 @@ a.nav-link {
     font-family: 'oswald';
     font-size: 115%;
 }
-
+.nav-item {
+    border: 1px solid grey;
+    border-style: outset;
+    margin: 3px;
+    padding: 1px;
+    border-radius: 8px;
+}
 /* Set navbar link color */
 nav .navbar-nav li a {
     color: #46a4e8 !important;
@@ -66,3 +75,4 @@ hr {
     margin-bottom: 20px;
     width: 75%;
 }
+
