@@ -231,6 +231,8 @@ class Event(models.Model):
     event_address_lookup = models.CharField(db_column='event_address_lookup__c', max_length=1300, blank=True, null=True)
     event_information = models.TextField(db_column='event_information__c', blank=True, null=True)
     open_for_registration = models.NullBooleanField(db_column='open_for_registration__c')
+    # Short description of the event
+    description = models.TextField(db_column='description__c', blank=True, null=True)
 
     class Meta:
         managed = False
