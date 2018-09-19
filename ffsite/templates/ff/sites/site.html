@@ -8,7 +8,15 @@
     <div class="col-lg-12 border border-light rounded p-3 m-4 card">
         <h1>{{ site.name }}</h1>
         <div>
-            {{ site.description }}
+            <p>
+                {% autoescape off %}
+                {% if site.site_info %}
+                {{ site.site_info }}
+                {% else %}}
+                --
+                {% endif %}}
+                {% endautoescape %}
+            </p>
         </div>
     </div>
 </div>

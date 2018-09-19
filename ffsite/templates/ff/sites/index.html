@@ -11,7 +11,15 @@
     <div class="col-sm-4 border border-light rounded p-3 m-4 card">
         <a href="{% url 'org_site' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
         <div>
-            {{ site.description }}
+            <p>
+                {% autoescape off %}
+                {% if site.site_info %}
+                {{ site.site_info }}
+                {% else %}}
+                --
+                {% endif %}}
+                {% endautoescape %}
+            </p>
         </div>
     </div>
     {% if forloop.last or forloop.counter|divisibleby:3 %}
