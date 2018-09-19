@@ -9,6 +9,12 @@
             <div class="event_info">
                 <b>Information</b>
                 <p>
+                    {{ event.description }}
+                </p>
+            </div>
+            <div class="event_info">
+                <b>Information</b>
+                <p>
                     {% autoescape off %}
                     {{ event.event_information }}
                     {% endautoescape %}

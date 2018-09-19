@@ -31,10 +31,15 @@
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
                 </div>
+                <div>
+                    {% if event.description %}
+                    {{ event.description }}
+                    {% endif %}}
+                </div>
             </div>
 
             {% if not forloop.last %}
-            <hr>
+            <hr class="">
             {% endif %}
 
             {% empty %}
@@ -53,6 +58,11 @@
             <div>
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
+                </div>
+                <div>
+                    {% if event.description %}
+                    {{ event.description }}
+                    {% endif %}}
                 </div>
             </div>
 

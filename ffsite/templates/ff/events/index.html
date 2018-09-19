@@ -12,13 +12,10 @@
         <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div>
             <div>{{ event.site.name }}</div>
-            <div>{{ event.event_start_date}}<br>
-                =><br>
-                {{ event.event_end_date}}
-            </div>
+            <div>{{ event.event_start_date}} => {{ event.event_end_date}}</div>
             <div>
-                {% if event.volunteerforce_link %}
-                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                {% if event.description %}
+                {{ event.description }}
                 {% endif %}
             </div>
         </div>
