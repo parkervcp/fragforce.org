@@ -37,6 +37,7 @@ a.nav-link {
     font-family: 'oswald';
     font-size: 115%;
 }
+
 .nav-item {
     border: 2px solid grey;
     border-style: outset;
@@ -44,6 +45,7 @@ a.nav-link {
     padding: 1px;
     border-radius: 8px;
 }
+
 /* Set navbar link color */
 nav .navbar-nav li a {
     color: #46a4e8 !important;
@@ -76,3 +78,6 @@ hr {
     width: 75%;
 }
 
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: #ced4da;
+}
