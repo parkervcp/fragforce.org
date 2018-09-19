@@ -9,10 +9,7 @@
         <div class="well">
             {% if event.description %}
             <div class="event_info">
-                <b>Overview</b>
-                <p>
-                    {{ event.description }}
-                </p>
+                {{ event.description }}
             </div>
             {% endif %}
             {% if event.event_start_date %}
