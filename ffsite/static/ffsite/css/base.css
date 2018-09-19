@@ -30,11 +30,11 @@ h3 {
     color: #46a4e8;
 }
 
-/*a.nav-link {*/
-/*font-family: 'Press Start 2P', cursive;*/
-/*!*color: #46a4e8; gets overridden*!*/
-/*font-size: 75%;*/
-/*}*/
+a.nav-link {
+    font-family: 'oswald';
+    /*color: #46a4e8; gets overridden*/
+    font-size: 75%;
+}
 
 .footer {
     font-size: 60%;
