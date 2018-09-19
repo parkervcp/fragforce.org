@@ -58,3 +58,6 @@ div.center {
     margin-right: auto;
     width: 50%;
 }
+
+div.row > div.col-lg {
+}
