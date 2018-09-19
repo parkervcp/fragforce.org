@@ -47,3 +47,7 @@ a.nav-link {
 .card {
     background-color: #253137;
 }
+
+img.center {
+    position: center;
+}
