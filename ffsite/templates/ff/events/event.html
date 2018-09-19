@@ -4,17 +4,62 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-lg">
-        <h2>{{ event.name }}</h2>
-        <div>
-            <div>Location: <a href="{% url 'org_site' sfid=event.site.sfid %}">{{ event.site.name }}</a></div>
-            <div>Start: {{ event.event_start_date}}</div>
-            <div>End: {{ event.event_end_date}}</div>
-            <div>
-                {% if event.volunteerforce_link %}
-                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                {% endif %}
+    <div class="col-sm-12">
+        <div class="well">
+            <div class="event_info">
+                <b>Information</b>
+                <p>
+                    {{ event.event_information|safe }}
+                </p>
             </div>
+            {% if event.event_start_date %}
+            <div class="event_info">
+                <b>Start:</b>
+                {% autoescape false %}
+                {{ event.event_start_date|localtime }}
+                {% endautoescape %}
+            </div>
+            {% endif %}
+
+            {% if event.event_end_date %}
+            <div class="event_info">
+                <b>Ends:</b>
+                {% autoescape false %}
+                {{ event.event_end_date|localtime }}
+                {% endautoescape %}
+            </div>
+            {% endif %}
+
+            {% if event.event_address_lookup %}
+            <div class="event_info">
+                <b>Location:</b>
+                <p>
+                    {{ event.event_address_lookup|safe }}
+                </p>
+            </div>
+            {% endif %}
+
+            {% if event.participant_count > 0 %}
+            <div><b>Registered Participants: </b>{{ event.participant_count|round }}</div>
+            {% endif %}
+
+            {% if event.volunteerforce_link %}
+            <div class="event_info">
+                <b><a href="{{ event.volunteerforce_link }}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
+            </div>
+            {% endif %}
+
+            {% if event.open_for_preregistration %}
+            <div class="event_info">
+                <b><a href="{{ event.prereg_url }}">Pre-Registration URL</a></b>
+            </div>
+            {% endif %}
+
+            {% if event.stream_recording_link %}
+            <div class="event_info">
+                <b><a href="{{ event.stream_recording_link }}">Stream Recording</a></b>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
