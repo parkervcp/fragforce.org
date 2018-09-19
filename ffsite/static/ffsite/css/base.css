@@ -13,19 +13,19 @@ a, a:hover, a:visited, a:active, a:link {
 }
 
 h1 {
-    font-size: 110%;
+    /*font-size: 110%;*/
     /*font-family: 'Press Start 2P', cursive;*/
     color: #46a4e8;
 }
 
 h2 {
     /*font-family: 'Press Start 2P', cursive;*/
-    font-size: 100%;
+    /*font-size: 100%;*/
     color: #46a4e8;
 }
 
 h3 {
-    font-size: 80%;
+    /*font-size: 80%;*/
     /*font-family: 'Press Start 2P', cursive;*/
     color: #46a4e8;
 }
