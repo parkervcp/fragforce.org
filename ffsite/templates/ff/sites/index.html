@@ -8,7 +8,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:2 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm-6 border border-light rounded p-3 m-4 card">
+    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
         <a href="{% url 'org_site' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
         <div>
             <p>
@@ -27,7 +27,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm-6 border border-light rounded p-3 m-4 card">
+    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
         <h2>None</h2>
         <div>
             No Sites :(
