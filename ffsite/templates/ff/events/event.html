@@ -5,19 +5,12 @@
 {% block body %}
 <div class="row">
     <div class="col-sm-12 border border-light rounded p-3 m-4 card">
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div class="well">
             <div class="event_info">
                 <b>Information</b>
                 <p>
                     {{ event.description }}
-                </p>
-            </div>
-            <div class="event_info">
-                <b>Information</b>
-                <p>
-                    {% autoescape off %}
-                    {{ event.event_information }}
-                    {% endautoescape %}
                 </p>
             </div>
             {% if event.event_start_date %}
@@ -70,6 +63,16 @@
                 <b><a href="{{ event.stream_recording_link }}">Stream Recording</a></b>
             </div>
             {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 border border-light rounded p-3 m-4 card">
+        <h3>Information</h3>
+        <div class="well event_info">
+            {% autoescape off %}
+            {{ event.event_information }}
+            {% endautoescape %}
         </div>
     </div>
 </div>
