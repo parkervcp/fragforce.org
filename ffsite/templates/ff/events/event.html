@@ -9,14 +9,16 @@
             <div class="event_info">
                 <b>Information</b>
                 <p>
-                    {{ event.event_information|safe }}
+                    {% autoescape off %}
+                    {{ event.event_information }}
+                    {% endautoescape %}
                 </p>
             </div>
             {% if event.event_start_date %}
             <div class="event_info">
                 <b>Start:</b>
-                {% autoescape false %}
-                {{ event.event_start_date|localtime }}
+                {% autoescape off %}
+                {{ event.event_start_date }}
                 {% endautoescape %}
             </div>
             {% endif %}
@@ -25,7 +27,7 @@
             <div class="event_info">
                 <b>Ends:</b>
                 {% autoescape false %}
-                {{ event.event_end_date|localtime }}
+                {{ event.event_end_date }}
                 {% endautoescape %}
             </div>
             {% endif %}
@@ -34,7 +36,9 @@
             <div class="event_info">
                 <b>Location:</b>
                 <p>
-                    {{ event.event_address_lookup|safe }}
+                    {% autoescape off %}
+                    {{ event.event_address_lookup }}
+                    {% endautoescape %}
                 </p>
             </div>
             {% endif %}
