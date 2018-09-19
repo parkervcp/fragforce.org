@@ -28,14 +28,8 @@
             {% for event in site.upcoming %}
             <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
             <div>
-                <div>{{ event.site.name }}</div>
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
-                </div>
-                <div>
-                    {% if event.volunteerforce_link %}
-                    <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                    {% endif %}
                 </div>
             </div>
             {% empty %}
@@ -52,14 +46,8 @@
             {% for event in site.past %}
             <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
             <div>
-                <div>{{ event.site.name }}</div>
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
-                </div>
-                <div>
-                    {% if event.volunteerforce_link %}
-                    <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                    {% endif %}
                 </div>
             </div>
             {% empty %}
