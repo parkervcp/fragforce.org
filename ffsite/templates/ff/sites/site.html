@@ -21,88 +21,55 @@
     </div>
 </div>
 
-<hr>
-
 <div class="row">
     <div class="col-lg border border-light rounded p-3 m-4 card">
         <h2>Upcoming Events</h2>
-        <div></div>
-    </div>
-</div>
-{% for event in site.upcoming %}
-{% if forloop.first or forloop.counter0|divisibleby:2 %}
-<div class="row">
-    {% endif %}
-    <div class="col-sm border border-light rounded p-3 m-4 card">
-        <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
-            <div>{{ event.site.name }}</div>
-            <div>{{ event.event_start_date}}<br>
-                =><br>
-                {{ event.event_end_date}}
-            </div>
+            {% for event in site.upcoming %}
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
             <div>
-                {% if event.volunteerforce_link %}
-                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                {% endif %}
+                <div>{{ event.site.name }}</div>
+                <div>{{ event.event_start_date}}<br>
+                    =><br>
+                    {{ event.event_end_date}}
+                </div>
+                <div>
+                    {% if event.volunteerforce_link %}
+                    <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </div>
-    {% if forloop.last or forloop.counter|divisibleby:2 %}
-</div>
-{% endif %}
-{% empty %}
-<div class="row">
-    <div class="col-sm border border-light rounded p-3 m-4 card">
-        <h3>None</h3>
-        <div>
-            No Events :(
+            {% empty %}
+            <div>No Events :(</div>
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endfor %}
-
-<hr>
 
 <div class="row">
     <div class="col-lg border border-light rounded p-3 m-4 card">
         <h2>Past Events</h2>
-        <div></div>
-    </div>
-</div>
-
-{% for event in site.past %}
-{% if forloop.first or forloop.counter0|divisibleby:2 %}
-<div class="row">
-    {% endif %}
-    <div class="col-sm border border-light rounded p-3 m-4 card">
-        <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
-            <div>{{ event.site.name }}</div>
-            <div>{{ event.event_start_date}}<br>
-                =><br>
-                {{ event.event_end_date}}
-            </div>
+            {% for event in site.past %}
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
             <div>
-                {% if event.volunteerforce_link %}
-                <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
-                {% endif %}
+                <div>{{ event.site.name }}</div>
+                <div>{{ event.event_start_date}}<br>
+                    =><br>
+                    {{ event.event_end_date}}
+                </div>
+                <div>
+                    {% if event.volunteerforce_link %}
+                    <a href="{{ event.volunteerforce_link }}">Volunteer Force Event</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </div>
-    {% if forloop.last or forloop.counter|divisibleby:2 %}
-</div>
-{% endif %}
-{% empty %}
-<div class="row">
-    <div class="col-sm border border-light rounded p-3 m-4 card">
-        <h3>None</h3>
-        <div>
-            No Events :(
+            {% empty %}
+            <div>No Events :(</div>
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endfor %}
 
 
 {% endblock %}
