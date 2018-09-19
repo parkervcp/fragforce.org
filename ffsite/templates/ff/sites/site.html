@@ -33,7 +33,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:2 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
         <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
             <div>{{ event.site.name }}</div>
@@ -53,7 +53,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
         <h3>None</h3>
         <div>
             No Events :(
@@ -75,7 +75,7 @@
 {% if forloop.first or forloop.counter0|divisibleby:2 %}
 <div class="row">
     {% endif %}
-    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
         <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
         <div>
             <div>{{ event.site.name }}</div>
@@ -95,7 +95,7 @@
 {% endif %}
 {% empty %}
 <div class="row">
-    <div class="col-sm-4 border border-light rounded p-3 m-4 card">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
         <h3>None</h3>
         <div>
             No Events :(
