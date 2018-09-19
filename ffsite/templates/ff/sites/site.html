@@ -26,7 +26,7 @@
         <h2>Upcoming Events</h2>
         <div>
             {% for event in site.upcoming %}
-            <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
             <div>
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
@@ -44,7 +44,7 @@
         <h2>Past Events</h2>
         <div>
             {% for event in site.past %}
-            <a href="{% url 'org_event' sfid=event.sfid %}"><h3>{{ event.name }}</h3></a>
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
             <div>
                 <div>
                     {{ event.event_start_date}} => {{ event.event_end_date}}
