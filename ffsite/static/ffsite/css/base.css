@@ -82,8 +82,15 @@ hr {
 .dropdown-item:focus, .dropdown-item:hover {
     background-color: #ced4da;
 }
+
 .centerimage {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
+.sticky {
+    position: fixed;
+    top: 0;
+}
+
