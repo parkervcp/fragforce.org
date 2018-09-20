@@ -29,6 +29,8 @@ h2 {
     /*font-size: 100%;*/
     font-family: 'oswald' !important;
     color: #46a4e8;
+    border-bottom: 2px solid #46a4e8;
+    padding-bottom: 2px;
 }
 
 h3 {
@@ -54,6 +56,20 @@ a.nav-link {
 /* Set navbar link color */
 nav .navbar-nav li a {
     color: #46a4e8 !important;
+}
+
+.navbar-nav .nav-link {
+    line-height: 1;
+    padding: 2px 5px 5px;
+}
+
+navbar-nav .nav-item {
+   background-color: #f2f2f2;
+}
+
+.navbar-right .nav-item {
+    border: none;
+    background-color: transparent !important;
 }
 
 .footer {
