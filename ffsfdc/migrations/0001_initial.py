@@ -66,7 +66,6 @@ class Migration(migrations.Migration):
                 ('sfid', models.CharField(blank=True, max_length=18, null=True, unique=True)),
                 ('field_hc_lastop', models.CharField(blank=True, db_column='_hc_lastop', max_length=32, null=True)),
                 ('field_hc_err', models.TextField(blank=True, db_column='_hc_err', null=True)),
-                ('contact_url', models.CharField(db_column='ContactURL__c', max_length=1300, blank=True, null=True)),
             ],
             options={
                 'db_table': 'account',
