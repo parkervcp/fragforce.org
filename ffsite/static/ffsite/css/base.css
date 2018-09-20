@@ -39,7 +39,6 @@ a.nav-link {
 }
 
 .nav-item {
-    width: 100px;
     border: 1px solid grey;
     /* border-style: outset; */
     margin: 3px;
