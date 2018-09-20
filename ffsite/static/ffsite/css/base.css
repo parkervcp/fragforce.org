@@ -65,6 +65,7 @@ nav .navbar-nav li a {
 }
 
 .card {
+    border: none;
     background-color: #253137;
 }
 
