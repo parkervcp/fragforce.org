@@ -125,3 +125,6 @@ hr {
     padding: 0 !important
 }
 
+.border-light {
+    border: none !important;    
+}
