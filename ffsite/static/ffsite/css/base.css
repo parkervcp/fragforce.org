@@ -8,6 +8,10 @@ body {
     background-color: #253137;
 }
 
+.header-color {
+    background-color: #37474f;
+}
+
 a, a:hover, a:visited, a:active, a:link {
     color: #46a4e8;
     text-decoration: none;
