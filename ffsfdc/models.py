@@ -124,8 +124,8 @@ class SiteAccount(models.Model):
     sfid = models.CharField(unique=True, max_length=18, blank=True, null=True)
     field_hc_lastop = models.CharField(db_column='_hc_lastop', max_length=32, blank=True, null=True)
     field_hc_err = models.TextField(db_column='_hc_err', blank=True, null=True)
-    site_info = models.TextField(db_column='site_info__c', blank=True, null=True)
-    
+    site_info = models.TextField(db_column='site_info__c', blank=True, null=True
+                                 
     class Meta:
         managed = False
         db_table = 'account'
