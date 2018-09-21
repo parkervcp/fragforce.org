@@ -4,7 +4,12 @@
 }
 
 body {
-    background-color: #37474f;
+    /* background-color: #37474f; */
+    background-color: #253137;
+}
+
+.header-color {
+    background-color: #37474f !important;
 }
 
 a, a:hover, a:visited, a:active, a:link {
@@ -15,18 +20,23 @@ a, a:hover, a:visited, a:active, a:link {
 h1 {
     /*font-size: 110%;*/
     /*font-family: 'Press Start 2P', cursive;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
 }
 
 h2 {
     /*font-family: 'Press Start 2P', cursive;*/
     /*font-size: 100%;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
+    border-bottom: 2px solid #46a4e8;
+    padding-bottom: 2px;
 }
 
 h3 {
     /*font-size: 80%;*/
     /*font-family: 'Press Start 2P', cursive;*/
+    font-family: 'oswald' !important;
     color: #46a4e8;
 }
 
@@ -35,9 +45,31 @@ a.nav-link {
     font-size: 115%;
 }
 
+.nav-item {
+    border: 1px solid grey;
+    /* border-style: outset; */
+    margin: 3px;
+    padding: 3px !important;
+    border-radius: 8px;
+}
+
 /* Set navbar link color */
 nav .navbar-nav li a {
     color: #46a4e8 !important;
+}
+
+.navbar-nav .nav-link {
+    line-height: 1;
+    padding: 2px 5px 5px;
+}
+
+.navbar-nav .nav-item {
+   background-color: #f2f2f2;
+}
+
+.navbar-right .nav-item {
+    border: none;
+    background-color: transparent !important;
 }
 
 .footer {
@@ -49,6 +81,7 @@ nav .navbar-nav li a {
 }
 
 .card {
+    border: none;
     background-color: #253137;
 }
 
@@ -65,4 +98,33 @@ hr {
     margin-top: 20px;
     margin-bottom: 20px;
     width: 75%;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: #ced4da;
+}
+
+.centerimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+}
+
+.menu-pad {
+    margin-top: 75px !important;
+}
+
+.p-3{
+    padding: 0 !important
+}
+
+.border-light {
+    border: none !important;    
 }
