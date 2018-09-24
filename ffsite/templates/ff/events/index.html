@@ -13,7 +13,9 @@
         <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
         <div>
             <div>{{ event.site.name }}</div>
+            {% autoescape off %}
             <div>{{ event.event_start_date|localtime }} => {{ event.event_end_date|localtime }}</div>
+            {% endautoescape %}
             <div>
                 {% if event.description %}
                 {{ event.description }}

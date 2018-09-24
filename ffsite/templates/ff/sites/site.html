@@ -32,7 +32,9 @@
             <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
             <div>
                 <div>
+                    {% autoescape off %}
                     {{ event.event_start_date|localtime }} => {{ event.event_end_date|localtime }}
+                    {% endautoescape %}
                 </div>
                 <div>
                     {% if event.description %}
@@ -60,7 +62,9 @@
             <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
             <div>
                 <div>
+                    {% autoescape off %}
                     {{ event.event_start_date|localtime }} => {{ event.event_end_date|localtime }}
+                    {% endautoescape %}
                 </div>
                 <div>
                     {% if event.description %}
