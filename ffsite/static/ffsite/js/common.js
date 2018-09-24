@@ -1,7 +1,7 @@
 // Convert to local tz
 function toLocal(dt) {
     dt = new Date(dt);
-    return dt.toString();
+    return dt.toISOString();
 }
 
 // Update an object's value to tz
