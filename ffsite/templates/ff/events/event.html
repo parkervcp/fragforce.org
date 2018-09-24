@@ -1,4 +1,5 @@
 {% extends "ff/base.html" %}
+{% load tz %}
 
 {% block title %}{{ event.name }}{% endblock %}
 
@@ -16,7 +17,7 @@
             <div class="event_info">
                 <b>Start:</b>
                 {% autoescape off %}
-                {{ event.event_start_date }}
+                {{ event.event_start_date|localtime }}
                 {% endautoescape %}
             </div>
             {% endif %}
@@ -25,7 +26,7 @@
             <div class="event_info">
                 <b>Ends:</b>
                 {% autoescape off %}
-                {{ event.event_end_date }}
+                {{ event.event_end_date|localtime }}
                 {% endautoescape %}
             </div>
             {% endif %}
