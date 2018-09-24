@@ -1,7 +1,7 @@
 // Convert to local tz
 function toLocal(dt) {
     dt = new Date(dt);
-    return dt.toLocaleString() + "(" + dt.timezoneOffset + ")";
+    return dt.toLocaleString() + "[" + dt.getTimezoneOffset() + "]";
 }
 
 // Update an object's value to tz
