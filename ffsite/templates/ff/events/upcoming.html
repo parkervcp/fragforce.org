@@ -1,0 +1,37 @@
+{% extends "ff/base.html" %}
+
+{% block title %}Upcoming Fragforce Events{% endblock %}
+
+
+{% block body %}
+{% for event in events %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row">
+    {% endif %}
+    <div class="col-sm border border-light rounded p-3 m-4 card">
+        <a href="{% url 'org_event' sfid=event.sfid %}"><h2>{{ event.name }}</h2></a>
+        <div>
+            <div>{{ event.site.name }}</div>
+            <div>{{ event.event_start_date}} => {{ event.event_end_date}}</div>
+            <div>
+                {% if event.description %}
+                {{ event.description }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
+        <h2>None</h2>
+        <div>
+            No Events :(
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

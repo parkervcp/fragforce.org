@@ -1,3 +1,0 @@
-{# Ports to always allow - Used to prevent locking ourselves out of firewalls #}
-53
-123

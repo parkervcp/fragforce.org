@@ -1,0 +1,83 @@
+{% extends "ff/base.html" %}
+
+{% block title %}{{ site.name }}{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg border border-light rounded p-3 m-4 card">
+        <h1>{{ site.name }}</h1>
+        <div>
+            <p>
+                {% autoescape off %}
+                {% if site.site_info %}
+                {{ site.site_info }}
+                {% else %}
+                --
+                {% endif %}
+                {% endautoescape %}
+                <br/>
+                <a href="{{ site.contacturl }}">Click here to sign up for more Info!</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg border border-light rounded p-3 m-4 card">
+        <h2>Upcoming Events</h2>
+        <div>
+            {% for event in site.upcoming %}
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
+            <div>
+                <div>
+                    {{ event.event_start_date}} => {{ event.event_end_date}}
+                </div>
+                <div>
+                    {% if event.description %}
+                    {{ event.description }}
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if not forloop.last %}
+            <hr class="">
+            {% endif %}
+
+            {% empty %}
+            <div>No Events :(</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg border border-light rounded p-3 m-4 card">
+        <h2>Past Events</h2>
+        <div>
+            {% for event in site.past %}
+            <a href="{% url 'org_event' sfid=event.sfid %}"><h4>{{ event.name }}</h4></a>
+            <div>
+                <div>
+                    {{ event.event_start_date}} => {{ event.event_end_date}}
+                </div>
+                <div>
+                    {% if event.description %}
+                    {{ event.description }}
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if not forloop.last %}
+            <hr>
+            {% endif %}
+
+            {% empty %}
+            <div>No Events :(</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

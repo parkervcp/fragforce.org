@@ -1,38 +1,64 @@
 {
   "name": "fragforce.org",
   "description": "Fragforce Dev PR",
-  "scripts": {},
+  "scripts": {
+    "postdeploy": "pg_dump --schema=$HC_SCHEMA $HC_RO_URL | psql $DATABASE_URL && bundle exec rake db:migrate"
+  },
   "env": {
-    "CACHE_DONATIONS_TIME": {
-      "required": true
-    },
+    "HC_RO_SCHEMA": "org",
     "DEBUG": {
       "required": true
     },
     "EXTRALIFE_TEAMID": {
       "required": true
     },
-    "REDIS_URL": {
+    "HC_RO_URL": {
       "required": true
     },
     "SECRET_KEY": {
-      "required": true
-    },
-    "SECTION_MAX_LINKS": {
-      "required": true
-    },
-    "THREADS_PER_PAGE": {
-      "required": true
+      "required": true,
+      "description": "A secret key used by Django for various tasks",
+      "generator": "secret"
     }
   },
-  "formation": {},
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
   "addons": [
-    "heroku-postgresql",
-    "heroku-redis",
+    {
+      "plan": "heroku-postgresql:standard-0",
+      "as": "DATABASE",
+      "options": {
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "FILE",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "CACHE",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    }
   ],
   "buildpacks": [
     {
       "url": "heroku/python"
     }
-  ]
+  ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "python manage.py test"
+      }
+    }
+  }
 }
