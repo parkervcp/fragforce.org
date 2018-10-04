@@ -20,6 +20,7 @@ def teams(request):
     return JsonResponse(
         [
             model_to_dict(t, fields=[field.name for field in TeamModel._meta.fields])
-            for t in TeamModel.objects.all()],
+            for t in TeamModel.objects.all()
+        ],
         safe=False,
     )
