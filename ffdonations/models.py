@@ -29,3 +29,33 @@ class TeamModel(models.Model):
     sumDonations = models.FloatField(verbose_name="Donations Total", null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
+
+
+class DonationModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Extra-Life
+    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donation ID", null=False)
+
+
+class DonorModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Extra-Life
+    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
+
+
+class ParticipantModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Extra-Life
+    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
