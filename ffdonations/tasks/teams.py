@@ -76,6 +76,7 @@ def update_teams(self, teams=None):
         tm.numDonations = team.numDonations
         tm.sumDonations = team.sumDonations
         tm.event = evt
+        tm.raw = team.raw
         tm.save()
         ret.append(tm.guid)
     return ret
