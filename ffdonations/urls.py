@@ -15,14 +15,8 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
+from django.urls import path
+from ffsite.views import *
 
 urlpatterns = [
-    path('', include('ffsite.urls')),
-    path('donations/', include('ffdonations.urls')),
 ]
-
-# Only enable the admin site when in debug mode (for now)
-if settings.DEBUG:
-    urlpatterns.append(path('admin/', admin.site.urls))
