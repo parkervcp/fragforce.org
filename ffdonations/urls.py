@@ -18,4 +18,5 @@ from ffdonations.views import *
 
 urlpatterns = [
     path('test', testView, name='testview'),
+    path('teams', teams, name='teams'),
 ]
