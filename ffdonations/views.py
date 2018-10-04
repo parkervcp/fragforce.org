@@ -14,12 +14,6 @@ def teams(request):
     from django.forms.models import model_to_dict
     update_teams_if_needed.delay()
     return JsonResponse(
-        [
-            model_to_dict(
-                t,
-                fields=['id', 'guid'] + [field.name for field in TeamModel._meta.fields],
-            )
-            for t in TeamModel.objects.all()
-        ],
+        TeamModel.objects.all().values(),
         safe=False,
     )
