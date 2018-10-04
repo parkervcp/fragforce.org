@@ -34,7 +34,7 @@ class Teams(DonorDriveBase):
     def teams(self):
         """ Return a generator of all teams as Team named tuples """
         fresp = self.fetch(sub_url=self.URL_TEAMS)
-        for t in fresp.data:
+        for t in fresp:
             yield self._team_to_team(t)
 
     def team(self, teamID):
@@ -45,5 +45,5 @@ class Teams(DonorDriveBase):
     def event_teams(self, eventID):
         """ Return a generator of all teams as Team named tuples for the given event """
         fresp = self.fetch(sub_url=urljoin(self.URL_EVENTS, str(eventID), self.URL_TEAMS))
-        for t in fresp.data:
+        for t in fresp:
             yield self._team_to_team(t)
