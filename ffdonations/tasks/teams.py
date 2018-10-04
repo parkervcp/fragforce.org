@@ -20,12 +20,12 @@ def update_teams_if_needed(self):
 
     # Force an update if it's been more than EL_TEAM_UPDATE_FREQUENCY_MAX since last
     # update for any record
-    if bq.filter(created__lte=maxc).count() > 0:
+    if bq.filter(last_updated__lte=maxc).count() > 0:
         return doupdate()
 
     # Skip updating if it's been less than EL_TEAM_UPDATE_FREQUENCY_MIN since last update
     # for any record
-    if bq.filter(created__gte=minc).count() > 0:
+    if bq.filter(last_updated__gte=minc).count() > 0:
         return None
 
     # Guess we'll do an update!
