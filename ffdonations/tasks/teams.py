@@ -2,6 +2,34 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from extralifeapi.teams import Team, Teams
 from ..models import *
+from django.conf import settings
+import datetime
+
+
+@shared_task(bind=True)
+def update_teams_if_needed(self):
+    """ Update the team list if required """
+
+    def doupdate():
+        return update_teams()
+
+    minc = datetime.datetime.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
+    maxc = datetime.datetime.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
+
+    bq = TeamModel.objects.filter(tracked=True)
+
+    # Force an update if it's been more than EL_TEAM_UPDATE_FREQUENCY_MAX since last
+    # update for any record
+    if bq.filter(created__lte=maxc).count() > 0:
+        return doupdate()
+
+    # Skip updating if it's been less than EL_TEAM_UPDATE_FREQUENCY_MIN since last update
+    # for any record
+    if bq.filter(created__gte=minc).count() > 0:
+        return None
+
+    # Guess we'll do an update!
+    return doupdate()
 
 
 @shared_task(bind=True)
