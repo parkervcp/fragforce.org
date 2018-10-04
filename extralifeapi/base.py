@@ -10,7 +10,7 @@ FetchResponse = namedtuple('FetchResponse', ['data', 'headers', 'urls'])
 
 
 class DonorDriveBase(object):
-    DEFAULT_BASE_URL = 'http://www.extra-life.org/api'
+    DEFAULT_BASE_URL = 'http://www.extra-life.org/api/'
     RE_MATCH_LINK = re.compile(r'^\<(.*)\>;rel="(.*)"')
 
     def __init__(self, base_url=DEFAULT_BASE_URL, log_parent=mod_logger):
