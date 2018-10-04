@@ -11,7 +11,7 @@ def testView(request):
     ret = []
     for team in t.teams():
         ret.append(team)
-    return JsonResponse(ret)
+    return JsonResponse(ret, safe=False)
 
 
 def teams(request):
