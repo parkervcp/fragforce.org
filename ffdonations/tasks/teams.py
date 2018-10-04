@@ -41,5 +41,5 @@ def update_teams(self, teams=None):
         tm.sumDonations = team.sumDonations
         tm.event = evt
         tm.save()
-        ret.save(tm.guid)
+        ret.append(tm.guid)
     return ret
