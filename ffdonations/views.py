@@ -16,4 +16,4 @@ def testView(request):
 
 def teams(request):
     update_teams_if_needed.delay()
-    return JsonResponse(TeamModel.objects.all())
+    return JsonResponse(TeamModel.objects.all(), safe=False)
