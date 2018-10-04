@@ -11,11 +11,11 @@ def update_teams_if_needed(self):
     """ Update the team list if required """
 
     try:
-        f = TeamModel.objects.get(id=settings.EL_TEAM_TRACK_TEMP)
+        f = TeamModel.objects.get(id=settings.EXTRALIFE_TEAMID)
         if not f.tracked:
             f.tracked = True
             f.save()
-    except Exception as e:
+    except f.DoesNotExist as e:
         pass
 
     def doupdate():
