@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 def testView(request):
@@ -9,4 +9,4 @@ def testView(request):
     ret = []
     for team in t.teams():
         ret.append(team)
-    return HttpResponse(json.dumps(ret))
+    return JsonResponse(ret)
