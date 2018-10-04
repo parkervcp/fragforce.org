@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.postgres.fields import JSONField
 
 
 class EventModel(models.Model):
@@ -30,6 +31,9 @@ class TeamModel(models.Model):
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
 
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+
 
 class DonationModel(models.Model):
     # Ours
@@ -39,6 +43,9 @@ class DonationModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donation ID", null=False)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default={})
 
 
 class DonorModel(models.Model):
@@ -50,6 +57,9 @@ class DonorModel(models.Model):
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
 
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+
 
 class ParticipantModel(models.Model):
     # Ours
@@ -59,3 +69,6 @@ class ParticipantModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default={})

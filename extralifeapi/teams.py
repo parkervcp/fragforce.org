@@ -16,6 +16,7 @@ Team = namedtuple('Team',
                       'numDonations',
                       'sumDonations',
                       'isInviteOnly',
+                      'raw',
                   ],
                   rename=True,
                   )
@@ -33,7 +34,10 @@ class Teams(DonorDriveBase):
     def _team_to_team(cls, data):
         kws = {}
         for f in Team._fields:
-            kws[f] = data.get(f, None)
+            if f == 'raw':
+                kws[f] = data
+            else:
+                kws[f] = data.get(f, None)
         return Team(**kws)
 
     def teams(self):
