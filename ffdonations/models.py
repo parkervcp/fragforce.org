@@ -32,7 +32,7 @@ class TeamModel(models.Model):
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class DonationModel(models.Model):
@@ -45,7 +45,7 @@ class DonationModel(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donation ID", null=False)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class DonorModel(models.Model):
@@ -58,7 +58,7 @@ class DonorModel(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class ParticipantModel(models.Model):
@@ -71,4 +71,4 @@ class ParticipantModel(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default={})
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
