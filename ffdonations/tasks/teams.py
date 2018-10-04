@@ -21,8 +21,8 @@ def update_teams_if_needed(self):
     def doupdate():
         return update_teams()
 
-    minc = datetime.datetime.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
+    minc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
+    maxc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
 
     bq = TeamModel.objects.filter(tracked=True)
 
