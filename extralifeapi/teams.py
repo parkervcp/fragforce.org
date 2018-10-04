@@ -16,6 +16,7 @@ Team = namedtuple('Team',
                       'numDonations',
                       'sumDonations',
                   ],
+                  rename=True,
                   )
 mod_logger = root_logger.getChild('teams')
 
