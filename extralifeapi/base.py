@@ -43,7 +43,7 @@ class DonorDriveBase(object):
             e['data_len'] = len(j)
             e['data'] = j
             self.log.debug(f"Got JSON data from {url}", extra=e)
-            return FetchResponse(j, r.headers, self._parse_link_header(r.headers.get('Link'), None))
+            return FetchResponse(j, r.headers, self._parse_link_header(r.headers.get('Link', None)))
         finally:
             self.log.log(5, f"Done fetching {url}", extra=e)
 
