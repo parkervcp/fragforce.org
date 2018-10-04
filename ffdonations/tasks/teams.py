@@ -10,6 +10,14 @@ import datetime
 def update_teams_if_needed(self):
     """ Update the team list if required """
 
+    try:
+        f = TeamModel.objects.get(id=settings.EL_TEAM_TRACK_TEMP)
+        if not f.tracked:
+            f.tracked = True
+            f.save()
+    except Exception as e:
+        pass
+
     def doupdate():
         return update_teams()
 

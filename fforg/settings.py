@@ -175,6 +175,9 @@ MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
 EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MIN', 30)))
 # Max time between updates for any given team
 EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MAX', 120)))
+# Teams to track by default
+# FIXME: Remove this
+EL_TEAM_TRACK_TEMP = [int(i) for i in os.environ.get('EL_TEAM_TRACK_TEMP', '').split(',')]
 
 
 
