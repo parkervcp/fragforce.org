@@ -30,7 +30,10 @@ class Teams(DonorDriveBase):
 
     @classmethod
     def _team_to_team(cls, data):
-        return Team(**data)
+        kws = {}
+        for f in Team._fields:
+            kws[f] = data.get(f, None)
+        return Team(**kws)
 
     def teams(self):
         """ Return a generator of all teams as Team named tuples """
