@@ -19,7 +19,10 @@ def teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
         [
-            model_to_dict(t, fields=[field.name for field in TeamModel._meta.fields])
+            model_to_dict(
+                t,
+                fields=['id', 'guid'] + [field.name for field in TeamModel._meta.fields],
+            )
             for t in TeamModel.objects.all()
         ],
         safe=False,
