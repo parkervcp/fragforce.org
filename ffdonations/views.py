@@ -5,7 +5,6 @@ from .tasks import *
 
 
 def testView(request):
-    from extralifeapi.teams import Teams, Team
     ret = repr(update_teams.delay())
 
     return JsonResponse(ret, safe=False)
