@@ -25,7 +25,7 @@ class Teams(DonorDriveBase):
     URL_EVENTS = 'events'
 
     def __init__(self, *args, **kwargs):
-        super(DonorDriveBase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @classmethod
     def _team_to_team(cls, data):
