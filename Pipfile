@@ -26,7 +26,7 @@ ipy = "*"
 redis = "*"
 boto = "*"
 logzio-python-handler = "*"
-
+celery = "*"
 
 [dev-packages]
 
