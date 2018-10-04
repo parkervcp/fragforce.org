@@ -2,7 +2,7 @@
 
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
-from django.contrib.postgres.operations import CreateExtension
+# from django.contrib.postgres.operations import CreateExtension
 import uuid
 
 
@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        CreateExtension('jsonb'),
+        #CreateExtension('jsonb'),
         migrations.CreateModel(
             name='DonationModel',
             fields=[
