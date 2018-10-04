@@ -15,5 +15,9 @@ def testView(request):
 
 
 def teams(request):
+    from django.forms.models import model_to_dict
     update_teams_if_needed.delay()
-    return JsonResponse(TeamModel.objects.all(), safe=False)
+    return JsonResponse(
+        [model_to_dict(t) for t in TeamModel.objects.all()],
+        safe=False,
+    )
