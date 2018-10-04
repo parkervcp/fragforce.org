@@ -15,6 +15,7 @@ Team = namedtuple('Team',
                       'fundraisingGoal',
                       'numDonations',
                       'sumDonations',
+                      'isInviteOnly',
                   ],
                   rename=True,
                   )
