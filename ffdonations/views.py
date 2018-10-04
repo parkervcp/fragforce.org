@@ -5,7 +5,7 @@ from .tasks import *
 
 
 def testView(request):
-    ret = repr(update_teams.delay())
+    ret = repr(update_teams.delay().get())
 
     return JsonResponse(ret, safe=False)
 
