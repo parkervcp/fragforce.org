@@ -11,9 +11,16 @@ def testView(request):
 
 
 def teams(request):
-    from django.forms.models import model_to_dict
     update_teams_if_needed.delay()
     return JsonResponse(
         [d for d in TeamModel.objects.all().values()],
+        safe=False,
+    )
+
+
+def tracked_teams(request):
+    update_teams_if_needed.delay()
+    return JsonResponse(
+        [d for d in TeamModel.objects.filter(tracked=True).values()],
         safe=False,
     )
