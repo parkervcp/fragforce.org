@@ -14,6 +14,11 @@ class DonorDriveBase(object):
     RE_MATCH_LINK = re.compile(r'^\<(.*)\>;rel="(.*)"')
 
     def __init__(self, base_url=DEFAULT_BASE_URL, log_parent=mod_logger, request_sleeper=None):
+        """
+        :param base_url: Base EL API URL
+        :param log_parent: Parent logger to base our logger off of
+        :param request_sleeper: Function. Should take url, data, and any other kwargs. No positional args.
+        """
         self.base_url = base_url
         self.log_parent = log_parent
         self.log = self.log_parent.getChild(self.__class__.__name__)
@@ -21,6 +26,7 @@ class DonorDriveBase(object):
         self.request_sleeper = request_sleeper
 
     def _do_sleep(self, url, data):
+        """ Sleep or do whatever between reqeusts to ensure they don't happen too often """
         e = dict(url=url, data=data, f=self.request_sleeper)
         try:
             self.log.log(5, "Sleeping if needed", extra=e)
