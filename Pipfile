@@ -30,7 +30,7 @@ celery = "*"
 django-redis-cache = "*"
 hiredis = "*"
 tiltify2 = "*"
-
+"https://github.com/gpmidi/tiltify-v2-api-python/archive/develop-v3.zip" = "*"
 
 [dev-packages]
 
