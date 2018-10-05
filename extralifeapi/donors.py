@@ -26,10 +26,10 @@ class Donations(DonorDriveBase):
         super().__init__(*args, **kwargs)
 
     def sub_by_pid(self, participantID):
-        return urljoin('participants', participantID, 'donations')
+        return urljoin('participants', str(participantID), 'donations')
 
     def sub_by_tid(self, teamID):
-        return urljoin('teams', teamID, 'donations')
+        return urljoin('teams', str(teamID), 'donations')
 
     @classmethod
     def _d_to_d(cls, data):

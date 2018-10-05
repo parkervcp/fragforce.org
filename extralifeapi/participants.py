@@ -36,13 +36,13 @@ class Participants(DonorDriveBase):
         return 'participants'
 
     def sub_by_pid(self, participantID):
-        return urljoin('participants', participantID)
+        return urljoin('participants', str(participantID))
 
     def sub_by_eid(self, eventID):
-        return urljoin('events', eventID, 'participants')
+        return urljoin('events', str(eventID), 'participants')
 
     def sub_by_tid(self, teamID):
-        return urljoin('teams', teamID, 'participants')
+        return urljoin('teams', str(teamID), 'participants')
 
     @classmethod
     def _p_to_p(cls, data):
