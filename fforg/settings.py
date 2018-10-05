@@ -176,5 +176,13 @@ EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPD
 # Max time between updates for any given team
 EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MAX', 120)))
 
-# Activate Django-Heroku.
+# Second to last
+CELERY_BEATM_SCHEDULE = {
+    'update-all-teams': {
+        'task': 'ffdonations.tasks.teams.update_teams_if_needed',
+        'schedule': timedelta(minutes=1),
+    },
+}
+
+# Activate Django-Heroku - Very last
 django_heroku.settings(locals())
