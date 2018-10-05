@@ -73,7 +73,7 @@ def tracked_donations_stats(request):
     baseq = DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id')
     ret = {
         'numDonations': baseq.count(),
-        'sumDonations': DonationModel.objects.aggergate(Sum('amount', filter=DonationModel.tracked_q())).values()[0],
+        'sumDonations': baseq.aggergate(Sum('amount')).values()[0],
         'avgDonations': DonationModel.objects.aggergate(Avg('amount', filter=DonationModel.tracked_q())).values()[0],
         'minDonations': DonationModel.objects.aggergate(Min('amount', filter=DonationModel.tracked_q())).values()[0],
         'maxDonations': DonationModel.objects.aggergate(Max('amount', filter=DonationModel.tracked_q())).values()[0],
