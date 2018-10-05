@@ -19,7 +19,7 @@ class RedisDB(object):
         return self._conn
 
     def make_key(self, name, *args, **kwargs):
-        kwsort = kwargs.items()
+        kwsort = list(kwargs.items())
         kwsort.sort(key=lambda x: x[0])
         arg_list = [name, ] + args + [f"{k}={v}" for k, v in kwsort]
         return '_'.join(arg_list)
