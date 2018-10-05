@@ -49,7 +49,7 @@ class Teams(DonorDriveBase):
     def team(self, teamID):
         """ Get a team """
         fresp = self.fetch(sub_url=urljoin(self.URL_TEAMS, str(teamID)))
-        return self._team_to_team(fresp.data)
+        return self._team_to_team(fresp)
 
     def event_teams(self, eventID):
         """ Return a generator of all teams as Team named tuples for the given event """
