@@ -191,6 +191,7 @@ GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', None)
 MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
 MAX_PAST_EVENTS = int(os.environ.get('MAX_PAST_EVENTS', 20))
 MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
+TILTIFY_TOKEN = os.environ.get('TILTIFY_TOKEN', None)
 
 # Various view cache timeouts
 VIEW_TEAMS_CACHE = int(os.environ.get('VIEW_TEAMS_CACHE', 20))
