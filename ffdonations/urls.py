@@ -22,4 +22,6 @@ urlpatterns = [
     path('teams/tracked', tracked_teams, name='teams-tracked'),
     path('participants', participants, name='participants'),
     path('participants/tracked', tracked_participants, name='participants-tracked'),
+    path('donations', donations, name='donations'),
+    path('donations/tracked', tracked_donations, name='donations-tracked'),
 ]

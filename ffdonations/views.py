@@ -50,3 +50,12 @@ def donations(request):
         [d for d in DonationModel.objects.all().order_by('id').values()],
         safe=False,
     )
+
+
+def tracked_donations(request):
+    # FIXME: Limit to only fragforce donations!
+    update_donations_if_needed.delay()
+    return JsonResponse(
+        [d for d in DonationModel.objects.all().order_by('id').values()],
+        safe=False,
+    )
