@@ -3,6 +3,7 @@ import uuid
 from django.contrib.postgres.fields import JSONField
 import datetime
 
+
 class EventModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
@@ -43,7 +44,7 @@ class ParticipantModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
-    displayName = models.CharField(max_length=8192, verbose_name="Participant Name", default='FIXME')
+    displayName = models.CharField(max_length=8192, verbose_name="Participant Name", null=True)
     # Info
     created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True)
@@ -69,6 +70,8 @@ class DonorModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
+    displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True)
+    avatarImage = models.URLField(verbose_name="Avatar Image", null=True)
 
 
 class DonationModel(models.Model):
@@ -91,4 +94,3 @@ class DonationModel(models.Model):
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
-
