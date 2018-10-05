@@ -89,11 +89,12 @@ def update_participants(self, participants=None):
                 tracked=False,
                 id=participant.participantID,
             )
-        # Add all shared fields
-        for field in Participant._fields:
-            if field in tm._meta.fields:
-                setattr(tm, field, participant[field])
-        # Non-shared fields
+        tm.sumPledges = participant.sumPledges
+        tm.displayName = participant.displayName
+        tm.numDonations = participant.numDonations
+        tm.sumDonations = participant.sumDonations
+        tm.isTeamCaptain = participant.isTeamCaptain
+        tm.fundraisingGoal = participant.fundraisingGoal
         tm.avatarImage = participant.avatarImageURL
         tm.created = participant.createdDateUTC
         tm.event = evt
