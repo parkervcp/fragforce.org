@@ -3,3 +3,4 @@ from celery import shared_task
 from .teams import *
 from .participants import *
 from .donations import *
+from .tiltify import *
