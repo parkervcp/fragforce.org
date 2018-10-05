@@ -71,15 +71,17 @@ def tracked_donations(request):
 def tracked_donations_stats(request):
     update_donations_if_needed.delay()
     baseq = DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id')
-    ret = {
-        'numDonations': baseq.count(),
-        'sumDonations': baseq.aggergate(Sum('amount')).values()[0],
-        'avgDonations': DonationModel.objects.aggergate(Avg('amount', filter=DonationModel.tracked_q())).values()[0],
-        'minDonations': DonationModel.objects.aggergate(Min('amount', filter=DonationModel.tracked_q())).values()[0],
-        'maxDonations': DonationModel.objects.aggergate(Max('amount', filter=DonationModel.tracked_q())).values()[0],
-        'participants': baseq.distinct('participant').count(),
-        'participants-with-donations': baseq.filter(participant__numDonations__gte=1).distinct('participant').count(),
-        'teams': baseq.distinct('team').count(),
-        'teams-with-donations': baseq.filter(team__numDonations__gte=1).distinct('team').count(),
-    }
+    ret = baseq.aggregate(
+        sumDonations=Sum('amount'),
+        avgDonations=Avg('amount'),
+        minDonations=Min('amount'),
+        maxDonations=Max('amount'),
+    )
+
+    ret['numDonations'] = baseq.count()
+    ret['participants'] = baseq.distinct('participant').count()
+    ret['participants-with-donations'] = baseq.filter(participant__numDonations__gte=1).distinct('participant').count()
+    ret['teams'] = baseq.distinct('team').count()
+    ret['teams-with-donations'] = baseq.filter(team__numDonations__gte=1).distinct('team').count()
+
     return JsonResponse(ret)
