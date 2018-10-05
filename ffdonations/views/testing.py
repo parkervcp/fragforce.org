@@ -4,16 +4,18 @@ from ..tasks import *
 from django.db.models import Q, Avg, Max, Min, Sum
 from django.views.decorators.cache import cache_page
 from django.conf import settings
+from functools import wraps
 
 
-def _onlydebug(func):
+def _onlydebug(f):
     """ Decorator: Only run the view if we're in debug mode """
 
+    @wraps(f)
     def wrapped(*args, **kwargs):
         if not settings.DEBUG:
             raise Http404("DEBUG=False")
 
-        return func(*args, **kwargs)
+        return f(*args, **kwargs)
 
     return wrapped
 
