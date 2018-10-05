@@ -35,6 +35,19 @@ class TeamModel(models.Model):
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
+class ParticipantModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Extra-Life
+    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
 class DonationModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
@@ -56,19 +69,6 @@ class DonorModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
-
-    # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
-
-
-class ParticipantModel(models.Model):
-    # Ours
-    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
-    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
-    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
-
-    # Extra-Life
-    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
