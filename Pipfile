@@ -28,6 +28,8 @@ boto = "*"
 logzio-python-handler = "*"
 celery = "*"
 django-redis-cache = ">=1.8.0"
+hiredis = ">=2.7"
+
 
 [dev-packages]
 

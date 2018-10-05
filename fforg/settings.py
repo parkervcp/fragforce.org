@@ -13,7 +13,6 @@ import os
 import dj_database_url
 import django_heroku
 from datetime import timedelta
-import redis
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -153,7 +152,6 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 
 # Base URL - Needs DB ID added
@@ -166,6 +164,8 @@ REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
 REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
 # Misc timers
 REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
+# Django cache
+REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
 
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
@@ -216,6 +216,30 @@ EL_REQUEST_MIN_TIME = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_
 EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_URL_SECONDS', 120)))
 # Min time between request for any given remote host
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': REDIS_URL_DJ_CACHE,
+        'OPTIONS': {
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'SOCKET_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_TIMEOUT', 5)),
+            'SOCKET_CONNECT_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 5)),
+                'timeout': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+            },
+            'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
+            'SERIALIZER_CLASS_KWARGS': {
+            },
+            'COMPRESSOR_CLASS': 'redis_cache.compressors.ZLibCompressor',
+            'COMPRESSOR_CLASS_KWARGS': {
+                'level': 2,  # 0 - 9; 0 - no compression; 1 - fastest, biggest; 9 - slowest, smallest
+            },
+        },
+    },
+}
 
 # Second to last
 CELERY_BEAT_SCHEDULE = {
