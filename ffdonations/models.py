@@ -43,6 +43,19 @@ class ParticipantModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
+    displayName = models.CharField(max_length=8192, verbose_name="Participant Name")
+    # Info
+    created = models.DateTimeField(verbose_name="Created At", null=False)
+    avatarImage = models.URLField(verbose_name="Avatar Image", null=True)
+    campaignDate = models.DateTimeField(null=True, verbose_name="Campaign Date")
+    campaignName = models.CharField(max_length=8192, null=True, verbose_name="Campaign Name")
+    fundraisingGoal = models.FloatField(verbose_name="Fundraising Goal", null=True)
+    numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
+    sumDonations = models.FloatField(verbose_name="Donations Total", null=True)
+    isTeamCaptain = models.BooleanField(verbose_name="Is Team Captain", default=False, null=False)
+    # Related
+    event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)

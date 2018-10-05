@@ -15,7 +15,7 @@ def _make_team(*args, **kwargs):
 
 @shared_task(bind=True)
 def update_teams_if_needed(self):
-    """ Update the team list if required """
+    """ Update the team db if required """
 
     def doupdate():
         return update_teams()
