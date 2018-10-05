@@ -7,7 +7,7 @@ def el_request_sleeper(url, data, parsed, **kwargs):
     """ Ensure we don't make requests to EL too fast """
     host = parsed.hostname
     key_global = r_timers.make_key('el_request_sleeper')
-    key_host = r_timers.make_key('', host=host)
+    key_host = r_timers.make_key('el_request_sleeper', host=host)
     key_url = r_timers.make_key('el_request_sleeper', url=url)
 
     sleeps = dict(
