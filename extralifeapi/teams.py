@@ -2,7 +2,6 @@
 from .log import root_logger
 from .base import DonorDriveBase
 from collections import namedtuple
-from urllib.parse import urljoin
 
 Team = namedtuple('Team',
                   [
@@ -48,7 +47,7 @@ class Teams(DonorDriveBase):
 
     def teams(self):
         """ Return a generator of all teams as Team named tuples """
-        fresp = self.fetch(sub_url=self.sub_team)
+        fresp = self.fetch(sub_url=self.sub_team())
         for t in fresp:
             yield self._team_to_team(t)
 
@@ -59,6 +58,6 @@ class Teams(DonorDriveBase):
 
     def event_teams(self, eventID):
         """ Return a generator of all teams as Team named tuples for the given event """
-        fresp = self.fetch(sub_url=urljoin(self.URL_EVENTS, str(eventID), self.URL_TEAMS))
+        fresp = self.fetch(sub_url=self.sub_team_by_eid(eventID))
         for t in fresp:
             yield self._team_to_team(t)

@@ -3,7 +3,7 @@ from .log import root_logger
 import requests
 from collections import namedtuple
 import re
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlparse
 from json import JSONDecodeError
 
 mod_logger = root_logger.getChild('base')
@@ -93,7 +93,7 @@ class DonorDriveBase(object):
 
     def fetch(self, sub_url, **kwargs):
         """ Fetch all records """
-        url = urljoin(self.DEFAULT_BASE_URL, sub_url)
+        url = "%s/%s" % (self.base_url, sub_url)
         e = dict(url=url, data=kwargs)
 
         fresp = self.fetch_json(url=url, **kwargs)
