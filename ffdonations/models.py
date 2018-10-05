@@ -70,7 +70,7 @@ class DonationModel(models.Model):
     last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
 
     # Extra-Life
-    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donation ID", null=False)
+    id = models.CharField(primary_key=True, max_length=1024, editable=False, verbose_name="Donation ID", null=False)
     message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='')
     amount = models.FloatField(null=True, default=0, verbose_name="Donation Amount")
     created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
