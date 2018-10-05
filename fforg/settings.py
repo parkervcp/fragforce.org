@@ -154,8 +154,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SECURE_SSL_REDIRECT = True
 
+REDIS_URL_DEFAULT = 'redis://localhost'
 # Base URL - Needs DB ID added
-REDIS_URL_BASE = os.environ.get('REDIS_URL', 'redis://localhost')
+REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
 # Don't use DB 0 for anything
 REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
 # Celery tasks
@@ -217,29 +218,41 @@ EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_T
 # Min time between request for any given remote host
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': REDIS_URL_DJ_CACHE,
-        'OPTIONS': {
-            'PARSER_CLASS': 'redis.connection.HiredisParser',
-            'SOCKET_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_TIMEOUT', 5)),
-            'SOCKET_CONNECT_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
-            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
-            'CONNECTION_POOL_CLASS_KWARGS': {
-                'max_connections': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 5)),
-                'timeout': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
-            },
-            'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
-            'SERIALIZER_CLASS_KWARGS': {
-            },
-            'COMPRESSOR_CLASS': 'redis_cache.compressors.ZLibCompressor',
-            'COMPRESSOR_CLASS_KWARGS': {
-                'level': 2,  # 0 - 9; 0 - no compression; 1 - fastest, biggest; 9 - slowest, smallest
+# Cache Configuration
+if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
+    # Dev and release config
+    CACHES = {}
+else:
+    # Real config
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': REDIS_URL_DJ_CACHE,
+            'OPTIONS': {
+                'PARSER_CLASS': 'redis.connection.HiredisParser',
+                'SOCKET_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_TIMEOUT', 5)),
+                'SOCKET_CONNECT_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+                'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+                'CONNECTION_POOL_CLASS_KWARGS': {
+                    'max_connections': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 5)),
+                    'timeout': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+                },
+                'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
+                'SERIALIZER_CLASS_KWARGS': {
+                },
             },
         },
-    },
-}
+    }
+
+    if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor',
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
+            # level = 0 - 9
+            # 0 - no compression
+            # 1 - fastest, biggest
+            # 9 - slowest, smallest
+            'level': 2,
+        }
 
 # Second to last
 CELERY_BEAT_SCHEDULE = {
