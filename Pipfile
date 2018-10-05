@@ -27,8 +27,8 @@ redis = ">=2.10.3"
 boto = "*"
 logzio-python-handler = "*"
 celery = "*"
-django-redis-cache = ">=1.8.0"
-hiredis = ">=2.7"
+django-redis-cache = "*"
+hiredis = "*"
 
 
 [dev-packages]
