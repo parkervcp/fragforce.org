@@ -66,7 +66,6 @@ class ParticipantModel(models.Model):
 class DonationModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
-    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
     last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
 
     # Extra-Life
