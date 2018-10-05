@@ -234,12 +234,11 @@ else:
                 'SOCKET_CONNECT_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
                 'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
                 'CONNECTION_POOL_CLASS_KWARGS': {
-                    'max_connections': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 5)),
-                    'timeout': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+                    'max_connections': int(os.environ.get('REDIS_DJ_POOL_MAX_CONN', 5)),
+                    'timeout': int(os.environ.get('REDIS_DJ_POOL_TIMEOUT', 3)),
                 },
                 'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
-                'SERIALIZER_CLASS_KWARGS': {
-                },
+                'SERIALIZER_CLASS_KWARGS': {},
             },
         },
     }
