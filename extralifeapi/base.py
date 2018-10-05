@@ -3,7 +3,7 @@ from .log import root_logger
 import requests
 from collections import namedtuple
 import re
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 mod_logger = root_logger.getChild('base')
 FetchResponse = namedtuple('FetchResponse', ['data', 'headers', 'urls'])
@@ -17,7 +17,8 @@ class DonorDriveBase(object):
         """
         :param base_url: Base EL API URL
         :param log_parent: Parent logger to base our logger off of
-        :param request_sleeper: Function. Should take url, data, and any other kwargs. No positional args.
+        :param request_sleeper: Function. Should take any kwargs. No positional args.
+        Will get at a min url (string), data (query data), and parsed (urlparse obj).
         """
         self.base_url = base_url
         self.log_parent = log_parent
@@ -26,8 +27,9 @@ class DonorDriveBase(object):
         self.request_sleeper = request_sleeper
 
     def _do_sleep(self, url, data):
-        """ Sleep or do whatever between reqeusts to ensure they don't happen too often """
-        e = dict(url=url, data=data, f=self.request_sleeper)
+        """ Sleep or do whatever between requests to ensure they don't happen too often """
+        parsed = urlparse(url)
+        e = dict(url=url, data=data, f=self.request_sleeper, parsed=parsed)
         try:
             self.log.log(5, "Sleeping if needed", extra=e)
             if self.request_sleeper is None:
@@ -35,7 +37,7 @@ class DonorDriveBase(object):
                 return None
             else:
                 self.log.log(5, "Sleeping per function", extra=e)
-                return self.request_sleeper(url=url, data=data)
+                return self.request_sleeper(url=url, data=data, parsed=parsed)
         finally:
             self.log.log(5, "Done with sleep", extra=e)
 
