@@ -91,6 +91,9 @@ def update_participants(self, participants=None):
         tm.created = participant.createdDateUTC
         tm.event = evt
         tm.team = team
+        # Update tracked
+        if not tm.tracked and ((evt and evt.tracked) or (team and team.tracked)):
+            tm.tracked = True
         # Save it
         tm.save()
         ret.append(tm.guid)
