@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 @cache_page(settings.VIEW_TEAMS_CACHE)
-def teams(request):
+def v_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
         [d for d in TeamModel.objects.all().order_by('id').values()],
@@ -16,7 +16,7 @@ def teams(request):
 
 
 @cache_page(settings.VIEW_TEAMS_CACHE)
-def tracked_teams(request):
+def v_tracked_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
         [d for d in TeamModel.objects.filter(tracked=True).order_by('id').values()],

@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 @cache_page(settings.VIEW_DONATIONS_STATS_CACHE)
-def tracked_donations_stats(request):
+def v_tracked_donations_stats(request):
     update_donations_if_needed.delay()
     baseq = DonationModel.objects.filter(DonationModel.tracked_q())
     ret = baseq.aggregate(

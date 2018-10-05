@@ -21,7 +21,7 @@ def _onlydebug(f):
 
 
 @_onlydebug
-def testView(request):
+def v_testView(request):
     if not settings.DEBUG:
         raise Http404("Not in debug")
     ret = [

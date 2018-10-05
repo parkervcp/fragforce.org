@@ -18,17 +18,17 @@ from ffdonations.views import *
 
 urlpatterns = [
     # Test stuff
-    path('test', testView, name='testview'),
+    path('test', v_testView, name='testview'),
     # Teams
-    path('teams', teams, name='teams'),
-    path('teams/tracked', tracked_teams, name='teams-tracked'),
+    path('teams', v_teams, name='teams'),
+    path('teams/tracked', v_tracked_teams, name='teams-tracked'),
     # Participants
-    path('participants', participants, name='participants'),
-    path('participants/tracked', tracked_participants, name='participants-tracked'),
+    path('participants', v_participants, name='participants'),
+    path('participants/tracked', v_tracked_participants, name='participants-tracked'),
     # Donations
-    path('donations', donations, name='donations'),
-    path('donations/tracked', tracked_donations, name='donations-tracked'),
-    path('donations/tracked/stats', tracked_donations_stats, name='donations-tracked-stats'),
+    path('donations', v_donations, name='donations'),
+    path('donations/tracked', v_tracked_donations, name='donations-tracked'),
+    path('donations/tracked/stats', v_tracked_donations_stats, name='donations-tracked-stats'),
     # Stats
-    path('stats/donations/tracked', tracked_donations_stats, name='stats-donations-tracked'),
+    path('stats/donations/tracked', v_tracked_donations_stats, name='stats-donations-tracked'),
 ]

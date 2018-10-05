@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 @cache_page(settings.VIEW_PARTICIPANTS_CACHE)
-def participants(request):
+def v_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
         [d for d in ParticipantModel.objects.all().order_by('id').values()],
@@ -16,7 +16,7 @@ def participants(request):
 
 
 @cache_page(settings.VIEW_PARTICIPANTS_CACHE)
-def tracked_participants(request):
+def v_tracked_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
         [d for d in ParticipantModel.objects.filter(tracked=True).order_by('id').values()],
