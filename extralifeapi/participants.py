@@ -73,7 +73,7 @@ class Participants(DonorDriveBase):
         fresp = self.fetch(sub_url=self.sub_by_eid(eventID))
         return self._p_to_p(fresp)
 
-    def participants_for_event(self, teamID):
+    def participants_for_team(self, teamID):
         """ Get all participants for the given team """
         fresp = self.fetch(sub_url=self.sub_by_tid(teamID))
         return self._p_to_p(fresp)
