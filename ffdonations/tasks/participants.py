@@ -49,6 +49,7 @@ def update_participants(self, participants=None):
     WARNING: If participants is None then will fetch a list of ALL participants
      Will take a TON of requests!!!
     """
+    from .donations import update_donations_if_needed_participant, update_donations_if_needed_team
     p = _make_p()
     ret = []
 
@@ -109,6 +110,13 @@ def update_participants(self, participants=None):
             tm.tracked = True
         # Save it
         tm.save()
+
+        # Hook in donations update
+        if tm.tracked:
+            update_donations_if_needed_participant.delay(participantID=tm.id)
+            if tm.team:
+                update_donations_if_needed_team.delay(teamID=tm.team.id)
+
         ret.append(tm.guid)
 
     return ret

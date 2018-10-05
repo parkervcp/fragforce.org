@@ -48,6 +48,7 @@ def update_teams(self, teams=None):
     WARNING: Listing teams causes an api call per team given
     WARNING: If teams is None then will fetch a list of ALL teams - May make many requests
     """
+    from .donations import update_donations_if_needed_team
     t = _make_team()
     ret = []
     if teams is None:
@@ -80,5 +81,10 @@ def update_teams(self, teams=None):
         tm.event = evt
         tm.raw = team.raw
         tm.save()
+
+        # Hook in donations update
+        if tm.tracked:
+            update_donations_if_needed_team.delay(teamID=tm.id)
+
         ret.append(tm.guid)
     return ret
