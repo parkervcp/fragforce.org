@@ -26,3 +26,7 @@ class RedisDB(object):
         hash.update(secret)
         hash.update(self.make_key(name=name, *args, **kwargs))
         return str(hash)
+
+
+class TimersDB(RedisDB):
+    pass

@@ -1,5 +1,5 @@
-from .redisdb import RedisDB
+from .redisdb import *
 from django.conf import settings
 
-# Misc timers
-r_timers = RedisDB(settings.REDIS_URL_TIMERS)
+# Timers
+r_timers = TimersDB(settings.REDIS_URL_TIMERS)
