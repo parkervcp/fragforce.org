@@ -13,6 +13,7 @@ import os
 import dj_database_url
 import django_heroku
 from datetime import timedelta
+import redis
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -163,6 +164,9 @@ REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
 REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
 # Celery tombstones (aka results)
 REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
+# Misc timers
+REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
+
 
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
