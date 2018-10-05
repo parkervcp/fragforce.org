@@ -1,7 +1,6 @@
 """ Participants """
 from .base import DonorDriveBase
 from collections import namedtuple
-from urllib.parse import urljoin
 from .log import root_logger
 
 mod_logger = root_logger.getChild('participants')
@@ -36,13 +35,13 @@ class Participants(DonorDriveBase):
         return 'participants'
 
     def sub_by_pid(self, participantID):
-        return urljoin('participants', str(participantID))
+        return 'participants/%d' % participantID
 
     def sub_by_eid(self, eventID):
-        return urljoin('events', str(eventID), 'participants')
+        return 'events/%d/participants' % eventID
 
     def sub_by_tid(self, teamID):
-        return urljoin('teams', str(teamID), 'participants')
+        return 'teams/%d/participants' % teamID
 
     @classmethod
     def _p_to_p(cls, data):
