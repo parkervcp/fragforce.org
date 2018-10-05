@@ -70,7 +70,7 @@ def tracked_donations(request):
 
 def tracked_donations_stats(request):
     update_donations_if_needed.delay()
-    baseq = DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id').distinct('id')
+    baseq = DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id')
     ret = {
         'numDonations': baseq.count(),
         'sumDonations': baseq.aggergate(Sum('amount')).values()[0],
