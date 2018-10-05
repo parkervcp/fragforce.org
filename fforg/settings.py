@@ -187,11 +187,11 @@ EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPD
 EL_TEAM_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_CHECK', 5)))
 
 # Min time between participants updates - Only cares about tracked participants!
-EL_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MIN', 30)))
+EL_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MIN', 120)))
 # Max time between updates for any given participants - Only cares about tracked participants!
-EL_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MAX', 120)))
+EL_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MAX', 300)))
 # How often to check for updates
-EL_PTCP_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_CHECK', 5)))
+EL_PTCP_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_CHECK', 30)))
 
 
 # Min time between EL REST requests
