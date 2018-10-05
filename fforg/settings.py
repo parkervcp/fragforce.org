@@ -244,13 +244,13 @@ else:
     }
 
     if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
-        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor',
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor'
         CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
             # level = 0 - 9
             # 0 - no compression
             # 1 - fastest, biggest
             # 9 - slowest, smallest
-            'level': 2,
+            'level': int(os.environ.get('DJANGO_COMPRESS_REDIS_ZLIB_LEVEL', 1)),
         }
 
 # Second to last
