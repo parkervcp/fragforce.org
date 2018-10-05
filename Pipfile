@@ -23,10 +23,11 @@ lxml = "*"
 passlib = "*"
 ipy = "*"
 "celery[redis]" = "*"
-redis = "*"
+redis = ">=2.10.3"
 boto = "*"
 logzio-python-handler = "*"
 celery = "*"
+django-redis-cache = ">=1.8.0"
 
 [dev-packages]
 
