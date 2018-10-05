@@ -78,7 +78,8 @@ class DonorDriveBase(object):
                 e['raw'] = r.raw
                 e['headers'] = r.headers
                 e['rdata'] = r.content
-                rd = r.content
+                e['text'] = r.text
+                rd = r.text
                 self.log.exception(f"Failed to decode JSON with {er}: Data: {rd}", extra=e)
                 raise JSONError(f"Failed to decode JSON with {er}: Data: {rd}")
             e['data_len'] = len(j)
