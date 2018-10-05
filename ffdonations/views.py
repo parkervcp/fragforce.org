@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .models import *
 from .tasks import *
 from django.db.models import Q, Avg, Max, Min, Sum
+from django.views.decorators.cache import cache_page
 
 
 def testView(request):
@@ -20,6 +21,7 @@ def testView(request):
     return JsonResponse([repr(r) for r in ret], safe=False)
 
 
+@cache_page(settings.VIEW_TEAMS_CACHE)
 def teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
@@ -28,6 +30,7 @@ def teams(request):
     )
 
 
+@cache_page(settings.VIEW_TEAMS_CACHE)
 def tracked_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
@@ -36,6 +39,7 @@ def tracked_teams(request):
     )
 
 
+@cache_page(settings.VIEW_PARTICIPANTS_CACHE)
 def participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
@@ -44,6 +48,7 @@ def participants(request):
     )
 
 
+@cache_page(settings.VIEW_PARTICIPANTS_CACHE)
 def tracked_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
@@ -52,6 +57,7 @@ def tracked_participants(request):
     )
 
 
+@cache_page(settings.VIEW_DONATIONS_CACHE)
 def donations(request):
     update_donations_if_needed.delay()
     return JsonResponse(
@@ -60,6 +66,7 @@ def donations(request):
     )
 
 
+@cache_page(settings.VIEW_DONATIONS_CACHE)
 def tracked_donations(request):
     update_donations_if_needed.delay()
     return JsonResponse(
@@ -68,6 +75,7 @@ def tracked_donations(request):
     )
 
 
+@cache_page(settings.VIEW_DONATIONS_STATS_CACHE)
 def tracked_donations_stats(request):
     update_donations_if_needed.delay()
     baseq = DonationModel.objects.filter(DonationModel.tracked_q())

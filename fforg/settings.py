@@ -192,6 +192,12 @@ MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
 MAX_PAST_EVENTS = int(os.environ.get('MAX_PAST_EVENTS', 20))
 MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
 
+# Various view cache timeouts
+VIEW_TEAMS_CACHE = int(os.environ.get('VIEW_TEAMS_CACHE', 20))
+VIEW_PARTICIPANTS_CACHE = int(os.environ.get('VIEW_PARTICIPANTS_CACHE', 20))
+VIEW_DONATIONS_CACHE = int(os.environ.get('VIEW_DONATIONS_CACHE', 20))
+VIEW_DONATIONS_STATS_CACHE = int(os.environ.get('VIEW_DONATIONS_STATS_CACHE', 20))
+
 # Min time between team updates - Only cares about tracked teams!
 EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MIN', 30)))
 # Max time between updates for any given team - Only cares about tracked teams!
