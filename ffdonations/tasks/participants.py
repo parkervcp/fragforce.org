@@ -93,7 +93,11 @@ def update_participants(self, participants=None):
         tm.displayName = participant.displayName
         tm.numDonations = participant.numDonations
         tm.sumDonations = participant.sumDonations
-        tm.isTeamCaptain = participant.isTeamCaptain
+        # Handle nulls
+        if participant.isTeamCaptain:
+            tm.isTeamCaptain = True
+        else:
+            tm.isTeamCaptain = False
         tm.fundraisingGoal = participant.fundraisingGoal
         tm.avatarImage = participant.avatarImageURL
         tm.created = participant.createdDateUTC
