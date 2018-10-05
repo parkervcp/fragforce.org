@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 import uuid
 from django.contrib.postgres.fields import JSONField
 import datetime
@@ -83,3 +84,8 @@ class DonationModel(models.Model):
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+    @classmethod
+    def tracked_q(cls):
+        """ Get a Q that filters Donations down to only tracked ones """
+        return Q(team__tracked=True) | Q(participant__tracked=True)
