@@ -7,7 +7,7 @@ from .tasks import *
 def testView(request):
     if not settings.DEBUG:
         raise Http404("Not in debug")
-    ret = repr(update_participants.delay().get())
+    ret = repr(update_participants.delay())
 
     return JsonResponse(ret, safe=False)
 
