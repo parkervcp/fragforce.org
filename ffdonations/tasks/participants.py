@@ -98,6 +98,7 @@ def update_participants(self, participants=None):
         tm.created = participant.createdDateUTC
         tm.event = evt
         tm.team = team
+        tm.raw = participant.raw
         # Update tracked
         if not tm.tracked and ((evt and evt.tracked) or (team and team.tracked)):
             tm.tracked = True
