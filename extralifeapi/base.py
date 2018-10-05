@@ -4,6 +4,7 @@ import requests
 from collections import namedtuple
 import re
 from urllib.parse import urljoin, urlparse
+from json import JSONDecodeError
 
 mod_logger = root_logger.getChild('base')
 FetchResponse = namedtuple('FetchResponse', ['data', 'headers', 'urls'])
@@ -63,7 +64,15 @@ class DonorDriveBase(object):
             self.log.log(5, f'Got result from {url}', extra=e)
             r.raise_for_status()
             self.log.log(5, f"Status of {url} is ok", extra=e)
-            j = r.json()
+            try:
+                j = r.json()
+            except JSONDecodeError as e:
+                e['raw'] = r.raw
+                e['headers'] = r.headers
+                e['rdata'] = r.content
+                rd = r.raw
+                self.log.exception(f"Failed to decode JSON with {e}: Data: {rd}", extra=e)
+                raise
             e['data_len'] = len(j)
             e['data'] = j
             self.log.debug(f"Got JSON data from {url}", extra=e)
