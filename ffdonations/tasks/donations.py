@@ -138,10 +138,16 @@ def update_donations_team(self, teamID):
         tm.participant = participant
         tm.raw = donation.raw
         tm.avatarImage = donation.avatarImageURL
-        tm.displayName = donation.displayName
+        if donation.displayName:
+            tm.displayName = donation.displayName
+        else:
+            tm.displayName = ''
         tm.created = donation.createdDateUTC
         tm.amount = donation.amount
-        tm.message = donation.message
+        if donation.message:
+            tm.message = donation.message
+        else:
+            tm.message = ''
         tm.save()
 
 
@@ -221,13 +227,16 @@ def update_donations_participant(self, participantID):
         tm.participant = participant
         tm.raw = donation.raw
         tm.avatarImage = donation.avatarImageURL
-        tm.displayName = donation.displayName
+        if donation.displayName:
+            tm.displayName = donation.displayName
+        else:
+            tm.displayName = ''
         tm.created = donation.createdDateUTC
         tm.amount = donation.amount
-        if donation.message is None:
-            tm.message = ''
-        else:
+        if donation.message:
             tm.message = donation.message
+        else:
+            tm.message = ''
         tm.save()
         ret.append(tm.guid)
     return ret
