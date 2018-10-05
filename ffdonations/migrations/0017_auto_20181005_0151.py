@@ -14,9 +14,4 @@ class Migration(migrations.Migration):
             name='displayName',
             field=models.CharField(default='', max_length=8192, verbose_name='Donor Name'),
         ),
-        migrations.AlterField(
-            model_name='donationmodel',
-            name='message',
-            field=models.CharField(default='', max_length=1048576, verbose_name='Message'),
-        ),
     ]
