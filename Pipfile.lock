@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "be71f0a05ab1e2d5c216f86225843fb0fe1000d86474ee5dc2004ff2ace80264"
+            "sha256": "60b358a71c070778a8696a1a316ae73239fa529a79984572c9e2a7e5a2d57efd"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -137,6 +137,7 @@
                 "sha256:e79ab4485b99eacb2166f3212218dd858258f374855e1568f728462b0e6ee0d9",
                 "sha256:f995d3667301e1754c57b04e0bae6f0fa9d710697a9f8d6712e8cca02550910f"
             ],
+            "markers": "python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.0.*' and python_version != '3.2.*'",
             "version": "==2.3.1"
         },
         "dj-database-url": {
@@ -382,14 +383,6 @@
                 "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
             ],
             "version": "==1.11.0"
-        },
-        "tiltify2": {
-            "hashes": [
-                "sha256:a845e6b3568a7ea9b4c725754e3184459bf5fd325de5fb67d5fbc4d9e23707ed",
-                "sha256:be8d7d29cd954404bc318a80cc63771b6990f5b378f730fa523c564b18773655"
-            ],
-            "index": "pypi",
-            "version": "==1.0"
         },
         "urllib3": {
             "hashes": [
