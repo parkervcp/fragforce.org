@@ -23,6 +23,9 @@ def update_participants_if_needed(self):
     minc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
     maxc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
 
+    if ParticipantModel.objects.all().count() <= 0:
+        return doupdate()
+
     bq = ParticipantModel.objects.filter(tracked=True)
 
     # Force an update if it's been more than EL_TEAM_UPDATE_FREQUENCY_MAX since last

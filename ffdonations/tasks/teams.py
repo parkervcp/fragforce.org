@@ -20,6 +20,9 @@ def update_teams_if_needed(self):
     def doupdate():
         return update_teams()
 
+    if TeamModel.objects.all().count() <= 0:
+        return doupdate()
+
     minc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
     maxc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
 
