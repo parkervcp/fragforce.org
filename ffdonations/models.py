@@ -79,13 +79,13 @@ class DonationModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donation ID", null=False)
-    message
-    amount
-    createdDateUTC
+    message = models.CharField(max_length=1024 * 1024, verbose_name="Message")
+    amount = models.FloatField(null=True, default=0, verbose_name="Donation Amount")
+    created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
 
     # Related
     donor = models.ForeignKey(DonorModel, null=True, default=None, verbose_name="Donor", on_delete=models.DO_NOTHING)
-    participant = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team",
+    participant = models.ForeignKey(ParticipantModel, null=True, default=None, verbose_name="Participant",
                                     on_delete=models.DO_NOTHING)
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
 
