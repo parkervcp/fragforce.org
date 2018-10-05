@@ -171,9 +171,9 @@ MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
 MAX_PAST_EVENTS = int(os.environ.get('MAX_PAST_EVENTS', 20))
 MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
 
-# Min time between team updates
+# Min time between team updates - Only cares about tracked teams!
 EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MIN', 30)))
-# Max time between updates for any given team
+# Max time between updates for any given team - Only cares about tracked teams!
 EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MAX', 120)))
 # How often to check for updates
 EL_TEAM_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_CHECK', 5)))
