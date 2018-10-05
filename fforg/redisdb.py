@@ -43,6 +43,7 @@ class TimersDB(RedisDB):
             return timedelta(seconds=0)
         r = float(r)
         expected = r + delta.total_seconds()
+        # Seconds until expected
         diff = expected - now
         if diff <= 0:
             return timedelta(seconds=0)
