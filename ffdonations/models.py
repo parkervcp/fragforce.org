@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import JSONField
 import datetime
 
 
+## Extra-Life
 class EventModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
@@ -89,3 +90,112 @@ class DonationModel(models.Model):
     def tracked_q(cls):
         """ Get a Q that filters Donations down to only tracked ones """
         return Q(team__tracked=True) | Q(participant__tracked=True)
+
+
+## Tiltify
+class MediaTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigAutoField(primary_key=True, verbose_name="ID")
+
+    # Tiltify
+    src = models.URLField(max_length=8192, null=False, verbose_name="Source URL")
+    alt = models.CharField(max_length=8192, null=True, default='', verbose_name="Alternate Text")
+    width = models.IntegerField(null=True, verbose_name="Width (px)")
+    height = models.IntegerField(null=True, verbose_name="Height (px)")
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+    # Type of result from lib
+    subtype = models.CharField(max_length=255, null=False, default='MediaResult')
+
+
+class CauseTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+
+
+class EventTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+
+
+class TeamTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    name = models.CharField(verbose_name="Name", unique=True, null=False)
+    slug = models.CharField(verbose_name="Slug", unique=True, null=False)
+    url = models.CharField(verbose_name="URL", unique=True, null=False)
+    avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
+
+    # On some
+    bio = models.CharField(max_length=1024 * 1024, verbose_name="Bio")
+    inviteOnly = models.NullBooleanField(verbose_name="Is Invite Only Team")
+    disbanded = models.NullBooleanField(verbose_name="Is Disbanded")
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+    # Type of result from lib
+    subtype = models.CharField(max_length=255, null=False, default='TeamResult')
+
+
+class UserTiltifyModel(models.Model):
+
+
+class CampaignTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    name = models.CharField(max_length=8192, verbose_name="Name", unique=True, null=False)
+    slug = models.CharField(max_length=8192, verbose_name="Slug", unique=True, null=False)
+    url = models.URLField(max_length=8192, verbose_name="URL", unique=True, null=False)
+    startsAt = models.DateTimeField(null=True, verbose_name='Starts At')
+    endsAt = models.DateTimeField(null=True, verbose_name='Ends At')
+    description = models.CharField(max_length=8192, verbose_name="Description", unique=True, null=True)
+    goal = models.FloatField(verbose_name="Goal Amount", null=True)
+    fundraiserGoalAmount = models.FloatField(verbose_name="Fundraiser Goal Amount", null=True)
+    originalGoalAmount = models.FloatField(verbose_name="Origional Goal Amount", null=True)
+    amountRaised = models.FloatField(verbose_name="Amount Raised", null=True)
+    supportingAmountRaised = models.FloatField(verbose_name="Supporting Amount Raised", null=True)
+    totalAmountRaised = models.FloatField(verbose_name="Total Amount Raised", null=True)
+    supportable = models.NullBooleanField(verbose_name="Is Supportable", null=True)
+    status = models.CharField(max_length=8192, null=True, verbose_name="Status")
+    startsOn = models.DateTimeField(null=True, verbose_name='Starts On')
+    endsOn = models.DateTimeField(null=True, verbose_name='Ends On')
+
+    thumbnail = models.ForeignKey(MediaTiltifyModel, verbose_name="Thumbnail", null=True, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(UserTiltifyModel, verbose_name="user", null=True, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(TeamTiltifyModel, verbose_name="Team", null=True, on_delete=models.DO_NOTHING)
+    livestream = models.ForeignKey(LiveStreamTiltifyModel, verbose_name="Live Stream", null=True,
+                                   on_delete=models.DO_NOTHING)
+    cause = models.ForeignKey(CauseTiltifyModel, verbose_name="Cause", null=True, on_delete=models.DO_NOTHING)
+    avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
+    fundraisingEvent = models.ForeignKey(EventTiltifyModel, verbose_name="Fundrasing Event", null=True,
+                                         on_delete=models.DO_NOTHING)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+    # Type of result from lib
+    subtype = models.CharField(max_length=255, null=False, default='CampaignResult')
+
+
+class DonationTiltifyModel(models.Model):
