@@ -54,7 +54,7 @@ class ParticipantModel(models.Model):
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
     sumDonations = models.FloatField(verbose_name="Donations Total", null=True)
     sumPledges = models.FloatField(verbose_name="Pledges Total", null=True)
-    isTeamCaptain = models.BooleanField(verbose_name="Is Team Captain", default=False, null=False)
+    isTeamCaptain = models.NullBooleanField(verbose_name="Is Team Captain", default=False, null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
