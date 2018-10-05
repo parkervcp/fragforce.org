@@ -224,7 +224,10 @@ def update_donations_participant(self, participantID):
         tm.displayName = donation.displayName
         tm.created = donation.createdDateUTC
         tm.amount = donation.amount
-        tm.message = donation.message
+        if donation.message is None:
+            tm.message = ''
+        else:
+            tm.message = donation.message
         tm.save()
         ret.append(tm.guid)
     return ret
