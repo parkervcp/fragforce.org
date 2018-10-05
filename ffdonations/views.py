@@ -70,18 +70,19 @@ def tracked_donations(request):
 
 def tracked_donations_stats(request):
     update_donations_if_needed.delay()
-    baseq = DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id')
+    baseq = DonationModel.objects.filter(DonationModel.tracked_q())
     ret = baseq.aggregate(
         sumDonations=Sum('amount'),
-        avgDonations=Avg('amount'),
-        minDonations=Min('amount'),
-        maxDonations=Max('amount'),
+        avgDonation=Avg('amount'),
+        minDonation=Min('amount'),
+        maxDonation=Max('amount'),
     )
 
     ret['numDonations'] = baseq.count()
-    ret['participants'] = baseq.distinct('participant').count()
-    ret['participants-with-donations'] = baseq.filter(participant__numDonations__gte=1).distinct('participant').count()
-    ret['teams'] = baseq.distinct('team').count()
-    ret['teams-with-donations'] = baseq.filter(team__numDonations__gte=1).distinct('team').count()
+    ret['participants'] = baseq.order_by('participant').distinct('participant').count()
+    ret['participants-with-donations'] = baseq.filter(participant__numDonations__gte=1).order_by(
+        'participant').distinct('participant').count()
+    ret['teams'] = baseq.order_by('team').distinct('team').count()
+    ret['teams-with-donations'] = baseq.filter(team__numDonations__gte=1).order_by('team').distinct('team').count()
 
     return JsonResponse(ret)
