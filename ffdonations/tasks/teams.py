@@ -9,15 +9,6 @@ import datetime
 @shared_task(bind=True)
 def update_teams_if_needed(self):
     """ Update the team list if required """
-
-    try:
-        f = TeamModel.objects.get(id=settings.EXTRALIFE_TEAMID)
-        if not f.tracked:
-            f.tracked = True
-            f.save()
-    except f.DoesNotExist as e:
-        pass
-
     def doupdate():
         return update_teams()
 

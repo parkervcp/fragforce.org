@@ -171,8 +171,6 @@ MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
 MAX_PAST_EVENTS = int(os.environ.get('MAX_PAST_EVENTS', 20))
 MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
 
-EXTRALIFE_TEAMID = int(os.environ.get('EXTRALIFE_TEAMID', None))
-
 # Min time between team updates
 EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MIN', 30)))
 # Max time between updates for any given team
