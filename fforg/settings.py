@@ -37,7 +37,6 @@ if SECRET_KEY == 'INSECURE':
 # FIXME: Add LOGZ.IO Logging
 LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -240,6 +239,23 @@ if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
         },
     }
 else:
+    def make_key_hash(key, key_prefix, version):
+        """ Create a hashed key"""
+        import hashlib
+        m = hashlib.sha512()
+        m.update(':'.join([key_prefix, str(version), key]))
+        return m.hexdigest()
+
+
+    def make_key_nohash(key, key_prefix, version):
+        return ':'.join([key_prefix, str(version), key])
+
+
+    if os.environ.get('DJANGO_CACHE_HASH', 'false').lower() == 'true':
+        make_key = make_key_hash
+    else:
+        make_key = make_key_nohash
+
     # Real config
     CACHES = {
         'default': {
@@ -259,6 +275,8 @@ else:
                 'SERIALIZER_CLASS_KWARGS': {},
                 # Used to auto flush cache when new builds happen :-D
                 'VERSION': HEROKU_RELEASE_VERSION_NUM,
+                'KEY_PREFIX': '_'.join([HEROKU_APP_ID, HEROKU_APP_NAME]),
+                'KEY_FUNCTION': make_key,
             },
         },
     }
