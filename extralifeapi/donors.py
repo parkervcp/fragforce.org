@@ -43,9 +43,9 @@ class Donations(DonorDriveBase):
     def donations_for_participants(self, participantID):
         """ Get all donations for the given participant """
         fresp = self.fetch(sub_url=self.sub_by_pid(participantID))
-        return self._d_to_d(fresp)
+        return self._d_to_d(fresp[0])
 
     def donations_for_team(self, teamID):
         """ Get all donations for the given team """
         fresp = self.fetch(sub_url=self.sub_by_tid(teamID))
-        return self._d_to_d(fresp)
+        return self._d_to_d(fresp[0])
