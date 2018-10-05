@@ -55,6 +55,7 @@ class DonorDriveBase(object):
         """ Fetch the given URL with the given data. Returns data structure from JSON or raises an error. """
         e = dict(url=url, data=kwargs)
         try:
+            # Sleep before the call!
             self._do_sleep(url=url, data=kwargs)
             self.log.debug(f'Going to fetch {url}', extra=e)
             r = self.session.get(url, data=kwargs)
