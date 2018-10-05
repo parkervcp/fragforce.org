@@ -155,9 +155,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 
+# Base URL - Needs DB ID added
 REDIS_URL_BASE = os.environ.get('REDIS_URL', 'redis://localhost')
-REDIS_URL = REDIS_URL_BASE + "/0"
+# Don't use DB 0 for anything
+REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
+# Celery tasks
 REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
+# Celery tombstones (aka results)
 REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
 
 CELERY_ACCEPT_CONTENT = ['json', ]
