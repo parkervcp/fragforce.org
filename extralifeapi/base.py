@@ -101,9 +101,10 @@ class DonorDriveBase(object):
         e = dict(url=url, data=kwargs)
 
         fresp = self.fetch_json(url=url, **kwargs)
-        ret = fresp.data
+        for row in fresp.data:
+            yield row
+
         while 'next' in fresp.urls:
-            assert isinstance(ret, list), "Expected a list not %r" % ret
             fresp = self.fetch_json(url=fresp.urls['next'])
-            ret.extend(fresp.data)
-        return ret
+            for row in fresp.data:
+                yield row
