@@ -7,9 +7,13 @@ from .tasks import *
 def testView(request):
     if not settings.DEBUG:
         raise Http404("Not in debug")
-    ret = repr(update_donations_existing.delay())
+    ret = [
+        update_donations_existing.delay(),
+        update_participants.delay(),
+        update_teams.delay(),
+    ]
 
-    return JsonResponse(ret, safe=False)
+    return JsonResponse([repr(r) for r in ret], safe=False)
 
 
 def teams(request):
