@@ -179,7 +179,7 @@ EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPD
 EL_TEAM_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_CHECK', 5)))
 
 # Second to last
-CELERY_BEATM_SCHEDULE = {
+CELERY_BEAT_SCHEDULE = {
     'update-all-teams': {
         'task': 'ffdonations.tasks.teams.update_teams_if_needed',
         'schedule': EL_TEAM_UPDATE_FREQUENCY_CHECK,
