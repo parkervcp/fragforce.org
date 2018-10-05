@@ -71,7 +71,7 @@ class DonationModel(models.Model):
 
     # Extra-Life
     id = models.CharField(primary_key=True, max_length=1024, editable=False, verbose_name="Donation ID", null=False)
-    message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='')
+    message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='', null=True)
     amount = models.FloatField(null=True, default=0, verbose_name="Donation Amount")
     created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
     displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True)
