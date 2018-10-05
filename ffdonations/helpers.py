@@ -16,7 +16,7 @@ def el_request_sleeper(url, data, parsed, **kwargs):
         url_sleep=r_timers.time_until(key_url, settings.EL_REQUEST_MIN_TIME_URL).total_seconds(),
     )
 
-    srt = sleeps.items()
+    srt = list(sleeps.items())
     srt.sort(key=lambda x: x[1], reverse=True)
     sleep_type, sleep_sec = srt[0]
 
