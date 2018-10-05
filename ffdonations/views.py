@@ -77,7 +77,7 @@ def tracked_donations_stats(request):
         'avgDonations': DonationModel.objects.aggergate(Avg('amount', filter=DonationModel.tracked_q())).values()[0],
         'minDonations': DonationModel.objects.aggergate(Min('amount', filter=DonationModel.tracked_q())).values()[0],
         'maxDonations': DonationModel.objects.aggergate(Max('amount', filter=DonationModel.tracked_q())).values()[0],
-        'participants': baseq.count(),
+        'participants': baseq.distinct('participant').count(),
         'participants-with-donations': baseq.filter(participant__numDonations__gte=1).distinct('participant').count(),
         'teams': baseq.distinct('team').count(),
         'teams-with-donations': baseq.filter(team__numDonations__gte=1).distinct('team').count(),
