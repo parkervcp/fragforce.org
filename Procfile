@@ -1,4 +1,4 @@
 web: gunicorn fforg.wsgi
-worker: celery -A fforg worker -l info -E
-beat: celery -A fforg worker -l info --beat -E
+worker: celery -A fforg worker -l info
+beat: celery -A fforg worker -l info --beat
 release: python manage.py migrate
