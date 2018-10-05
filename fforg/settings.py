@@ -154,6 +154,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SECURE_SSL_REDIRECT = True
 
+# Heroku auto set
+HEROKU_APP_ID = os.environ.get('HEROKU_APP_ID', None)
+HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
+HEROKU_RELEASE_CREATED_AT = os.environ.get('HEROKU_RELEASE_CREATED_AT', None)
+HEROKU_RELEASE_VERSION = os.environ.get('HEROKU_RELEASE_VERSION', 'v1')
+HEROKU_RELEASE_VERSION_NUM = int(HEROKU_RELEASE_VERSION.lstrip('v'))
+HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
+HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
+
 REDIS_URL_DEFAULT = 'redis://localhost'
 # Base URL - Needs DB ID added
 REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
@@ -221,13 +230,18 @@ REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_H
 # Cache Configuration
 if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
     # Dev and release config
-    CACHES = {}
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        },
+    }
 else:
     # Real config
     CACHES = {
         'default': {
             'BACKEND': 'redis_cache.RedisCache',
             'LOCATION': REDIS_URL_DJ_CACHE,
+            'TIMEOUT': int(os.environ.get('REDIS_DJ_TIMEOUT', 300)),
             'OPTIONS': {
                 'PARSER_CLASS': 'redis.connection.HiredisParser',
                 'SOCKET_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_TIMEOUT', 5)),
@@ -239,6 +253,8 @@ else:
                 },
                 'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
                 'SERIALIZER_CLASS_KWARGS': {},
+                # Used to auto flush cache when new builds happen :-D
+                'VERSION': HEROKU_RELEASE_VERSION_NUM,
             },
         },
     }
