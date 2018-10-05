@@ -6,9 +6,17 @@ from django.conf import settings
 import datetime
 
 
+def _make_team(*args, **kwargs):
+    """ Make a safe team object """
+    from ..helpers import el_request_sleeper
+    kwargs.setdefault('request_sleeper', el_request_sleeper)
+    return Teams(*args, **kwargs)
+
+
 @shared_task(bind=True)
 def update_teams_if_needed(self):
     """ Update the team list if required """
+
     def doupdate():
         return update_teams()
 
@@ -37,7 +45,7 @@ def update_teams(self, teams=None):
     WARNING: Listing teams causes an api call per team given
     WARNING: If teams is None then will fetch a list of ALL teams - May make many requests
     """
-    t = Teams()
+    t = _make_team()
     ret = []
     if teams is None:
         tr = t.teams()
