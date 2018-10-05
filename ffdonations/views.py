@@ -9,10 +9,13 @@ def testView(request):
     if not settings.DEBUG:
         raise Http404("Not in debug")
     ret = [
-        update_donations_existing.delay(),
-        update_participants.delay(),
-        update_teams.delay(),
+        # update_donations_existing.delay(),
+        # update_participants.delay(),
+        # update_teams.delay(),
     ]
+
+    for team in TeamModel.objects.filter(tracked=True).all():
+        ret.append(update_donations_if_needed_team.delay(team.id))
 
     return JsonResponse([repr(r) for r in ret], safe=False)
 
