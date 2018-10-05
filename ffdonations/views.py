@@ -15,7 +15,7 @@ def testView(request):
 def teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
-        [d for d in TeamModel.objects.all().values()],
+        [d for d in TeamModel.objects.all().order_by('id').values()],
         safe=False,
     )
 
@@ -23,7 +23,7 @@ def teams(request):
 def tracked_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
-        [d for d in TeamModel.objects.filter(tracked=True).values()],
+        [d for d in TeamModel.objects.filter(tracked=True).order_by('id').values()],
         safe=False,
     )
 
@@ -31,7 +31,7 @@ def tracked_teams(request):
 def participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
-        [d for d in ParticipantModel.objects.all().values()],
+        [d for d in ParticipantModel.objects.all().order_by('id').values()],
         safe=False,
     )
 
@@ -39,6 +39,6 @@ def participants(request):
 def tracked_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
-        [d for d in ParticipantModel.objects.filter(tracked=True).values()],
+        [d for d in ParticipantModel.objects.filter(tracked=True).order_by('id').values()],
         safe=False,
     )
