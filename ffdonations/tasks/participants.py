@@ -72,7 +72,11 @@ def update_participants(self, participants=None):
             try:
                 team = TeamModel.objects.get(id=participant.teamID)
             except TeamModel.DoesNotExist as e:
-                team = TeamModel(tracked=False, id=participant.teamID)
+                team = TeamModel(
+                    tracked=False,
+                    id=participant.teamID,
+                    name=participant.teamName,
+                )
                 team.save()
         else:
             team = None
