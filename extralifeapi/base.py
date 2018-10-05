@@ -10,6 +10,14 @@ mod_logger = root_logger.getChild('base')
 FetchResponse = namedtuple('FetchResponse', ['data', 'headers', 'urls'])
 
 
+class FetchError(Exception):
+    """ Top level problem with fetching a page """
+
+
+class JSONError(FetchError):
+    """ JSON issues """
+
+
 class DonorDriveBase(object):
     DEFAULT_BASE_URL = 'http://www.extra-life.org/api/'
     RE_MATCH_LINK = re.compile(r'^\<(.*)\>;rel="(.*)"')
@@ -70,9 +78,9 @@ class DonorDriveBase(object):
                 e['raw'] = r.raw
                 e['headers'] = r.headers
                 e['rdata'] = r.content
-                rd = r.raw
+                rd = r.content
                 self.log.exception(f"Failed to decode JSON with {er}: Data: {rd}", extra=e)
-                raise
+                raise JSONError(f"Failed to decode JSON with {er}: Data: {rd}")
             e['data_len'] = len(j)
             e['data'] = j
             self.log.debug(f"Got JSON data from {url}", extra=e)
