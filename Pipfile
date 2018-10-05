@@ -29,6 +29,7 @@ logzio-python-handler = "*"
 celery = "*"
 django-redis-cache = "*"
 hiredis = "*"
+tiltify2 = "*"
 
 
 [dev-packages]

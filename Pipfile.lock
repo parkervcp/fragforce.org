@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fe9681951f13d995e51add454c3f9c356435d17a0ce1720bea2e4a48073b6f5d"
+            "sha256": "a4a3d4b321a19cc220b247b33f733fdd412ccc47fe3935e4b48dfc41b3831361"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -103,7 +103,6 @@
                 "sha256:edabd457cd23a02965166026fd9bfd196f4324fe6032e866d0f3bd0301cd486f",
                 "sha256:fdf1c1dc5bafc32bc5d08b054f94d659422b05aba244d6be4ddc1c72d9aa70fb"
             ],
-            "markers": "python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.0.*' and python_version != '3.2.*'",
             "version": "==1.11.5"
         },
         "chardet": {
@@ -348,6 +347,7 @@
                 "sha256:26ff56a6b5ecaf3a2a59f132681e2a80afcc76b4f902f612f518f92c2a1bf854",
                 "sha256:6488f1423b00f73b7ad5167885312bb0ce410d3312eb212393795b53c8caa580"
             ],
+            "markers": "python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.0.*' and python_version != '3.2.*'",
             "version": "==18.0.0"
         },
         "pytz": {
@@ -379,6 +379,14 @@
                 "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
             ],
             "version": "==1.11.0"
+        },
+        "tiltify2": {
+            "hashes": [
+                "sha256:a845e6b3568a7ea9b4c725754e3184459bf5fd325de5fb67d5fbc4d9e23707ed",
+                "sha256:be8d7d29cd954404bc318a80cc63771b6990f5b378f730fa523c564b18773655"
+            ],
+            "index": "pypi",
+            "version": "==1.0"
         },
         "urllib3": {
             "hashes": [
