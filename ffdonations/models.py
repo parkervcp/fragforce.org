@@ -63,18 +63,6 @@ class ParticipantModel(models.Model):
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
-class DonorModel(models.Model):
-    # Ours
-    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
-    tracked = models.BooleanField(default=False, verbose_name="Is Tracked")
-    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
-
-    # Extra-Life
-    id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Donor ID", null=False)
-    displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True)
-    avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
-
-
 class DonationModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
@@ -86,9 +74,10 @@ class DonationModel(models.Model):
     message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='')
     amount = models.FloatField(null=True, default=0, verbose_name="Donation Amount")
     created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
+    displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True)
+    avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
 
     # Related
-    donor = models.ForeignKey(DonorModel, null=True, default=None, verbose_name="Donor", on_delete=models.DO_NOTHING)
     participant = models.ForeignKey(ParticipantModel, null=True, default=None, verbose_name="Participant",
                                     on_delete=models.DO_NOTHING)
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
