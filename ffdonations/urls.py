@@ -17,12 +17,18 @@ from django.urls import path
 from ffdonations.views import *
 
 urlpatterns = [
+    # Test stuff
     path('test', testView, name='testview'),
+    # Teams
     path('teams', teams, name='teams'),
     path('teams/tracked', tracked_teams, name='teams-tracked'),
+    # Participants
     path('participants', participants, name='participants'),
     path('participants/tracked', tracked_participants, name='participants-tracked'),
+    # Donations
     path('donations', donations, name='donations'),
     path('donations/tracked', tracked_donations, name='donations-tracked'),
     path('donations/tracked/stats', tracked_donations_stats, name='donations-tracked-stats'),
+    # Stats
+    path('stats/donations/tracked', tracked_donations_stats, name='stats-donations-tracked'),
 ]
