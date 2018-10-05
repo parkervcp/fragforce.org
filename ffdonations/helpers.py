@@ -21,4 +21,7 @@ def el_request_sleeper(url, data, parsed, **kwargs):
     sleep_type, sleep_sec = srt[0]
 
     time.sleep(sleep_sec)
+
+    print(f"Slept for {sleep_sec} seconds")
+
     return sleep_type
