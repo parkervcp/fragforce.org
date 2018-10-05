@@ -56,8 +56,12 @@ class DonorDriveBase(object):
             return {}
         n = {}
         for a in link.split(','):
-            r = cls.RE_MATCH_LINK.match(a).groups()
-            n[r[1].lower()] = r[0]
+            match = cls.RE_MATCH_LINK.match(a)
+            if match:
+                r = match.groups()
+                n[r[1].lower()] = r[0]
+            else:
+                return {}
         return n
 
     def fetch_json(self, url, **kwargs):
