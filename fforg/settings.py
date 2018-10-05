@@ -172,6 +172,7 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ACKS_LATE = True
 CELERY_BROKER_URL = REDIS_URL_TASKS
 CELERY_RESULT_BACKEND = REDIS_URL_TOMBS
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', None)
 MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
@@ -208,7 +209,6 @@ EL_DON_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_
 EL_DON_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_DON_PTCP_UPDATE_FREQUENCY_MIN', 5)))
 # Max time between updates of donations for any given participants - Only cares about tracked participants
 EL_DON_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_PTCP_UPDATE_FREQUENCY_MAX', 15)))
-
 
 # Min time between EL REST requests
 EL_REQUEST_MIN_TIME = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_SECONDS', 15)))
