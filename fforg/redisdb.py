@@ -34,7 +34,9 @@ class RedisDB(object):
 
 class TimersDB(RedisDB):
     def time_until(self, key, delta=timedelta(seconds=1), now=time.time()):
-        """ The amount of time between calls. Zero if not called before. """
+        """ The amount of time between calls. Zero if not called before.
+        Doesn't really do concurrency but it's "good enough" for now.
+        """
         r = self.db.get(key)
         if r is None:
             self.db.set(key, str(now), ex=delta)
