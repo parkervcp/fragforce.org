@@ -20,8 +20,8 @@ def update_participants_if_needed(self):
     def doupdate():
         return update_participants()
 
-    minc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
+    minc = datetime.datetime.utcnow() - settings.EL_PTCP_UPDATE_FREQUENCY_MIN
+    maxc = datetime.datetime.utcnow() - settings.EL_PTCP_UPDATE_FREQUENCY_MAX
 
     if ParticipantModel.objects.all().count() <= 0:
         return doupdate()

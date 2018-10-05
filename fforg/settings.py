@@ -186,6 +186,14 @@ EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPD
 # How often to check for updates
 EL_TEAM_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_CHECK', 5)))
 
+# Min time between participants updates - Only cares about tracked participants!
+EL_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MIN', 30)))
+# Max time between updates for any given participants - Only cares about tracked participants!
+EL_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MAX', 120)))
+# How often to check for updates
+EL_PTCP_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_CHECK', 5)))
+
+
 # Min time between EL REST requests
 EL_REQUEST_MIN_TIME = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_SECONDS', 15)))
 # Min time between EL REST requests for any given URL
@@ -198,6 +206,10 @@ CELERY_BEAT_SCHEDULE = {
     'update-all-teams': {
         'task': 'ffdonations.tasks.teams.update_teams_if_needed',
         'schedule': EL_TEAM_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-participants': {
+        'task': 'ffdonations.tasks.participants.update_participants_if_needed',
+        'schedule': EL_PTCP_UPDATE_FREQUENCY_CHECK,
     },
 }
 
