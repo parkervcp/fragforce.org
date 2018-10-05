@@ -7,7 +7,7 @@ from .tasks import *
 def testView(request):
     if not settings.DEBUG:
         raise Http404("Not in debug")
-    ret = repr(update_participants.delay())
+    ret = repr(update_donations_existing.delay())
 
     return JsonResponse(ret, safe=False)
 
@@ -40,5 +40,13 @@ def tracked_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
         [d for d in ParticipantModel.objects.filter(tracked=True).order_by('id').values()],
+        safe=False,
+    )
+
+
+def donations(request):
+    update_donations_if_needed.delay()
+    return JsonResponse(
+        [d for d in DonationModel.objects.all().order_by('id').values()],
         safe=False,
     )

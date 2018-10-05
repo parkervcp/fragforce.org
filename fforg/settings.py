@@ -167,7 +167,6 @@ REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
 # Misc timers
 REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
 
-
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ACKS_LATE = True
@@ -193,6 +192,12 @@ EL_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_PTCP_UPD
 # How often to check for updates
 EL_PTCP_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_CHECK', 30)))
 
+# Min time between donation list updates - Only cares about tracked teams/participants!
+EL_DON_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_MIN', 60)))
+# Max time between updates for any given donation list - Only cares about tracked teams/participants!
+EL_DON_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_MAX', 300)))
+# How often to check for updates
+EL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_CHECK', 15)))
 
 # Min time between EL REST requests
 EL_REQUEST_MIN_TIME = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_SECONDS', 15)))
@@ -210,6 +215,10 @@ CELERY_BEAT_SCHEDULE = {
     'update-all-participants': {
         'task': 'ffdonations.tasks.participants.update_participants_if_needed',
         'schedule': EL_PTCP_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-donations': {
+        'task': 'ffdonations.tasks.donations.update_donations_if_needed',
+        'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
     },
 }
 

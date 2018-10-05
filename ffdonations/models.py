@@ -46,7 +46,7 @@ class ParticipantModel(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Participant ID", null=False)
     displayName = models.CharField(max_length=8192, verbose_name="Participant Name", null=True)
     # Info
-    created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
+    created = models.DateTimeField(verbose_name="Created At", null=True)
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
     campaignDate = models.DateTimeField(null=True, verbose_name="Campaign Date")
     campaignName = models.CharField(max_length=8192, null=True, verbose_name="Campaign Name")
