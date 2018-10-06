@@ -18,11 +18,11 @@ def v_tracked_donations_stats(request):
     )
 
     ret['numDonations'] = baseq.count()
-    ret['participants'] = baseq.order_by('participant__id').distinct('participant__id').count()
-    ret['participants-with-donations'] = baseq.filter(participant__numDonations__gte=1).order_by(
+    ret['participants-with-donations-synced'] = baseq.order_by('participant__id').distinct('participant__id').count()
+    ret['participants-with-donations-actual'] = baseq.filter(participant__numDonations__gte=1).order_by(
         'participant__id').distinct('participant__id').count()
-    ret['teams'] = baseq.order_by('team__id').distinct('team__id').count()
-    ret['teams-with-donations'] = baseq.filter(team__numDonations__gte=1).order_by('team__id').distinct(
+    ret['teams-with-donations-synced'] = baseq.order_by('team__id').distinct('team__id').count()
+    ret['teams-with-donations-actual'] = baseq.filter(team__numDonations__gte=1).order_by('team__id').distinct(
         'team__id').count()
 
     ret['tracked-participants'] = ParticipantModel.objects.filter(tracked=True).count()
