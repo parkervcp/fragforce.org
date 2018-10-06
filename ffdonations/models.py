@@ -25,12 +25,12 @@ class TeamModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Team ID", null=False)
-    name = models.CharField(max_length=8192, null=False, verbose_name="Team Name")
+    name = models.CharField(max_length=8192, null=True, verbose_name="Team Name")
     # Info
     created = models.DateTimeField(verbose_name="Created At", null=True)
-    fundraisingGoal = models.FloatField(verbose_name="Fundraising Goal", null=True)
+    fundraisingGoal = models.DecimalField(verbose_name="Fundraising Goal", null=True)
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
-    sumDonations = models.FloatField(verbose_name="Donations Total", null=True)
+    sumDonations = models.DecimalField(verbose_name="Donations Total", null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
 
@@ -52,10 +52,10 @@ class ParticipantModel(models.Model):
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
     campaignDate = models.DateTimeField(null=True, verbose_name="Campaign Date")
     campaignName = models.CharField(max_length=8192, null=True, verbose_name="Campaign Name")
-    fundraisingGoal = models.FloatField(verbose_name="Fundraising Goal", null=True)
+    fundraisingGoal = models.DecimalField(verbose_name="Fundraising Goal", null=True)
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
-    sumDonations = models.FloatField(verbose_name="Donations Total", null=True)
-    sumPledges = models.FloatField(verbose_name="Pledges Total", null=True)
+    sumDonations = models.DecimalField(verbose_name="Donations Total", null=True)
+    sumPledges = models.DecimalField(verbose_name="Pledges Total", null=True)
     isTeamCaptain = models.NullBooleanField(verbose_name="Is Team Captain", default=False, null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
@@ -72,10 +72,10 @@ class DonationModel(models.Model):
 
     # Extra-Life
     id = models.CharField(primary_key=True, max_length=1024, editable=False, verbose_name="Donation ID", null=False)
-    message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='', null=False)
-    amount = models.FloatField(null=True, default=0, verbose_name="Donation Amount")
-    created = models.DateTimeField(verbose_name="Created At", null=False, default=datetime.datetime.utcnow)
-    displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=False, default='')
+    message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='', null=True)
+    amount = models.DecimalField(null=True, default=0, verbose_name="Donation Amount")
+    created = models.DateTimeField(verbose_name="Created At", null=True, default=datetime.datetime.utcnow)
+    displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True, default='')
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
 
     # Related
@@ -100,7 +100,7 @@ class MediaTiltifyModel(models.Model):
     id = models.BigAutoField(primary_key=True, verbose_name="ID")
 
     # Tiltify
-    src = models.URLField(max_length=8192, null=False, verbose_name="Source URL")
+    src = models.URLField(max_length=8192, null=True, verbose_name="Source URL")
     alt = models.CharField(max_length=8192, null=True, default='', verbose_name="Alternate Text")
     width = models.IntegerField(null=True, verbose_name="Width (px)")
     height = models.IntegerField(null=True, verbose_name="Height (px)")
@@ -112,6 +112,102 @@ class MediaTiltifyModel(models.Model):
     subtype = models.CharField(max_length=255, null=False, default='MediaResult')
 
 
+class RewardTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tiltify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    name = models.CharField(max_length=8192, null=True, default='Name')
+    description = models.CharField(max_length=1024 * 1024, null=True, default='Description')
+    amount = models.IntegerField(null=True, verbose_name="Amount")
+    kind = models.CharField(max_length=8192, null=True, default='Kind')
+    quantity = models.IntegerField(null=True, verbose_name="Quantity")
+    remaining = models.IntegerField(null=True, verbose_name="Remaining")
+    fairMarketValue = models.DecimalField(null=True, verbose_name="Fair Market Value")
+    currency = models.CharField(max_length=8192, null=True, default='Currency')
+    shippingAddressRequired = models.NullBooleanField(null=True, verbose_name="Is Active")
+    shippingNote = models.CharField(max_length=1024 * 1024, null=True, default='Description')
+    active = models.NullBooleanField(null=True, verbose_name="Is Active")
+    startsAt = models.DateTimeField(null=True, verbose_name="Starts At")
+    createdAt = models.DateTimeField(null=True, verbose_name="Created At")
+    updatedAt = models.DateTimeField(null=True, verbose_name="Updated At")
+
+    image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image")
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
+class SocailTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigAutoField(primary_key=True, verbose_name="ID")
+
+    # Tiltify
+    twitter = models.CharField(max_length=8192, null=True, default='Twitter')
+    twitch = models.CharField(max_length=8192, null=True, default='Twitch')
+    youtube = models.CharField(max_length=8192, null=True, default='Youtube')
+    facebook = models.CharField(max_length=8192, null=True, default='Facebook')
+    instagram = models.CharField(max_length=8192, null=True, default='Instagram')
+    website = models.CharField(max_length=8192, null=True, default='Website')
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
+class AddressTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigAutoField(primary_key=True, verbose_name="ID")
+
+    # Tiltify
+    addressLine1 = models.CharField(max_length=8192, null=True, default='Address Line 1')
+    addressLine2 = models.CharField(max_length=8192, null=True, default='Address Line 2')
+    city = models.CharField(max_length=8192, null=True, default='City')
+    region = models.CharField(max_length=8192, null=True, default='Region')
+    postalCode = models.BigIntegerField(null=True, default='Postal Code')
+    country = models.CharField(max_length=8192, null=True, default='Country')
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
+class ColorTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigAutoField(primary_key=True, verbose_name="ID")
+
+    # Tiltify
+    highlight = models.CharField(max_length=8192, null=True, default='Hightlight Color')
+    background = models.CharField(max_length=8192, null=True, default='Background Color')
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
+class SettingsTiltifyModel(models.Model):
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigAutoField(primary_key=True, verbose_name="ID")
+
+    # Tiltify
+    headerIntro = models.CharField(max_length=8192, null=True, default='Intro')
+    headerTitle = models.CharField(max_length=8192, null=True, default='Title')
+    footerCopyright = models.CharField(max_length=8192, null=True, default='Copyright')
+    findOutMoreLink = models.URLField(max_length=8192, null=True, verbose_name="Find Out More")
+
+    colors = models.ForeignKey(ColorTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Colors")
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
+
 class CauseTiltifyModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
@@ -119,6 +215,28 @@ class CauseTiltifyModel(models.Model):
 
     # Tilify
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    name = models.CharField(max_length=8192, null=True, verbose_name="Name")
+    legalName = models.CharField(max_length=8192, null=True, verbose_name="Legal Name")
+    slug = models.CharField(max_length=8192, null=True, verbose_name="Slug")
+    currency = models.CharField(max_length=8192, null=True, verbose_name="Currency")
+    about = models.CharField(max_length=8192, null=True, verbose_name="About")
+    video = models.URLField(max_length=8192, null=True, verbose_name="Name")
+    contactEmail = models.EmailField(max_length=8192, null=True, verbose_name="Contact Email")
+    paypalEmail = models.EmailField(max_length=8192, null=True, verbose_name="Paypal Email")
+    paypalCurrencyCode = models.CharField(max_length=8192, null=True, verbose_name="Paypal Currency Code")
+    status = models.CharField(max_length=8192, null=True, verbose_name="Status")
+    stripeConnected = models.NullBooleanField(null=True, verbose_name="Stripe Connected")
+    mailchimpConnected = models.NullBooleanField(null=True, verbose_name="Mail Chimp Connected")
+
+    image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image")
+    logo = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Logo")
+    banner = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Banner")
+    social = models.ForeignKey(SocailTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Social")
+    settings = models.ForeignKey(SettingsTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Settings")
+    address = models.ForeignKey(AddressTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Address")
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class EventTiltifyModel(models.Model):
@@ -129,9 +247,22 @@ class EventTiltifyModel(models.Model):
     # Tilify
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
 
+    # FIXME: Find out what this should link to
+
 
 class LiveStreamTiltifyModel(models.Model):
-    pass
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+
+    # Tilify
+    channel = models.CharField(max_length=8192, verbose_name="Channel", null=True)
+    stream_type = models.CharField(max_length=8192, verbose_name="Type", null=True)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+
 
 class TeamTiltifyModel(models.Model):
     # Ours
@@ -140,9 +271,9 @@ class TeamTiltifyModel(models.Model):
 
     # Tilify
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
-    name = models.CharField(verbose_name="Name", unique=True, null=False)
-    slug = models.CharField(verbose_name="Slug", unique=True, null=False)
-    url = models.CharField(verbose_name="URL", unique=True, null=False)
+    name = models.CharField(verbose_name="Name", unique=True, null=True)
+    slug = models.CharField(verbose_name="Slug", unique=True, null=True)
+    url = models.CharField(verbose_name="URL", unique=True, null=True)
     avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
 
     # On some
@@ -158,7 +289,20 @@ class TeamTiltifyModel(models.Model):
 
 
 class UserTiltifyModel(models.Model):
-    pass
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    username = models.CharField(max_length=8192, verbose_name="Username", unique=True, null=True)
+    slug = models.CharField(max_length=8192, verbose_name="Slug", unique=True, null=True)
+    url = models.URLField(max_length=8192, verbose_name="URL", unique=True, null=True)
+
+    avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class CampaignTiltifyModel(models.Model):
@@ -168,18 +312,18 @@ class CampaignTiltifyModel(models.Model):
 
     # Tilify
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
-    name = models.CharField(max_length=8192, verbose_name="Name", unique=True, null=False)
-    slug = models.CharField(max_length=8192, verbose_name="Slug", unique=True, null=False)
-    url = models.URLField(max_length=8192, verbose_name="URL", unique=True, null=False)
+    name = models.CharField(max_length=8192, verbose_name="Name", unique=True, null=True)
+    slug = models.CharField(max_length=8192, verbose_name="Slug", unique=True, null=True)
+    url = models.URLField(max_length=8192, verbose_name="URL", unique=True, null=True)
     startsAt = models.DateTimeField(null=True, verbose_name='Starts At')
     endsAt = models.DateTimeField(null=True, verbose_name='Ends At')
     description = models.CharField(max_length=8192, verbose_name="Description", unique=True, null=True)
-    goal = models.FloatField(verbose_name="Goal Amount", null=True)
-    fundraiserGoalAmount = models.FloatField(verbose_name="Fundraiser Goal Amount", null=True)
-    originalGoalAmount = models.FloatField(verbose_name="Origional Goal Amount", null=True)
-    amountRaised = models.FloatField(verbose_name="Amount Raised", null=True)
-    supportingAmountRaised = models.FloatField(verbose_name="Supporting Amount Raised", null=True)
-    totalAmountRaised = models.FloatField(verbose_name="Total Amount Raised", null=True)
+    goal = models.DecimalField(verbose_name="Goal Amount", null=True)
+    fundraiserGoalAmount = models.DecimalField(verbose_name="Fundraiser Goal Amount", null=True)
+    originalGoalAmount = models.DecimalField(verbose_name="Origional Goal Amount", null=True)
+    amountRaised = models.DecimalField(verbose_name="Amount Raised", null=True)
+    supportingAmountRaised = models.DecimalField(verbose_name="Supporting Amount Raised", null=True)
+    totalAmountRaised = models.DecimalField(verbose_name="Total Amount Raised", null=True)
     supportable = models.NullBooleanField(verbose_name="Is Supportable", null=True)
     status = models.CharField(max_length=8192, null=True, verbose_name="Status")
     startsOn = models.DateTimeField(null=True, verbose_name='Starts On')
@@ -192,7 +336,7 @@ class CampaignTiltifyModel(models.Model):
                                    on_delete=models.DO_NOTHING)
     cause = models.ForeignKey(CauseTiltifyModel, verbose_name="Cause", null=True, on_delete=models.DO_NOTHING)
     avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
-    fundraisingEvent = models.ForeignKey(EventTiltifyModel, verbose_name="Fundrasing Event", null=True,
+    fundraisingEvent = models.ForeignKey(EventTiltifyModel, verbose_name="Fundraising Event", null=True,
                                          on_delete=models.DO_NOTHING)
 
     # Extra
@@ -203,4 +347,17 @@ class CampaignTiltifyModel(models.Model):
 
 
 class DonationTiltifyModel(models.Model):
-    pass
+    # Ours
+    guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
+    last_updated = models.DateTimeField(null=False, auto_now=True, verbose_name="Date Record Last Fetched")
+
+    # Tilify
+    id = models.BigIntegerField(verbose_name="ID", primary_key=True)
+    amount = models.DecimalField(verbose_name="Amount", max_digits=50, decimal_places=2, null=True)
+    name = models.CharField(max_length=8192, null=True, verbose_name="Name")
+    comment = models.CharField(max_length=1024 * 1024, null=True, verbose_name="Comment")
+    completedAt = models.DateTimeField(null=True, verbose_name="Completed At")
+    reward = models.ForeignKey(RewardTiltifyModel, verbose_name="Reward", null=True, on_delete=models.DO_NOTHING)
+
+    # Extra
+    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
