@@ -25,7 +25,7 @@ def v_tracked_donations_stats(request):
     ret['teams-with-donations'] = baseq.filter(team__numDonations__gte=1).order_by('team__id').distinct(
         'team__id').count()
 
-    ret['tracked-participants'] = ParticipantModel.objects.filter(tracked=True).count(),
-    ret['tracked-teams'] = TeamModel.objects.filter(tracked=True).count(),
+    ret['tracked-participants'] = ParticipantModel.objects.filter(tracked=True).count()
+    ret['tracked-teams'] = TeamModel.objects.filter(tracked=True).count()
 
     return JsonResponse(ret)
