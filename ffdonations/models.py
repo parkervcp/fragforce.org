@@ -155,6 +155,7 @@ class TeamTiltifyModel(models.Model):
 
 
 class UserTiltifyModel(models.Model):
+    pass
 
 
 class CampaignTiltifyModel(models.Model):
@@ -199,3 +200,4 @@ class CampaignTiltifyModel(models.Model):
 
 
 class DonationTiltifyModel(models.Model):
+    pass
