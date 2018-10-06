@@ -130,6 +130,9 @@ class EventTiltifyModel(models.Model):
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
 
 
+class LiveStreamTiltifyModel(models.Model):
+    pass
+
 class TeamTiltifyModel(models.Model):
     # Ours
     guid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="GUID", null=False)
