@@ -195,7 +195,6 @@ TILTIFY_TOKEN = os.environ.get('TILTIFY_TOKEN', None)
 TILTIFY_TIMEOUT = int(os.environ.get('TILTIFY_TIMEOUT', 60))
 TILTIFY_APP_OWNER = os.environ.get('TILTIFY_APP_OWNER', HEROKU_APP_NAME)
 
-
 # Various view cache timeouts
 VIEW_TEAMS_CACHE = int(os.environ.get('VIEW_TEAMS_CACHE', 20))
 VIEW_PARTICIPANTS_CACHE = int(os.environ.get('VIEW_PARTICIPANTS_CACHE', 20))
@@ -288,7 +287,7 @@ else:
                 # 'SERIALIZER_CLASS_KWARGS': {},
                 # Used to auto flush cache when new builds happen :-D
                 'VERSION': HEROKU_RELEASE_VERSION_NUM,
-                'KEY_PREFIX': '_'.join([HEROKU_APP_ID, HEROKU_APP_NAME]),
+                'KEY_PREFIX': '_'.join([str(HEROKU_APP_ID), str(HEROKU_APP_NAME)]),
                 'KEY_FUNCTION': make_key,
             },
         },
