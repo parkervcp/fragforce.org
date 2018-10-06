@@ -28,9 +28,9 @@ class TeamModel(models.Model):
     name = models.CharField(max_length=8192, null=True, verbose_name="Team Name")
     # Info
     created = models.DateTimeField(verbose_name="Created At", null=True)
-    fundraisingGoal = models.DecimalField(verbose_name="Fundraising Goal", null=True)
+    fundraisingGoal = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Fundraising Goal", null=True)
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
-    sumDonations = models.DecimalField(verbose_name="Donations Total", null=True)
+    sumDonations = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Donations Total", null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
 
@@ -52,10 +52,10 @@ class ParticipantModel(models.Model):
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
     campaignDate = models.DateTimeField(null=True, verbose_name="Campaign Date")
     campaignName = models.CharField(max_length=8192, null=True, verbose_name="Campaign Name")
-    fundraisingGoal = models.DecimalField(verbose_name="Fundraising Goal", null=True)
+    fundraisingGoal = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Fundraising Goal", null=True)
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
-    sumDonations = models.DecimalField(verbose_name="Donations Total", null=True)
-    sumPledges = models.DecimalField(verbose_name="Pledges Total", null=True)
+    sumDonations = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Donations Total", null=True)
+    sumPledges = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Pledges Total", null=True)
     isTeamCaptain = models.NullBooleanField(verbose_name="Is Team Captain", default=False, null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
@@ -73,7 +73,7 @@ class DonationModel(models.Model):
     # Extra-Life
     id = models.CharField(primary_key=True, max_length=1024, editable=False, verbose_name="Donation ID", null=False)
     message = models.CharField(max_length=1024 * 1024, verbose_name="Message", default='', null=True)
-    amount = models.DecimalField(null=True, default=0, verbose_name="Donation Amount")
+    amount = models.DecimalField(decimal_places=2, max_digits=50, null=True, default=0, verbose_name="Donation Amount")
     created = models.DateTimeField(verbose_name="Created At", null=True, default=datetime.datetime.utcnow)
     displayName = models.CharField(max_length=8192, verbose_name="Donor Name", null=True, default='')
     avatarImage = models.URLField(verbose_name="Avatar Image", null=True, max_length=8192)
@@ -125,7 +125,7 @@ class RewardTiltifyModel(models.Model):
     kind = models.CharField(max_length=8192, null=True, default='Kind')
     quantity = models.IntegerField(null=True, verbose_name="Quantity")
     remaining = models.IntegerField(null=True, verbose_name="Remaining")
-    fairMarketValue = models.DecimalField(null=True, verbose_name="Fair Market Value")
+    fairMarketValue = models.DecimalField(decimal_places=2, max_digits=50, null=True, verbose_name="Fair Market Value")
     currency = models.CharField(max_length=8192, null=True, default='Currency')
     shippingAddressRequired = models.NullBooleanField(null=True, verbose_name="Is Active")
     shippingNote = models.CharField(max_length=1024 * 1024, null=True, default='Description')
@@ -228,9 +228,12 @@ class CauseTiltifyModel(models.Model):
     stripeConnected = models.NullBooleanField(null=True, verbose_name="Stripe Connected")
     mailchimpConnected = models.NullBooleanField(null=True, verbose_name="Mail Chimp Connected")
 
-    image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image")
-    logo = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Logo")
-    banner = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Banner")
+    image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image",
+                              related_name='image')
+    logo = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Logo",
+                             related_name='logo')
+    banner = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Banner",
+                               related_name='banner')
     social = models.ForeignKey(SocailTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Social")
     settings = models.ForeignKey(SettingsTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Settings")
     address = models.ForeignKey(AddressTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Address")
@@ -271,9 +274,9 @@ class TeamTiltifyModel(models.Model):
 
     # Tilify
     id = models.BigIntegerField(verbose_name="ID", primary_key=True)
-    name = models.CharField(verbose_name="Name", unique=True, null=True)
-    slug = models.CharField(verbose_name="Slug", unique=True, null=True)
-    url = models.CharField(verbose_name="URL", unique=True, null=True)
+    name = models.CharField(verbose_name="Name", unique=True, null=True, max_length=8192)
+    slug = models.CharField(verbose_name="Slug", unique=True, null=True, max_length=8192)
+    url = models.CharField(verbose_name="URL", unique=True, null=True, max_length=8192)
     avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
 
     # On some
@@ -318,24 +321,30 @@ class CampaignTiltifyModel(models.Model):
     startsAt = models.DateTimeField(null=True, verbose_name='Starts At')
     endsAt = models.DateTimeField(null=True, verbose_name='Ends At')
     description = models.CharField(max_length=8192, verbose_name="Description", unique=True, null=True)
-    goal = models.DecimalField(verbose_name="Goal Amount", null=True)
-    fundraiserGoalAmount = models.DecimalField(verbose_name="Fundraiser Goal Amount", null=True)
-    originalGoalAmount = models.DecimalField(verbose_name="Origional Goal Amount", null=True)
-    amountRaised = models.DecimalField(verbose_name="Amount Raised", null=True)
-    supportingAmountRaised = models.DecimalField(verbose_name="Supporting Amount Raised", null=True)
-    totalAmountRaised = models.DecimalField(verbose_name="Total Amount Raised", null=True)
+    goal = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Goal Amount", null=True)
+    fundraiserGoalAmount = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Fundraiser Goal Amount",
+                                               null=True)
+    originalGoalAmount = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Origional Goal Amount",
+                                             null=True)
+    amountRaised = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Amount Raised", null=True)
+    supportingAmountRaised = models.DecimalField(decimal_places=2, max_digits=50,
+                                                 verbose_name="Supporting Amount Raised", null=True)
+    totalAmountRaised = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Total Amount Raised",
+                                            null=True)
     supportable = models.NullBooleanField(verbose_name="Is Supportable", null=True)
     status = models.CharField(max_length=8192, null=True, verbose_name="Status")
     startsOn = models.DateTimeField(null=True, verbose_name='Starts On')
     endsOn = models.DateTimeField(null=True, verbose_name='Ends On')
 
-    thumbnail = models.ForeignKey(MediaTiltifyModel, verbose_name="Thumbnail", null=True, on_delete=models.DO_NOTHING)
+    thumbnail = models.ForeignKey(MediaTiltifyModel, verbose_name="Thumbnail", null=True, on_delete=models.DO_NOTHING,
+                                  related_name='thumbnail')
     user = models.ForeignKey(UserTiltifyModel, verbose_name="user", null=True, on_delete=models.DO_NOTHING)
     team = models.ForeignKey(TeamTiltifyModel, verbose_name="Team", null=True, on_delete=models.DO_NOTHING)
     livestream = models.ForeignKey(LiveStreamTiltifyModel, verbose_name="Live Stream", null=True,
                                    on_delete=models.DO_NOTHING)
     cause = models.ForeignKey(CauseTiltifyModel, verbose_name="Cause", null=True, on_delete=models.DO_NOTHING)
-    avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
+    avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING,
+                               related_name='avatar')
     fundraisingEvent = models.ForeignKey(EventTiltifyModel, verbose_name="Fundraising Event", null=True,
                                          on_delete=models.DO_NOTHING)
 
