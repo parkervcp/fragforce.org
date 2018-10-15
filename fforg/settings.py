@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ffsite.ctx.common_org',
+                'ffdonations.ctx.donations',
             ],
             'debug': DEBUG,
         },
