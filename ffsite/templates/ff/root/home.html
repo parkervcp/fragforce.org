@@ -4,7 +4,12 @@
 
 {% block body %}
 <div class="row">
-    <!-- <div class="col-lg border border-light rounded p-3 m-4 card"> -->
+    <div class="col-lg p-3 m-4 card" style="vertical-align:middle;">
+        <h2>Current Progress</h2>
+        {% cache 120 bars %}
+        Total EL Donations: {{ el_donation_stats.sumDonations }}
+        {% endcache %}
+    </div>
     <div class="col-lg p-3 m-4 card"> 
         <h2>What is Fragforce?</h2>
         <br />
@@ -16,7 +21,6 @@
             love of gaming, all while assisting local hospitals.
         </div>
     </div>
-    <!-- <div class="col-lg border border-light rounded p-3 m-4 card"> -->
     <div class="col-lg p-3 m-4 card">
         <a href="/static/ffsite/images/combined.jpg" class="align-middle">
             <img src="/static/ffsite/images/combined.jpg" width="100%">
@@ -24,7 +28,6 @@
     </div>
 </div>
 <div class="row">
-    <!-- <div class="col-lg border border-light rounded p-3 m-4 card"> -->
     <div class="col-lg p-3 m-4 card">
         <h2>Who is Fragforce supporting?</h2>
         <br />
@@ -48,7 +51,6 @@
             industry and the power of play.
         </div>
     </div>
-    <!-- <div class="col-lg border border-light rounded p-3 m-4 card"> -->
     <div class="col-lg p-3 m-4 card">
         <h2>How can I donate?</h2>
         <br />
