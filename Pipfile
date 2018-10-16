@@ -25,6 +25,7 @@ logzio-python-handler = "*"
 celery = "*"
 django-redis-cache = "*"
 hiredis = "*"
+django-memoize = "*"
 # Temp until PR finsihed and applied
 #tiltify2 = "*"
 "5378783" = {file = "https://github.com/gpmidi/tiltify-v2-api-python/zipball/develop-v3"}
