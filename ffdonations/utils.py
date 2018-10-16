@@ -1,6 +1,6 @@
-from ..tasks import *
+# from .tasks import *
 from django.db.models import Q, Avg, Max, Min, Sum
-from django.conf import settings
+#from django.conf import settings
 from .models import *
 from memoize import memoize
 
