@@ -244,6 +244,10 @@ EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_T
 # Min time between request for any given remote host
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
 
+# How often to check for updates
+TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 60)))
+
+
 # Cache Configuration
 if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
     # Dev and release config
@@ -318,6 +322,10 @@ CELERY_BEAT_SCHEDULE = {
     'update-all-donations': {
         'task': 'ffdonations.tasks.donations.update_donations_if_needed',
         'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
+    },
+    'til-update-all-donations': {
+        'task': 'ffdonations.tasks.tiltify.campaigns.update_campaigns',
+        'schedule': TIL_DON_UPDATE_FREQUENCY_CHECK,
     },
 }
 
