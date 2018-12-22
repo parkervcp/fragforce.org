@@ -16,7 +16,7 @@
         ]
     },
     "default": {
-        "5378783": {
+        "5378784": {
             "file": "https://github.com/gpmidi/tiltify-v2-api-python/zipball/develop-v3"
         },
         "amqp": {
