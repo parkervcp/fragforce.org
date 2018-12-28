@@ -31,6 +31,9 @@ def v_testView(request):
     ]
 
     for team in TeamModel.objects.filter(tracked=True).all():
-        ret.append(update_donations_if_needed_team.delay(team.id))
+        ret.append(update_donations_team.delay(team.id))
+
+    for p in ParticipantModel.objects.filter(tracked=True).all():
+        ret.append(update_donations_participant.delay(p.id))
 
     return JsonResponse([repr(r) for r in ret], safe=False)
