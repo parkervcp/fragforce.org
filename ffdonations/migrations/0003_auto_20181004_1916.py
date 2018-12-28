@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        #CreateExtension('jsonb'),
+        # CreateExtension('jsonb'),
         migrations.CreateModel(
             name='DonationModel',
             fields=[
