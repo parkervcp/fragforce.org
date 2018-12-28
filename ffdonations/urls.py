@@ -19,6 +19,7 @@ from ffdonations.views import *
 urlpatterns = [
     # Test stuff
     path('test', v_testView, name='testview'),
+    path('update/force', v_forceUpdate, name='force-update'),
     # Teams
     path('teams', v_teams, name='teams'),
     path('teams/tracked', v_tracked_teams, name='teams-tracked'),
