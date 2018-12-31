@@ -9,4 +9,5 @@ def donations(request):
     return dict(
         # FIXME: Add custom caching here - use tasks to pregenerate so it doesn't slow down random pages
         el_donation_stats=el_donation_stats(),
+        el_num_donations=el_num_donations(),
     )
