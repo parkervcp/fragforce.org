@@ -25,7 +25,7 @@ from memoize import memoize
 def el_num_donations():
     tsum = TeamModel.objects.filter(tracked=True).aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     psum = ParticipantModel.objects.filter(Q(Q(team__tracked=False) | Q(team__isnull=True)), tracked=True) \
-        .aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
+        .aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     return dict(
         countDonations=float(tsum + psum),
         countTeamDonations=float(tsum),
@@ -35,7 +35,7 @@ def el_num_donations():
 
 @memoize(timeout=120)
 def el_donation_stats():
-    tsum = TeamModel.objects.filter(tracked=True).aggregate(ttl=Sum('numDonations')).get('ttl', 0)
+    tsum = TeamModel.objects.filter(tracked=True).aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     psum = ParticipantModel.objects.filter(Q(Q(team__tracked=False) | Q(team__isnull=True)), tracked=True) \
         .aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     return dict(
