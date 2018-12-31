@@ -23,16 +23,9 @@ def _onlydebug(f):
 @_onlydebug
 def v_testView(request):
     ret = [
-        # update_donations_existing.delay(),
-        # update_participants.delay(),
-        # update_teams.delay(),
+        ('pct',),
+        ('team',),
     ]
-
-    for team in TeamModel.objects.filter(tracked=True).all():
-        ret.append(update_donations_team.delay(team.id))
-
-    for p in ParticipantModel.objects.filter(tracked=True).all():
-        ret.append(update_donations_participant.delay(p.id))
 
     return JsonResponse([repr(r) for r in ret], safe=False)
 
