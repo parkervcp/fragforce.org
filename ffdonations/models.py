@@ -14,6 +14,7 @@ class EventModel(models.Model):
 
     # Extra-Life
     id = models.BigIntegerField(primary_key=True, editable=False, verbose_name="Event ID", null=False)
+    name = models.CharField(max_length=8192, null=True, verbose_name="Event Name")
 
 
 class TeamModel(models.Model):
