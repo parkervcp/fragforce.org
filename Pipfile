@@ -27,6 +27,7 @@ django-redis-cache = "*"
 hiredis = "*"
 "django-memoize" = "*"
 memoize = "*"
+
 # Temp until PR finsihed and applied
 tiltify2 = {git = "https://github.com/gpmidi/tiltify-v2-api-python.git", ref = "develop-v3", editable = true}
 

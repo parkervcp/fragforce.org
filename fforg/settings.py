@@ -277,7 +277,7 @@ else:
     # Real config
     CACHES = {
         'default': {
-            'BACKEND': 'redis_cache.RedisCache',
+            'BACKEND': 'django_redis.RedisCache',
             'LOCATION': REDIS_URL_DJ_CACHE,
             'TIMEOUT': int(os.environ.get('REDIS_DJ_TIMEOUT', 300)),
             'OPTIONS': {
@@ -289,7 +289,7 @@ else:
                     'max_connections': int(os.environ.get('REDIS_DJ_POOL_MAX_CONN', 5)),
                     'timeout': int(os.environ.get('REDIS_DJ_POOL_TIMEOUT', 3)),
                 },
-                # 'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
+                # 'SERIALIZER_CLASS': 'django_redis.serializers.JSONSerializer',
                 # 'SERIALIZER_CLASS_KWARGS': {},
                 # Used to auto flush cache when new builds happen :-D
                 'VERSION': HEROKU_RELEASE_VERSION_NUM,
@@ -300,7 +300,7 @@ else:
     }
 
     if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
-        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor'
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'django_redis.compressors.ZLibCompressor'
         CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
             # level = 0 - 9
             # 0 - no compression
