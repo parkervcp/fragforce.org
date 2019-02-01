@@ -61,13 +61,12 @@ def el_contact(year=timezone.now().year):
 @memoize(timeout=120)
 def el_num_donations(year=timezone.now().year):
     """ For current year """
-    tsum = TeamModel.objects.filter(id__in=el_teams(year=year)) \
-        .aggregate(ttl=Sum('numDonations')).get('ttl', 0)
+    teams = TeamModel.objects.filter(id__in=el_teams(year=year))
+    tsum = teams.aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     if tsum is None:
         tsum = 0
-    psum = ParticipantModel.objects.filter(Q(
-        Q(team__tracked=False) | Q(id__in=el_teams(year=year))
-    ), tracked=True) \
+    psum = ParticipantModel.objects.filter(id__in=el_teams(year=year), tracked=True) \
+        .filter(~Q(team__in=teams)) \
         .aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     if psum is None:
         psum = 0
@@ -81,13 +80,12 @@ def el_num_donations(year=timezone.now().year):
 @memoize(timeout=120)
 def el_donation_stats(year=timezone.now().year):
     """ For current year """
-    tsum = TeamModel.objects.filter(id__in=el_teams(year=year)) \
-        .aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
+    teams = TeamModel.objects.filter(id__in=el_teams(year=year))
+    tsum = teams.aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     if tsum is None:
         tsum = 0
-    psum = ParticipantModel.objects.filter(Q(
-        Q(team__tracked=False) | Q(id__in=el_teams(year=year))
-    ), tracked=True) \
+    psum = ParticipantModel.objects.filter(id__in=el_teams(year=year), tracked=True) \
+        .filter(~Q(team__in=teams)) \
         .aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     if psum is None:
         psum = 0
