@@ -65,7 +65,7 @@ def el_num_donations(year=timezone.now().year):
     tsum = teams.aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     if tsum is None:
         tsum = 0
-    psum = ParticipantModel.objects.filter(id__in=el_teams(year=year), tracked=True) \
+    psum = ParticipantModel.objects.filter(id__in=el_contact(year=year), tracked=True) \
         .filter(~Q(team__in=teams)) \
         .aggregate(ttl=Sum('numDonations')).get('ttl', 0)
     if psum is None:
@@ -84,7 +84,7 @@ def el_donation_stats(year=timezone.now().year):
     tsum = teams.aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     if tsum is None:
         tsum = 0
-    psum = ParticipantModel.objects.filter(id__in=el_teams(year=year), tracked=True) \
+    psum = ParticipantModel.objects.filter(id__in=el_contact(year=year), tracked=True) \
         .filter(~Q(team__in=teams)) \
         .aggregate(ttl=Sum('sumDonations')).get('ttl', 0)
     if psum is None:
