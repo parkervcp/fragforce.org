@@ -1,17 +1,13 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
-
 python_version = "3.6"
 
-
 [packages]
-
+ipython = "*"
 "psycopg2-binary" = "*"
 django-heroku = "*"
 gunicorn = "*"
@@ -23,10 +19,14 @@ lxml = "*"
 passlib = "*"
 ipy = "*"
 "celery[redis]" = "*"
-redis = "*"
+redis = ">=2.10.3"
 boto = "*"
 logzio-python-handler = "*"
-
+celery = "*"
+django-redis-cache = "*"
+hiredis = "*"
+django-memoize = "*"
+# Temp until PR finsihed and applied
+tiltify2 = {git = "https://github.com/gpmidi/tiltify-v2-api-python.git", ref = "develop-v3", editable = true}
 
 [dev-packages]
-

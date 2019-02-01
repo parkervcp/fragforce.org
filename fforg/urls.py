@@ -20,6 +20,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', include('ffsite.urls')),
+    path('d/', include('ffdonations.urls')),
 ]
 
 # Only enable the admin site when in debug mode (for now)

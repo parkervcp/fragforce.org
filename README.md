@@ -39,3 +39,6 @@ Project files
 
 ### ffsite
 Fragforce.org pages
+
+### ffdonations
+Various donation sync options
