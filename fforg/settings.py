@@ -40,6 +40,7 @@ LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
 # Application definition
 
 INSTALLED_APPS = [
+    'redis_cache',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
