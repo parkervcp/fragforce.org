@@ -60,7 +60,7 @@ def update_teams(self, teams=None):
             try:
                 evt = EventModel.objects.get(id=team.eventID)
             except EventModel.DoesNotExist as e:
-                evt = EventModel(tracked=False, id=team.eventID)
+                evt = EventModel(tracked=False, id=team.eventID, name=team.eventName)
                 evt.save()
         else:
             evt = None
