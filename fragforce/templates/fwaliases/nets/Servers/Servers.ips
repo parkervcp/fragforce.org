@@ -1,5 +1,0 @@
-{% include "fwaliases/nets/Servers/Bob.ips" %}
-{% include "fwaliases/nets/Servers/Canterbury.ips" %}
-{% include "fwaliases/nets/Servers/Doug.ips" %}
-{% include "fwaliases/nets/Servers/Roz.ips" %}
-{% include "fwaliases/nets/Servers/Xonotic.ips" %}

@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="../../../static/ffsite/css/base.css">{% extends "ff/base.html" %}
+
+{% block title %}How To Donate{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg border border-light rounded p-3 m-4 card">
+        <h2>Donating to Fragforce via Extra-Life (US and Canada only)</h2>
+        <br />
+        <div>
+            <ul>
+                <li>Donate to a random Fragforce team member: 
+                    <a href="{{ rnd_pct.donate_link }}">{{ rnd_pct.name }}</a>
+                </li>
+                <li>
+                    Alternatively, instead of donating to someone else, you can Join the team and raise money
+                    yourself! 
+                    <a href="/join">Check out the join page for more info!</a>
+                </li>
+                <li>
+                    You can donate to a user of your choice using 
+                    <a href="http://team.fragforce.org">http://team.fragforce.org</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg border border-light rounded p-3 m-4 card">
+        <h2>Donating to Fragforce via Child's Play (International)</h2>
+        <br />
+        <div>
+            <ul>
+                <li>
+                    Go to the <a href="https://tiltify.com/+fragforce/">Donation Page</a> and click
+                    "Donate Now" button -- you can register on Tiltify or donate anonymously.
+                </li>
+                <li>Pay via PayPal.</li>
+                <li>Pat yourself on the back for helping make kid's lives better!</li>
+                <li>
+                    Alternatively, instead of donating to someone else, you can Join the team and raise money
+                    yourself! 
+                    <a href="/join">Check out the join page for more info!</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

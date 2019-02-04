@@ -66,6 +66,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
-/.idea/
-/fragforce.org.iml
-/fragforce-website.db
+.idea/
+*.iml
+*.db
+*.sqlite3

@@ -1,3 +1,4 @@
-web: gunicorn --workers=16 -b 0.0.0.0:$PORT app:app
-clock:  python clock.py
-worker: python fragforce/worker.py
+web: gunicorn fforg.wsgi
+worker: celery -A fforg worker -l info --autoscale=8,2
+beat: celery -A fforg worker -l info --beat --autoscale=2,1
+release: python manage.py migrate

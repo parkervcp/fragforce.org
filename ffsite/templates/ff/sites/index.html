@@ -1,0 +1,39 @@
+{% extends "ff/base.html" %}
+
+{% block title %}Fragforce Sites{% endblock %}
+
+
+{% block body %}
+{% for site in sites %}
+{% if forloop.first or forloop.counter0|divisibleby:2 %}
+<div class="row">
+    {% endif %}
+    <div class="col-sm border border-light rounded p-3 m-4 card">
+        <a href="{% url 'org_site' sfid=site.sfid %}"><h2>{{ site.name }}</h2></a>
+        <div>
+            <p>
+                {% autoescape off %}
+                {% if site.description %}
+                {{ site.description }}
+                {% else %}
+                --
+                {% endif %}
+                {% endautoescape %}
+            </p>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter|divisibleby:2 %}
+</div>
+{% endif %}
+{% empty %}
+<div class="row">
+    <div class="col-sm border border-light rounded p-3 m-4 card">
+        <h2>None</h2>
+        <div>
+            No Sites :(
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
