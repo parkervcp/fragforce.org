@@ -277,7 +277,7 @@ else:
     # Real config
     CACHES = {
         'default': {
-            'BACKEND': 'redis_cache.RedisCache',
+            'BACKEND': 'django_redis.cache.RedisCache',
             'LOCATION': REDIS_URL_DJ_CACHE,
             'TIMEOUT': int(os.environ.get('REDIS_DJ_TIMEOUT', 300)),
             'OPTIONS': {
@@ -300,7 +300,7 @@ else:
     }
 
     if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
-        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor'
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'django_redis.compressors.ZLibCompressor'
         CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
             # level = 0 - 9
             # 0 - no compression
