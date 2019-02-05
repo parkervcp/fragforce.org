@@ -249,7 +249,7 @@ TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_U
 
 
 # Cache Configuration
-if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
+if True or REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
     # Dev and release config
     CACHES = {
         'default': {
