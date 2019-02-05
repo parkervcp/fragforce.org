@@ -249,7 +249,7 @@ TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_U
 
 
 # Cache Configuration
-if True or REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
+if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
     # Dev and release config
     CACHES = {
         'default': {
@@ -277,7 +277,7 @@ else:
     # Real config
     CACHES = {
         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
+            'BACKEND': 'redis_cache.cache.RedisCache',
             'LOCATION': REDIS_URL_DJ_CACHE,
             'TIMEOUT': int(os.environ.get('REDIS_DJ_TIMEOUT', 300)),
             'OPTIONS': {
@@ -300,7 +300,7 @@ else:
     }
 
     if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
-        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'django_redis.compressors.ZLibCompressor'
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor'
         CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
             # level = 0 - 9
             # 0 - no compression
