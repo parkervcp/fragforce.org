@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6.7"
 
 [packages]
 ipython = "*"
@@ -21,9 +21,9 @@ ipy = "*"
 "celery[redis]" = "*"
 redis = ">=2.10.3"
 boto = "*"
-logzio-python-handler = "*"
+"logzio-python-handler" = "*"
 celery = "*"
-django-redis = "*"
+"django-redis" = "*"
 hiredis = "*"
 "django-memoize" = "*"
 memoize = "*"
