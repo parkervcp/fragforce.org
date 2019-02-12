@@ -6,6 +6,21 @@
   },
   "env": {
     "HC_RO_SCHEMA": "org",
+    "GOOGLE_ANALYTICS_ID": {
+      "required": true
+    },
+    "EXTRALIFE_TEAMID": {
+      "required": true
+    },
+    "REDIS_DJ_POOL_MAX_CONN": {
+      "required": true
+    },
+    "TILTIFY_TOKEN": {
+      "required": true
+    },
+    "REDIS_DJ_TIMEOUT": {
+      "required": true
+    },
     "DEBUG": {
       "required": true
     },
@@ -36,14 +51,7 @@
     },
     {
       "plan": "heroku-redis:premium-0",
-      "as": "FILE",
-      "options": {
-        "maxmemory-policy": "allkeys-lru"
-      }
-    },
-    {
-      "plan": "heroku-redis:premium-0",
-      "as": "CACHE",
+      "as": "REDIS",
       "options": {
         "maxmemory-policy": "allkeys-lru"
       }
