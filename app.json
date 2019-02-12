@@ -1,9 +1,6 @@
 {
   "name": "fragforce.org",
   "description": "Fragforce Dev PR",
-  "scripts": {
-    "postdeploy": "pg_dump --schema=$HC_SCHEMA $HC_RO_URL | psql $DATABASE_URL && bundle exec rake db:migrate"
-  },
   "env": {
     "HC_RO_SCHEMA": "org",
     "GOOGLE_ANALYTICS_ID": {
