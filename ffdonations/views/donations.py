@@ -8,17 +8,19 @@ from django.conf import settings
 
 @cache_page(settings.VIEW_DONATIONS_CACHE)
 def v_donations(request):
+    orderByVar = request.GET.get('orderBy', 'id')
     update_donations_if_needed.delay()
     return JsonResponse(
-        [d for d in DonationModel.objects.all().order_by('id').values()],
+        [d for d in DonationModel.objects.all().order_by(orderByVar).values()],
         safe=False,
     )
 
 
 @cache_page(settings.VIEW_DONATIONS_CACHE)
 def v_tracked_donations(request):
+    orderByVar = request.GET.get('orderBy', 'id')
     update_donations_if_needed.delay()
     return JsonResponse(
-        [d for d in DonationModel.objects.filter(DonationModel.tracked_q()).order_by('id').values()],
+        [d for d in DonationModel.objects.filter(DonationModel.tracked_q()).order_by(orderByVar).values()],
         safe=False,
     )
