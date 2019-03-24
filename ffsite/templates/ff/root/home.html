@@ -17,6 +17,12 @@
                             type: 'doughnut',
                             data: {
                                 datasets: [{
+                                    backgroundColor: [
+                                        "rgb(54, 162, 235)",
+                                        "rgb(255, 205, 86)",
+                                        "rgb(0, 255, 255)",
+                                        "rgb(255, 99, 132)"
+                                    ],
                                     data: [
                                         {{ extralife }},
                                         {{ childsplay }},
@@ -24,12 +30,6 @@
                                         {{ togo }}
                                     ]
                                 }],
-                                backgroundColor: [
-                                    "rgb(54, 162, 235)",
-                                    "rgb(255, 205, 86)",
-                                    "rgb(0, 255, 255)",
-                                    "rgb(255, 99, 132)"
-                                ],
                                 // These labels appear in the legend and in the tooltips when hovering different arcs
                                 labels: [
                                     'Extra Life',
