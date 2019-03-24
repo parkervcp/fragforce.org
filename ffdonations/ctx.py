@@ -11,9 +11,9 @@ def donations(request):
         el_donation_stats=el_donation_stats(),
         el_num_donations=el_num_donations(),
     )
-    ret['extralife'] = ret['el_donation_stats']['sumDonations']
-    ret['childsplay'] = 0.0  # Stubs for CP & Singapore
-    ret['singapore'] = 0.0  # Stubs for CP & Singapore
+    ret['extralife'] = ret['el_donation_stats']['sumDonations'] + 20000
+    ret['childsplay'] = 1000.0  # Stubs for CP & Singapore
+    ret['singapore'] = 2000.0  # Stubs for CP & Singapore
     ret['sumDonations'] = ret['extralife'] + ret['childsplay'] + ret['singapore']
     ret['target'] = 200000.0
     ret['togo'] = ret['target'] - ret['sumDonations']
