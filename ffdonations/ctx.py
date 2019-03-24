@@ -15,6 +15,6 @@ def donations(request):
     ret['childsplay'] = 0.0  # Stubs for CP & Singapore
     ret['singapore'] = 0.0  # Stubs for CP & Singapore
     ret['sumDonations'] = ret['extralife'] + ret['childsplay'] + ret['singapore']
-    ret['target'] = 200000
+    ret['target'] = 200000.0
     ret['togo'] = ret['target'] - ret['sumDonations']
     return ret
