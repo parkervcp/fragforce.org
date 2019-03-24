@@ -11,28 +11,32 @@
 
             {% cache 120 bars %}
                 <script>
-                    var ctx = document.getElementById('fundProgress');
-                    var myChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            datasets: [{
-                                data: [
-                                    {{ extralife }},
-                                    {{ childsplay }},
-                                    {{ singapore }},
-                                    {{ togo }}
-                                ]
-                            }],
+                    $(function () {
 
-                            // These labels appear in the legend and in the tooltips when hovering different arcs
-                            labels: [
-                                'Extra Life',
-                                'Childsplay',
-                                'Singapore Chidlren\'s',
-                                'Remaining'
-                            ]
-                        },
-                        options: {}
+                        var ctx = document.getElementById('fundProgress');
+                        var myChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                datasets: [{
+                                    data: [
+                                        {{ extralife }},
+                                        {{ childsplay }},
+                                        {{ singapore }},
+                                        {{ togo }}
+                                    ]
+                                }],
+
+                                // These labels appear in the legend and in the tooltips when hovering different arcs
+                                labels: [
+                                    'Extra Life',
+                                    'Childsplay',
+                                    'Singapore Chidlren\'s',
+                                    'Remaining'
+                                ]
+                            },
+                            options: {}
+                        });
+
                     });
                 </script>
             {% endcache %}
