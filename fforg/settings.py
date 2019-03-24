@@ -168,6 +168,13 @@ HEROKU_RELEASE_VERSION_NUM = int(HEROKU_RELEASE_VERSION.lstrip('v'))
 HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
 HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
 
+SINGAPORE_DONATIONS = float(os.environ.get('SINGAPORE_DONATIONS', '0.0'))
+CHILDSPLAY_DONATIONS = float(os.environ.get('CHILDSPLAY_DONATIONS', '0.0'))
+TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
+
+# Cache version prefix
+VERSION = int(HEROKU_RELEASE_VERSION_NUM)
+
 REDIS_URL_DEFAULT = 'redis://localhost'
 # Base URL - Needs DB ID added
 REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
