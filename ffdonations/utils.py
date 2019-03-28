@@ -31,6 +31,7 @@ def event_name_maker(year=timezone.now().year):
 @memoize(timeout=120)
 def el_teams(year=timezone.now().year):
     """ Returns a list of team IDs that we're tracking for the given year """
+    from ffdonations.tasks.teams import update_teams
     yr = event_name_maker(year=year)
     ret = []
     for sa in SiteAccount.objects.filter(el_id__isnull=False).only('el_id').all():
@@ -39,13 +40,14 @@ def el_teams(year=timezone.now().year):
             if tm.event.name == yr:
                 ret.append(tm.id)
         except TeamModel.DoesNotExist:
-            pass
+            update_teams.delay([sa.el_id, ])
     return ret
 
 
 @memoize(timeout=120)
 def el_contact(year=timezone.now().year):
     """ Returns a list of participant IDs that we're tracking for the given year """
+    from ffdonations.tasks.participants import update_participants
     yr = event_name_maker(year=year)
     ret = []
     for sa in Contact.objects.filter(extra_life_id__isnull=False).only('extra_life_id').all():
@@ -54,7 +56,7 @@ def el_contact(year=timezone.now().year):
             if tm.event.name == yr:
                 ret.append(tm.id)
         except ParticipantModel.DoesNotExist:
-            pass
+            update_participants.delay([sa.extra_life_id, ])
     return ret
 
 
