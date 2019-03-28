@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from ffsfdc.models import *
 from ffsite.models import *
+from django.views.decorators.cache import cache_page
+from django.conf import settings
 
 
+@cache_page(settings.VIEW_SITE_EVENT_CACHE)
 def events(request):
     """ Events page """
     return render(request, 'ff/events/index.html', {
@@ -10,6 +13,7 @@ def events(request):
     })
 
 
+@cache_page(settings.VIEW_SITE_EVENT_CACHE)
 def events_upcoming(request):
     """ Events upcoming page """
     import datetime
@@ -19,6 +23,7 @@ def events_upcoming(request):
     })
 
 
+@cache_page(settings.VIEW_SITE_EVENT_CACHE)
 def event(request, sfid):
     """ Event page """
     return render(request, 'ff/events/event.html', {

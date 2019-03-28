@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import dj_database_url
 import django_heroku
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,6 +34,9 @@ if SECRET_KEY == 'INSECURE':
     else:
         raise ValueError("SECRET_KEY env var must be defined when not in DEBUG=True")
 
+# FIXME: Add LOGZ.IO Logging
+LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,8 +50,10 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'memoize',
     'ffsite',
     'ffsfdc',
+    'ffdonations',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ffsite.ctx.common_org',
+                'ffdonations.ctx.donations',
             ],
             'debug': DEBUG,
         },
@@ -150,12 +157,184 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
-REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost/0')
+
+# Heroku auto set
+HEROKU_APP_ID = os.environ.get('HEROKU_APP_ID', None)
+HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
+HEROKU_RELEASE_CREATED_AT = os.environ.get('HEROKU_RELEASE_CREATED_AT', None)
+HEROKU_RELEASE_VERSION = os.environ.get('HEROKU_RELEASE_VERSION', 'v1')
+HEROKU_RELEASE_VERSION_NUM = int(HEROKU_RELEASE_VERSION.lstrip('v'))
+HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
+HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
+
+SINGAPORE_DONATIONS = float(os.environ.get('SINGAPORE_DONATIONS', '0.0'))
+CHILDSPLAY_DONATIONS = float(os.environ.get('CHILDSPLAY_DONATIONS', '0.0'))
+TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
+
+# Cache version prefix
+VERSION = int(HEROKU_RELEASE_VERSION_NUM)
+
+REDIS_URL_DEFAULT = 'redis://localhost'
+# Base URL - Needs DB ID added
+REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
+# Don't use DB 0 for anything
+REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
+# Celery tasks
+REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
+# Celery tombstones (aka results)
+REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
+# Misc timers
+REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
+# Django cache
+REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
+
+CELERY_ACCEPT_CONTENT = ['json', ]
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_ACKS_LATE = True
+CELERY_BROKER_URL = REDIS_URL_TASKS
+CELERY_RESULT_BACKEND = REDIS_URL_TOMBS
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
+
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', None)
 MAX_UPCOMING_EVENTS = int(os.environ.get('MAX_UPCOMING_EVENTS', 20))
 MAX_PAST_EVENTS = int(os.environ.get('MAX_PAST_EVENTS', 20))
 MAX_ALL_EVENTS = int(os.environ.get('MAX_ALL_EVENTS', 20))
-# Activate Django-Heroku.
+TILTIFY_TOKEN = os.environ.get('TILTIFY_TOKEN', None)
+TILTIFY_TIMEOUT = int(os.environ.get('TILTIFY_TIMEOUT', 60))
+TILTIFY_APP_OWNER = os.environ.get('TILTIFY_APP_OWNER', HEROKU_APP_NAME)
+
+# Various view cache timeouts
+VIEW_TEAMS_CACHE = int(os.environ.get('VIEW_TEAMS_CACHE', 20))
+VIEW_PARTICIPANTS_CACHE = int(os.environ.get('VIEW_PARTICIPANTS_CACHE', 20))
+VIEW_DONATIONS_CACHE = int(os.environ.get('VIEW_DONATIONS_CACHE', 20))
+VIEW_DONATIONS_STATS_CACHE = int(os.environ.get('VIEW_DONATIONS_STATS_CACHE', 20))
+VIEW_SITE_EVENT_CACHE = int(os.environ.get('VIEW_SITE_EVENT_CACHE', 60))
+VIEW_SITE_SITE_CACHE = int(os.environ.get('VIEW_SITE_SITE_CACHE', 60))
+VIEW_SITE_STATIC_CACHE = int(os.environ.get('VIEW_SITE_STATIC_CACHE', 300))
+
+# Min time between team updates - Only cares about tracked teams!
+EL_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MIN', 30)))
+# Max time between updates for any given team - Only cares about tracked teams!
+EL_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_MAX', 120)))
+# How often to check for updates
+EL_TEAM_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_TEAM_UPDATE_FREQUENCY_CHECK', 5)))
+
+# Min time between participants updates - Only cares about tracked participants!
+EL_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MIN', 120)))
+# Max time between updates for any given participants - Only cares about tracked participants!
+EL_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_MAX', 300)))
+# How often to check for updates
+EL_PTCP_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_PTCP_UPDATE_FREQUENCY_CHECK', 30)))
+
+# Min time between donation list updates - Only cares about tracked teams/participants!
+EL_DON_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_MIN', 60)))
+# Max time between updates for any given donation list - Only cares about tracked teams/participants!
+EL_DON_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_MAX', 300)))
+# How often to check for updates
+EL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('EL_DON_UPDATE_FREQUENCY_CHECK', 15)))
+
+# Min time between donation list updates for a team - Only cares about tracked teams
+EL_DON_TEAM_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_DON_TEAM_UPDATE_FREQUENCY_MIN', 5)))
+# Max time between updates of donations for any given team - Only cares about tracked teams
+EL_DON_TEAM_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_TEAM_UPDATE_FREQUENCY_MAX', 15)))
+
+# Min time between donation list updates for a participants - Only cares about tracked participants
+EL_DON_PTCP_UPDATE_FREQUENCY_MIN = timedelta(minutes=int(os.environ.get('EL_DON_PTCP_UPDATE_FREQUENCY_MIN', 5)))
+# Max time between updates of donations for any given participants - Only cares about tracked participants
+EL_DON_PTCP_UPDATE_FREQUENCY_MAX = timedelta(minutes=int(os.environ.get('EL_DON_PTCP_UPDATE_FREQUENCY_MAX', 15)))
+
+# Min time between EL REST requests
+EL_REQUEST_MIN_TIME = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_SECONDS', 15)))
+# Min time between EL REST requests for any given URL
+EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_TIME_URL_SECONDS', 120)))
+# Min time between request for any given remote host
+REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
+
+# How often to check for updates
+TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 60)))
+
+
+# Cache Configuration
+if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
+    # Dev and release config
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        },
+    }
+else:
+    def make_key_hash(key, key_prefix, version):
+        """ Create a hashed key"""
+        import hashlib
+        m = hashlib.sha512()
+        m.update(':'.join([key_prefix, str(version), key]))
+        return m.hexdigest()
+
+
+    def make_key_nohash(key, key_prefix, version):
+        return ':'.join([key_prefix, str(version), key])
+
+
+    if os.environ.get('DJANGO_CACHE_HASH', 'false').lower() == 'true':
+        make_key = make_key_hash
+    else:
+        make_key = make_key_nohash
+
+    # Real config
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.cache.RedisCache',
+            'LOCATION': REDIS_URL_DJ_CACHE,
+            'TIMEOUT': int(os.environ.get('REDIS_DJ_TIMEOUT', 300)),
+            'OPTIONS': {
+                'PARSER_CLASS': 'redis.connection.HiredisParser',
+                'SOCKET_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_TIMEOUT', 5)),
+                'SOCKET_CONNECT_TIMEOUT': int(os.environ.get('REDIS_DJ_SOCKET_CONNECT_TIMEOUT', 3)),
+                'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+                'CONNECTION_POOL_CLASS_KWARGS': {
+                    'max_connections': int(os.environ.get('REDIS_DJ_POOL_MAX_CONN', 5)),
+                    'timeout': int(os.environ.get('REDIS_DJ_POOL_TIMEOUT', 3)),
+                },
+                # 'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
+                # 'SERIALIZER_CLASS_KWARGS': {},
+                # Used to auto flush cache when new builds happen :-D
+                'VERSION': HEROKU_RELEASE_VERSION_NUM,
+                'KEY_PREFIX': '_'.join([str(HEROKU_APP_ID), str(HEROKU_APP_NAME)]),
+                'KEY_FUNCTION': make_key,
+            },
+        },
+    }
+
+    if os.environ.get('DJANGO_COMPRESS_REDIS', 'false').lower() == 'true':
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS'] = 'redis_cache.compressors.ZLibCompressor'
+        CACHES['default']['OPTIONS']['COMPRESSOR_CLASS_KWARGS'] = {
+            # level = 0 - 9
+            # 0 - no compression
+            # 1 - fastest, biggest
+            # 9 - slowest, smallest
+            'level': int(os.environ.get('DJANGO_COMPRESS_REDIS_ZLIB_LEVEL', 1)),
+        }
+
+# Second to last
+CELERY_BEAT_SCHEDULE = {
+    'update-all-teams': {
+        'task': 'ffdonations.tasks.teams.update_teams_if_needed',
+        'schedule': EL_TEAM_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-participants': {
+        'task': 'ffdonations.tasks.participants.update_participants_if_needed',
+        'schedule': EL_PTCP_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-donations': {
+        'task': 'ffdonations.tasks.donations.update_donations_if_needed',
+        'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
+    },
+    'til-update-all-donations': {
+        'task': 'ffdonations.tasks.tiltify.campaigns.update_campaigns',
+        'schedule': TIL_DON_UPDATE_FREQUENCY_CHECK,
+    },
+}
+
+# Activate Django-Heroku - Very last
 django_heroku.settings(locals())
