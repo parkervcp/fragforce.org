@@ -196,13 +196,13 @@ elif os.environ.get('REDIS0_URL', None):
     # Don't use DB 0 for anything
     REDIS_URL_DEFAULT = os.environ.get('REDIS0_URL', 'redis://localhost') + "/0"
     # Celery tasks
-    REDIS_URL_TASKS = os.environ.get('REDIS1_URL', 'redis://localhost') + "/1"
+    REDIS_URL_TASKS = os.environ.get('REDIS1_URL', 'redis://localhost') + "/0"
     # Celery tombstones (aka results)
-    REDIS_URL_TOMBS = os.environ.get('REDIS2_URL', 'redis://localhost') + "/2"
+    REDIS_URL_TOMBS = os.environ.get('REDIS2_URL', 'redis://localhost') + "/0"
     # Misc timers
-    REDIS_URL_TIMERS = os.environ.get('REDIS3_URL', 'redis://localhost') + "/3"
+    REDIS_URL_TIMERS = os.environ.get('REDIS3_URL', 'redis://localhost') + "/0"
     # Django cache
-    REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/4"
+    REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/0"
 
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
