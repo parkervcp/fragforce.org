@@ -3,7 +3,7 @@ from celery import shared_task
 from extralifeapi.donors import Donations, Donation
 from ..models import *
 from django.conf import settings
-import datetime
+from django.utils import timezone
 
 
 def _make_d(*args, **kwargs):
@@ -23,8 +23,8 @@ def update_donations_if_needed(self):
     def doupdate():
         return update_donations_existing()
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()
@@ -76,8 +76,8 @@ def update_donations_if_needed_team(self, teamID):
 
     assert team.tracked, f"Expected a tracked team - Got {team}"
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()
@@ -165,8 +165,8 @@ def update_donations_if_needed_participant(self, participantID):
 
     assert participant.tracked, f"Expected a tracked participant - Got {participant}"
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()
