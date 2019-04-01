@@ -84,7 +84,6 @@
         "maxmemory-policy": "allkeys-lru"
       }
     }
-    }
   ],
   "buildpacks": [
     {
