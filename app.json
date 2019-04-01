@@ -51,7 +51,35 @@
     },
     {
       "plan": "heroku-redis:premium-0",
-      "as": "REDIS",
+      "as": "REDIS0",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "REDIS1",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "REDIS2",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "REDIS3",
+      "options": {
+        "maxmemory-policy": "allkeys-lru"
+      }
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "REDIS4",
       "options": {
         "maxmemory-policy": "allkeys-lru"
       }

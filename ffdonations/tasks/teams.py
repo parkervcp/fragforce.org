@@ -4,6 +4,7 @@ from extralifeapi.teams import Team, Teams
 from ..models import *
 from django.conf import settings
 import datetime
+from ffsfdc.models import *
 
 
 def _make_team(*args, **kwargs):
@@ -79,6 +80,14 @@ def update_teams(self, teams=None):
         tm.numDonations = team.numDonations
         tm.sumDonations = team.sumDonations
         tm.event = evt
+
+        # Update tracked from org
+        try:
+            c = SiteAccount.objects.get(el_id=team.teamID)
+            tm.tracked = True
+        except SiteAccount.DoesNotExist as e:
+            pass
+
         tm.raw = team.raw
         tm.save()
 
