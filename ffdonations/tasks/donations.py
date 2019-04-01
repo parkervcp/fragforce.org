@@ -50,9 +50,10 @@ def update_donations_existing(self):
     """ Update donations based on all existing participants and teams that are known based
     on the donations DB
     """
-    teamIDs = set(DonationModel.objects.filter(team__isnull=False).values('team').distinct('team'))
+    teamIDs = set(DonationModel.objects.filter(team__isnull=False).values('team').distinct('team').keys())
     participantIDs = set(
-        DonationModel.objects.filter(participant__isnull=False).values('participant').distinct('participant'))
+        DonationModel.objects.filter(participant__isnull=False).values('participant').distinct('participant').keys()
+    )
 
     ret = []
     for teamID in teamIDs:
