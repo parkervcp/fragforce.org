@@ -58,7 +58,7 @@ def update_participants(self, participants=None):
     if participants is None:
         tr = p.participants()
     else:
-        tr = [p.participant(participantID) for participantID in participants]
+        tr = [p.participant(int(participantID)) for participantID in participants]
 
     for participant in tr:
         if participant.eventID:
