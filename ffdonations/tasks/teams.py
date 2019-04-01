@@ -55,7 +55,7 @@ def update_teams(self, teams=None):
     if teams is None:
         tr = t.teams()
     else:
-        tr = [t.team(teamID=tid) for tid in teams]
+        tr = [t.team(teamID=int(tid)) for tid in teams]
     for team in tr:
         if team.eventID:
             try:
