@@ -175,19 +175,34 @@ TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
 # Cache version prefix
 VERSION = int(HEROKU_RELEASE_VERSION_NUM)
 
-REDIS_URL_DEFAULT = 'redis://localhost'
-# Base URL - Needs DB ID added
-REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
-# Don't use DB 0 for anything
-REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
-# Celery tasks
-REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
-# Celery tombstones (aka results)
-REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
-# Misc timers
-REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
-# Django cache
-REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
+if os.environ.get('REDIS_URL', None):
+    REDIS_URL_DEFAULT = 'redis://localhost'
+    # Base URL - Needs DB ID added
+    REDIS_URL_BASE = os.environ.get('REDIS_URL', REDIS_URL_DEFAULT)
+    # Don't use DB 0 for anything
+    REDIS_URL_DEFAULT = REDIS_URL_BASE + "/0"
+    # Celery tasks
+    REDIS_URL_TASKS = REDIS_URL_BASE + "/1"
+    # Celery tombstones (aka results)
+    REDIS_URL_TOMBS = REDIS_URL_BASE + "/2"
+    # Misc timers
+    REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
+    # Django cache
+    REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
+elif os.environ.get('REDIS0_URL', None):
+    REDIS_URL_DEFAULT = 'redis://localhost'
+    # Base URL - Needs DB ID added
+    REDIS_URL_BASE = REDIS_URL_DEFAULT
+    # Don't use DB 0 for anything
+    REDIS_URL_DEFAULT = os.environ.get('REDIS0_URL', 'redis://localhost') + "/0"
+    # Celery tasks
+    REDIS_URL_TASKS = os.environ.get('REDIS1_URL', 'redis://localhost') + "/1"
+    # Celery tombstones (aka results)
+    REDIS_URL_TOMBS = os.environ.get('REDIS2_URL', 'redis://localhost') + "/2"
+    # Misc timers
+    REDIS_URL_TIMERS = os.environ.get('REDIS3_URL', 'redis://localhost') + "/3"
+    # Django cache
+    REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/4"
 
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
