@@ -75,7 +75,7 @@ def update_teams(self, teams=None):
                 id=team.teamID,
             )
         tm.name = team.name
-        tm.created = timezone.localtime(team.createdDateUTC)
+        tm.created = team.createdDateUTC
         tm.fundraisingGoal = team.fundraisingGoal
         tm.numDonations = team.numDonations
         tm.sumDonations = team.sumDonations

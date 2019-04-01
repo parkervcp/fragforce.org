@@ -142,7 +142,7 @@ def update_donations_team(self, teamID):
             tm.displayName = donation.displayName
         else:
             tm.displayName = ''
-        tm.created = timezone.localtime(donation.createdDateUTC)
+        tm.created = donation.createdDateUTC
         tm.amount = donation.amount
         if donation.message:
             tm.message = donation.message
@@ -231,7 +231,7 @@ def update_donations_participant(self, participantID):
             tm.displayName = donation.displayName
         else:
             tm.displayName = ''
-        tm.created = timezone.localtime(donation.createdDateUTC)
+        tm.created = donation.createdDateUTC
         tm.amount = donation.amount
         if donation.message:
             tm.message = donation.message
