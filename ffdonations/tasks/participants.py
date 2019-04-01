@@ -4,6 +4,7 @@ from extralifeapi.participants import Participants, Participant
 from ..models import *
 from django.conf import settings
 import datetime
+from ffsfdc.models import *
 
 
 def _make_p(*args, **kwargs):
@@ -105,7 +106,13 @@ def update_participants(self, participants=None):
         tm.event = evt
         tm.team = team
         tm.raw = participant.raw
-        # Update tracked
+        # Update tracked from org
+        try:
+            c = Contact.objects.get(extra_life_id=participant.participantID)
+            tm.tracked = True
+        except Contact.DoesNotExist as e:
+            pass
+        # Update tracked from parents
         if not tm.tracked and ((evt and evt.tracked) or (team and team.tracked)):
             tm.tracked = True
         # Save it
