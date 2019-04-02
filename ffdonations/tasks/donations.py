@@ -3,7 +3,7 @@ from celery import shared_task
 from extralifeapi.donors import Donations, Donation
 from ..models import *
 from django.conf import settings
-import datetime
+from django.utils import timezone
 
 
 def _make_d(*args, **kwargs):
@@ -23,8 +23,8 @@ def update_donations_if_needed(self):
     def doupdate():
         return update_donations_existing()
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()
@@ -50,15 +50,15 @@ def update_donations_existing(self):
     """ Update donations based on all existing participants and teams that are known based
     on the donations DB
     """
-    teamIDs = set(DonationModel.objects.filter(team__isnull=False).values('team').distinct('team'))
-    participantIDs = set(
-        DonationModel.objects.filter(participant__isnull=False).values('participant').distinct('participant'))
+    teamIDs = DonationModel.objects.filter(team__isnull=False).values('team').distinct('team')
+    participantIDs = DonationModel.objects.filter(participant__isnull=False).values('participant').distinct(
+        'participant')
 
     ret = []
     for teamID in teamIDs:
-        ret.append(update_donations_if_needed_team.delay(teamID=teamID))
+        ret.append(update_donations_if_needed_team.delay(teamID=teamID).id)
     for participantID in participantIDs:
-        ret.append(update_donations_if_needed_participant.delay(participantID=participantID))
+        ret.append(update_donations_if_needed_participant.delay(participantID=participantID).id)
     return ret
 
 
@@ -76,8 +76,8 @@ def update_donations_if_needed_team(self, teamID):
 
     assert team.tracked, f"Expected a tracked team - Got {team}"
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_TEAM_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()
@@ -165,8 +165,8 @@ def update_donations_if_needed_participant(self, participantID):
 
     assert participant.tracked, f"Expected a tracked participant - Got {participant}"
 
-    minc = datetime.datetime.utcnow() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MAX
 
     if DonationModel.objects.all().count() <= 0:
         return doupdate()

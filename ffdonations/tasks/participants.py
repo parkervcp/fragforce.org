@@ -3,8 +3,8 @@ from celery import shared_task
 from extralifeapi.participants import Participants, Participant
 from ..models import *
 from django.conf import settings
-import datetime
 from ffsfdc.models import *
+from django.utils import timezone
 
 
 def _make_p(*args, **kwargs):
@@ -21,8 +21,8 @@ def update_participants_if_needed(self):
     def doupdate():
         return update_participants()
 
-    minc = datetime.datetime.utcnow() - settings.EL_PTCP_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_PTCP_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_PTCP_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_PTCP_UPDATE_FREQUENCY_MAX
 
     if ParticipantModel.objects.all().count() <= 0:
         return doupdate()
@@ -58,7 +58,7 @@ def update_participants(self, participants=None):
     if participants is None:
         tr = p.participants()
     else:
-        tr = [p.participant(participantID) for participantID in participants]
+        tr = [p.participant(int(participantID)) for participantID in participants]
 
     for participant in tr:
         if participant.eventID:
