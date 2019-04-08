@@ -3,7 +3,7 @@ from celery import shared_task
 from extralifeapi.teams import Team, Teams
 from ..models import *
 from django.conf import settings
-import datetime
+from django.utils import timezone
 from ffsfdc.models import *
 
 
@@ -24,8 +24,8 @@ def update_teams_if_needed(self):
     if TeamModel.objects.all().count() <= 0:
         return doupdate()
 
-    minc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
-    maxc = datetime.datetime.utcnow() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
+    minc = timezone.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MIN
+    maxc = timezone.now() - settings.EL_TEAM_UPDATE_FREQUENCY_MAX
 
     bq = TeamModel.objects.filter(tracked=True)
 
@@ -55,7 +55,7 @@ def update_teams(self, teams=None):
     if teams is None:
         tr = t.teams()
     else:
-        tr = [t.team(teamID=tid) for tid in teams]
+        tr = [t.team(teamID=int(tid)) for tid in teams]
     for team in tr:
         if team.eventID:
             try:

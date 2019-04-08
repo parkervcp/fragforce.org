@@ -9,9 +9,18 @@ from django.conf import settings
 @cache_page(settings.VIEW_DONATIONS_CACHE)
 def v_donations(request):
     orderByVar = request.GET.get('orderBy', 'id')
+    filterByVar = request.GET.get('filterBy', 'none')
+    recordCountVar = request.GET.get('recordCount', '0')
+    recordCountInt = int(recordCountVar)
     update_donations_if_needed.delay()
+    if recordCountInt < 1:
+        listedDonos = DonationModel.objects.order_by(orderByVar)
+    else:
+        listedDonos = DonationModel.objects.order_by(orderByVar)[:recordCountInt]
+    if filterByVar != 'none':
+        listedDonos = listedDonos.filter( participant_id == filterByVar )
     return JsonResponse(
-        [d for d in DonationModel.objects.all().order_by(orderByVar).values()],
+        [d for d in listedDonos.values()],
         safe=False,
     )
 
