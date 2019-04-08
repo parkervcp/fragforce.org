@@ -28,27 +28,23 @@
 
 		// load variables from config data
 		// Time (ms) between checks for donation updates
-		var checkInterval = (urlInterval) ? parseInt(urlInterval, 10000) : 10000; 
+		var checkInterval = (parseInt(urlInterval)) ? parseInt(urlInterval) : 10000; 
 		// source command, to eventually pull which type of donations to track
 		var jsonSource = (urlList == 'top' || urlList == 'last') ? urlList : 'last';
-		console.log('list type url: ' + urlList + ' final: ' + jsonSource);
 		// number of donations to loop through in string
-		var numDonations = (urlCount) ? parseInt(urlCount, 3) : 3;
+		var numDonations = (parseInt(urlCount)) ? parseInt(urlCount) : 3;
 		// participant ID for filters
-		var filterId = (urlUserId) ? parseInt(urlUserId, 0) : 0; 
-		console.log('user filter url: ' + urlUserId + ' final: ' + filterId);
+		var filterId = (parseInt(urlUserId)) ? parseInt(urlUserId) : 0; 
 
 		//safety checks for intervals and donations
 		if(checkInterval < 2000 || checkInterval > 999999){
 			console.log('invalid value for checkInterval, defaulting to 10 seconds');
 			checkInterval = 10000;
 		}
-		console.log('interval url: ' + urlInterval + ' final: ' + checkInterval);
 		if(numDonations < 1 || numDonations > 10){
 			console.log('invalid value for numDonations, defaulting to 3');
 			numDonations = 3;
 		}
-		console.log('pull count url: ' + urlCount + ' final: ' + numDonations);
 
 		/* System variables, don't edit */
 		var currentAPIRes;
