@@ -1,0 +1,120 @@
+<!--
+  eventtotal.html - scrolling marquee for browsersource
+
+  pulls team or user donataions, shows in scrolling marquee text
+
+  recommended 30px height by 600 width, then scale up as needed
+
+  @param checkInterval - ms between donations updates, 2000-999999 valid
+  @param filterId - filtering on Team ID for team's item,
+            defaults to 43926 for team Fragforce 2019
+  @param startAmount - How much we raised before the event to perform math
+
+  @dev - Siebren Bakker
+
+-->
+<!DOCTYPE html>
+<html>
+  <script>
+    
+    // first pull URL and see if we have any vars to parse
+    var url = new URL(window.location.href);
+    var urlInterval = url.searchParams.get("checkInterval");
+    var urlTeamId = url.searchParams.get("filterId");
+    var urlStartAmount = url.searchParams.get("startAmount"); 
+
+    // load variables from config data
+    // Time (ms) between checks for donation updates
+    var checkInterval = (parseInt(urlInterval)) ? parseInt(urlInterval) : 10000; 
+    // team ID for filters
+    var filterId = (parseInt(urlTeamId)) ? parseInt(urlTeamId) : 43926;
+    // Check we have a date we can parse
+    var startAmount = (parseFloat(urlStartAmount)) ? parseFloat(urlStartAmount) : 0;
+
+    //safety checks for intervals and donations
+    if(checkInterval < 2000 || checkInterval > 999999){
+      console.log('invalid value for checkInterval, defaulting to 10 seconds');
+      checkInterval = 10000;
+    }
+
+    /* System variables, don't edit */
+    var currentAPIRes;
+    var initialAPIRes;
+    var updateCount = 0;
+    // Donation source, url of donations to pull
+    //var jsonURL =  location.origin + '/d/donations?orderBy=';
+    var jsonURL = 'https://extra-life.org/api/teams/' + filterId;
+    console.log( 'calling url string: ' + jsonURL );
+    
+    // string before list of donators
+    var scrollFinalString = '';
+    
+    
+    // method called to reset scroll loop (note keeping blank URL check for future changes)
+    function getViaApi(){
+      if(jsonURL != ''){
+          const Http = new XMLHttpRequest();
+        const url = jsonURL;
+        Http.open( "GET", url );
+        Http.send();
+        Http.onreadystatechange=function(){
+          if( this.readyState==4 && this.status==200 ){
+            // send notification to console log
+            updateCount++;
+            console.log( 'success request #' + updateCount );
+            
+            //pull data from http response
+            currentAPIRes = JSON.parse(Http.responseText);
+            
+            //process if we have enough records
+              
+              //reset string to base for re-population
+              scrollFinalString = '';
+
+              var sumDonations = currentAPIRes.sumDonations;
+              var totalRaised = sumDonations - startAmount;
+              
+              scrollFinalString = 'Total Raised: $' + totalRaised.toFixed(2);
+
+            // finally populate string
+            document.getElementById("donationtext").innerHTML = scrollFinalString;
+          } else {
+            //bad send from HTTP response?  default to just start string, but log
+            console.log('Waiting for json response.');
+            document.getElementById("donationtext").innerHTML = scrollFinalString;
+          }
+        }
+      } else {
+        // in case no json source is set in config (or bad source label), default to just prep string
+        console.log('Bad or empty json source in settings, defaulting to basic response');
+        document.getElementById("donationtext").innerHTML = scrollFinalString;
+      }
+    }
+    // make first call and schedule future calls at interval
+    getViaApi();
+    setInterval(getViaApi, checkInterval);
+    
+  </script>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+  </head>
+  <style>
+    /* General -- Font settings for Acme font */
+    .acmeFontLarge{
+      font-family: 'Acme';
+      font-size: 80px; 
+      font-weight: bold; 
+      text-align: center;
+    }
+    .acmeFontSmall{
+      font-family: 'Acme';
+      font-size: 28px; 
+      font-weight: bold; 
+      text-align: center;
+    }
+  </style>
+  <body>
+      <div id="donationtext" class="acmeFontSmall"> </div>
+  </body>
+</html>
+  
