@@ -21,15 +21,17 @@
     var url = new URL(window.location.href);
     var urlInterval = url.searchParams.get("checkInterval");
     var urlTeamId = url.searchParams.get("filterId");
-    var urlStartAmount = url.searchParams.get("startAmount"); 
+    var urlStartAmount = url.searchParams.get("startAmount");
+    var urlText = url.searchParams.get("displayText");
 
     // load variables from config data
     // Time (ms) between checks for donation updates
-    var checkInterval = (parseInt(urlInterval)) ? parseInt(urlInterval) : 10000; 
+    var checkInterval = (parseInt(urlInterval)) ? parseInt(urlInterval) : 15000; 
     // team ID for filters
     var filterId = (parseInt(urlTeamId)) ? parseInt(urlTeamId) : 43926;
     // Check we have a date we can parse
     var startAmount = (parseFloat(urlStartAmount)) ? parseFloat(urlStartAmount) : 0;
+    var displayText = (urlText) ? urlText : "Event Total";
 
     //safety checks for intervals and donations
     if(checkInterval < 2000 || checkInterval > 999999){
@@ -74,7 +76,7 @@
               var sumDonations = currentAPIRes.sumDonations;
               var totalRaised = sumDonations - startAmount;
               
-              scrollFinalString = 'Total Raised: $' + totalRaised.toFixed(2);
+              scrollFinalString = displayText + ' $' + totalRaised.toFixed(2);
 
             // finally populate string
             document.getElementById("donationtext").innerHTML = scrollFinalString;
