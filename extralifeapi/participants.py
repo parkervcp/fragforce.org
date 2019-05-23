@@ -45,6 +45,7 @@ class Participants(DonorDriveBase):
 
     @classmethod
     def _p_to_p(cls, data):
+        data = dict(data)
         kws = {}
         for f in Participant._fields:
             if f == 'raw':
