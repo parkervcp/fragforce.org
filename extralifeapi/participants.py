@@ -45,13 +45,12 @@ class Participants(DonorDriveBase):
 
     @classmethod
     def _p_to_p(cls, data):
-        data = dict(data)
         kws = {}
         for f in Participant._fields:
             if f == 'raw':
                 kws[f] = data
             else:
-                kws[f] = data.get(f, None)
+                kws[f] = dict(data).get(f, None)
         return Participant(**kws)
 
     def participants(self):
