@@ -50,7 +50,7 @@ class Participants(DonorDriveBase):
             if f == 'raw':
                 kws[f] = data
             else:
-                kws[f] = data.get(f, None)
+                kws[f] = dict(data).get(f, None)
         return Participant(**kws)
 
     def participants(self):
