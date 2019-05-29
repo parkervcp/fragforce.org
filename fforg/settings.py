@@ -175,6 +175,9 @@ TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
 # Cache version prefix
 VERSION = int(HEROKU_RELEASE_VERSION_NUM)
 
+# Max rows for api to return
+MAX_API_ROWS = int(os.environ.get('MAX_API_ROWS', 1024))
+
 if os.environ.get('REDIS_URL', None):
     REDIS_URL_DEFAULT = 'redis://localhost'
     # Base URL - Needs DB ID added

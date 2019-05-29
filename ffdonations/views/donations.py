@@ -13,12 +13,13 @@ def v_donations(request):
     recordCountVar = request.GET.get('recordCount', '0')
     recordCountInt = int(recordCountVar)
     update_donations_if_needed.delay()
-    if recordCountInt < 1:
-        listedDonos = DonationModel.objects.order_by(orderByVar)
+    listedDonos = DonationModel.objects.order_by(orderByVar)
+    if recordCountInt > 0 and recordCountInt <= settings.MAX_API_ROWS:
+        listedDonos = listedDonos[:recordCountInt]
     else:
-        listedDonos = DonationModel.objects.order_by(orderByVar)[:recordCountInt]
+        listedDonos = listedDonos[:settings.MAX_API_ROWS]
     if filterByVar != 'none':
-        listedDonos = listedDonos.filter( participant_id == filterByVar )
+        listedDonos = listedDonos.filter(participant_id=filterByVar)
     return JsonResponse(
         [d for d in listedDonos.values()],
         safe=False,
@@ -30,6 +31,7 @@ def v_tracked_donations(request):
     orderByVar = request.GET.get('orderBy', 'id')
     update_donations_if_needed.delay()
     return JsonResponse(
-        [d for d in DonationModel.objects.filter(DonationModel.tracked_q()).order_by(orderByVar).values()],
+        [d for d in
+         DonationModel.objects.filter(DonationModel.tracked_q()).order_by(orderByVar)[:settings.MAX_API_ROWS].values()],
         safe=False,
     )
