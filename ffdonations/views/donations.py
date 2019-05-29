@@ -18,7 +18,7 @@ def v_donations(request):
     else:
         listedDonos = DonationModel.objects.order_by(orderByVar)[:recordCountInt]
     if filterByVar != 'none':
-        listedDonos = listedDonos.filter( participant_id == filterByVar )
+        listedDonos = listedDonos.filter(participant_id=filterByVar)
     return JsonResponse(
         [d for d in listedDonos.values()],
         safe=False,
