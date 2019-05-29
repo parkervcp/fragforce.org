@@ -14,7 +14,7 @@ def v_donations(request):
     recordCountInt = int(recordCountVar)
     update_donations_if_needed.delay()
     listedDonos = DonationModel.objects.order_by(orderByVar)
-    if recordCountInt >= 0 and recordCountInt <= settings.MAX_API_ROWS:
+    if recordCountInt > 0 and recordCountInt <= settings.MAX_API_ROWS:
         listedDonos = listedDonos[:recordCountInt]
     else:
         listedDonos = listedDonos[:settings.MAX_API_ROWS]
