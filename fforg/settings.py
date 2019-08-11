@@ -270,9 +270,14 @@ EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_T
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
 
 # How often to check for updates
-TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 60)))
+TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 10)))
+TIL_TEAMS_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_TEAMS_UPDATE_FREQUENCY_CHECK', 10)))
 
-TILIFY_TEAMS = os.environ.get('TILIFY_TEAMS', 'fragforce').split(',')
+# How long to wait in seconds after getting a parent before fetching any children
+TF_UPDATE_WAIT = timedelta(seconds=int(os.environ.get('TF_UPDATE_WAIT', 120)))
+
+# Comma seperated list of tiltify teams (the slugs or IDs) to monitor
+TILTIFY_TEAMS = os.environ.get('TILTIFY_TEAMS', 'fragforce').split(',')
 
 # Cache Configuration
 if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
@@ -352,6 +357,10 @@ CELERY_BEAT_SCHEDULE = {
     'til-update-all-donations': {
         'task': 'ffdonations.tasks.tiltify.campaigns.update_campaigns',
         'schedule': TIL_DON_UPDATE_FREQUENCY_CHECK,
+    },
+    'til-update-all-teams': {
+        'task': 'ffdonations.tasks.tiltify.teams.update_teams',
+        'schedule': TIL_TEAMS_UPDATE_FREQUENCY_CHECK,
     },
 }
 

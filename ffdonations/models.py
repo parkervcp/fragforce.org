@@ -278,7 +278,10 @@ class TeamTiltifyModel(models.Model):
     name = models.CharField(verbose_name="Name", unique=True, null=True, max_length=8192)
     slug = models.CharField(verbose_name="Slug", unique=True, null=True, max_length=8192)
     url = models.CharField(verbose_name="URL", unique=True, null=True, max_length=8192)
+
+    # Cascade
     avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
+    social = models.ForeignKey(SocailTiltifyModel, verbose_name="Social", null=True, on_delete=models.DO_NOTHING)
 
     # On some
     bio = models.CharField(max_length=1024 * 1024, verbose_name="Bio")
