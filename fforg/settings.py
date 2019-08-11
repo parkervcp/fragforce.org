@@ -272,6 +272,7 @@ REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_H
 # How often to check for updates
 TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 60)))
 
+TILIFY_TEAMS = os.environ.get('TILIFY_TEAMS', 'fragforce').split(',')
 
 # Cache Configuration
 if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
