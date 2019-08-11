@@ -15,6 +15,9 @@ def update_teams(self):
     # Use slugs to resolve
     for slug in settings.TILTIFY_TEAMS:
         team = tf.f_team(slug)
+        if not team:
+            raise self.retry()
+
         try:
             o = TeamTiltifyModel.objects.get(id=team.id)
 
