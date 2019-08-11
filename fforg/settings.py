@@ -192,6 +192,9 @@ if os.environ.get('REDIS_URL', None):
     REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
     # Django cache
     REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
+
+    CELERY_BROKER_URL = REDIS_URL_TASKS
+    CELERY_RESULT_BACKEND = REDIS_URL_TOMBS
 elif os.environ.get('REDIS0_URL', None):
     REDIS_URL_DEFAULT = 'redis://localhost'
     # Base URL - Needs DB ID added
@@ -207,11 +210,14 @@ elif os.environ.get('REDIS0_URL', None):
     # Django cache
     REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/0"
 
+    CELERY_BROKER_URL = REDIS_URL_TASKS
+    CELERY_RESULT_BACKEND = REDIS_URL_TOMBS
+
+
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ACKS_LATE = True
-CELERY_BROKER_URL = REDIS_URL_TASKS
-CELERY_RESULT_BACKEND = REDIS_URL_TOMBS
+
 CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', None)
