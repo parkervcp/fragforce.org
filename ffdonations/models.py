@@ -1,8 +1,9 @@
+import datetime
+import uuid
+
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
-import uuid
-from django.contrib.postgres.fields import JSONField
-import datetime
 
 
 ## Extra-Life
@@ -287,6 +288,9 @@ class TeamTiltifyModel(models.Model):
     bio = models.CharField(max_length=1024 * 1024, verbose_name="Bio")
     inviteOnly = models.NullBooleanField(verbose_name="Is Invite Only Team")
     disbanded = models.NullBooleanField(verbose_name="Is Disbanded")
+    totalAmountRaised = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Total Amount Raised",
+                                            null=True)
+    about = models.CharField(verbose_name="About", null=True, max_length=8192)
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
