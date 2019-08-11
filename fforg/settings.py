@@ -410,10 +410,14 @@ LOGGING = {
             'handlers': ['console', ],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO')
         },
-        'appname': {
+        'root': {
             'handlers': ['console', 'logzio'],
             'level': 'INFO'
-        }
+        },
+        '': {
+            'handlers': ['console', 'logzio'],
+            'level': 'INFO'
+        },
     }
 }
 
