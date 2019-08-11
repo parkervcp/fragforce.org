@@ -41,5 +41,6 @@ def update_teams(self):
             o.save()
             created += 1
         # Update the campaign in TF_CAMP_UPDATE_WAIT seconds
-        update_campaigns.apply_async(kwargs=dict(team_id=team.parsed['id']), countdown=settings.TF_UPDATE_WAIT.seconds)
+        update_campaigns.apply_async(kwargs=dict(team_id=team.parsed['id']),
+                                     countdown=settings.TF_UPDATE_WAIT.total_seconds())
     return created, updated
