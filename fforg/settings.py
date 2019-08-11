@@ -291,7 +291,7 @@ REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_H
 TIL_TEAMS_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_TEAMS_UPDATE_FREQUENCY_CHECK', 10)))
 
 # How long to wait in seconds after getting a parent before fetching any children
-TF_UPDATE_WAIT = int(os.environ.get('TF_UPDATE_WAIT', 120))
+TF_UPDATE_WAIT = timedelta(seconds=int(os.environ.get('TF_UPDATE_WAIT', 120)))
 
 # Comma seperated list of tiltify teams (the slugs or IDs) to monitor
 TILTIFY_TEAMS = os.environ.get('TILTIFY_TEAMS', 'fragforce').split(',')
