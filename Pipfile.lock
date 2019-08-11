@@ -476,7 +476,7 @@
         "tiltify2": {
             "editable": true,
             "git": "https://github.com/gpmidi/tiltify-v2-api-python.git",
-            "ref": "9b2f274f8bf4e415616150426b21a6fc134d910d"
+            "ref": "22c7e2265e26c651f5f554d8a2bb7d9de042f27a"
         },
         "traitlets": {
             "hashes": [
