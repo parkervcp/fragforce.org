@@ -15,15 +15,13 @@ def update_teams(self):
     # Use slugs to resolve
     for slug in settings.TILTIFY_TEAMS:
         team = tf.f_team(slug)
-        if not team:
-            raise self.retry()
 
         try:
-            o = TeamTiltifyModel.objects.get(id=team.id)
+            o = TeamTiltifyModel.objects.get(id=team.parsed['id'])
 
             n = {}
             for k in team.FIELDS_NORM:
-                setattr(o, k, getattr(team, k, None))
+                setattr(o, k, team.parsed.get(k, None))
 
             o.raw = team.data
             o.subtype = team.__class__.__name__
@@ -33,7 +31,7 @@ def update_teams(self):
         except TeamTiltifyModel.DoesNotExist as e:
             n = {}
             for k in team.FIELDS_NORM:
-                n[k] = getattr(team, k, None)
+                n[k] = team.parsed.get(k, None)
 
             o = TeamTiltifyModel(
                 raw=team.data,

@@ -14,11 +14,11 @@ def update_campaigns(self, team_id):
     created = 0
     for c in tf.f_team_campaigns(team.id):
         try:
-            o = CampaignTiltifyModel.objects.get(id=c.id)
+            o = CampaignTiltifyModel.objects.get(id=c.parsed.get('id'))
 
             n = {}
             for k in c.FIELDS_NORM:
-                setattr(o, k, getattr(c, k, None))
+                setattr(o, k, c.parsed.get(k, None))
 
             o.team_id = team.id
             o.raw = c.data
@@ -29,7 +29,7 @@ def update_campaigns(self, team_id):
         except CampaignTiltifyModel.DoesNotExist as e:
             n = {}
             for k in c.FIELDS_NORM:
-                n[k] = getattr(c, k, None)
+                n[k] = c.parsed.get(k, None)
 
             o = CampaignTiltifyModel(
                 raw=c.data,
