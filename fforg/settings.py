@@ -270,7 +270,6 @@ EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_T
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
 
 # How often to check for updates
-TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 10)))
 TIL_TEAMS_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_TEAMS_UPDATE_FREQUENCY_CHECK', 10)))
 
 # How long to wait in seconds after getting a parent before fetching any children
@@ -353,10 +352,6 @@ CELERY_BEAT_SCHEDULE = {
     'update-all-donations': {
         'task': 'ffdonations.tasks.donations.update_donations_if_needed',
         'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
-    },
-    'til-update-all-donations': {
-        'task': 'ffdonations.tasks.tiltify.campaigns.update_campaigns',
-        'schedule': TIL_DON_UPDATE_FREQUENCY_CHECK,
     },
     'til-update-all-teams': {
         'task': 'ffdonations.tasks.tiltify.teams.update_teams',
