@@ -377,5 +377,45 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'logzioFormat': {
+            'format': '{"additional_field": "value"}'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'verbose'
+        },
+        'logzio': {
+            'class': 'logzio.handler.LogzioHandler',
+            'level': 'INFO',
+            'formatter': 'logzioFormat',
+            'token': LOGZIO_API_KEY,
+            'logzio_type': "django",
+            'logs_drain_timeout': 5,
+            'url': 'https://listener.logz.io:8071',
+            'debug': True
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', ],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+        },
+        'appname': {
+            'handlers': ['console', 'logzio'],
+            'level': 'INFO'
+        }
+    }
+}
+
 # Activate Django-Heroku - Very last
 django_heroku.settings(locals())
