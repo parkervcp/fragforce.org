@@ -1,7 +1,10 @@
 from celery import shared_task
-
+import logging
 from .helpers import *
 from ...models import *
+
+log = logging.getLogger('ffdonations.tasks.tiltify.campaigns')
+
 
 
 @shared_task(bind=True)
@@ -13,6 +16,7 @@ def update_campaigns(self, team_id):
     updated = 0
     created = 0
     for c in tf.f_team_campaigns(team.id):
+        log.debug("Working on team-campaign", extra=dict(c=c.parsed))
         try:
             o = CampaignTiltifyModel.objects.get(id=c.parsed.get('id'))
 
