@@ -19,7 +19,7 @@ def update_campaigns(self, team_id):
     for c in tf.f_team_campaigns(team.id):
         log.warning("Working on team-campaign %r", c.parsed.get('id', None), extra=dict(c=c.parsed))
         try:
-            o = CampaignTiltifyModel.objects.get(id=c.parsed.get('id'))
+            o = CampaignTiltifyModel.objects.get(id=int(c.parsed.get('id')))
 
             n = {}
             for k in c.FIELDS_NORM:
@@ -39,7 +39,7 @@ def update_campaigns(self, team_id):
             o = CampaignTiltifyModel(
                 raw=c.data,
                 subtype=c.__class__.__name__,
-                team_id=team.id,
+                team=team,
                 **n,
             )
 
