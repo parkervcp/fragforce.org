@@ -23,7 +23,10 @@ def update_campaigns(self, team_id):
 
             n = {}
             for k in c.FIELDS_NORM:
-                setattr(o, k, c.parsed.get(k, None))
+                if str(k) in ['startsAt', 'endsAt']:
+                    n[str(k)] = datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)) / 1000)
+                else:
+                    n[str(k)] = str(c.parsed.get(k, None))
 
             o.team_id = team.id
             o.raw = c.data
