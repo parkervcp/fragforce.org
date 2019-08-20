@@ -212,7 +212,7 @@ def update_donations_participant(self, participantID):
         participant.save()
 
     try:
-        donations = d.donations_for_participants(participantID=participantID)
+        donations = list(d.donations_for_participants(participantID=participantID))
     except HTTPError:
         participant.tracked = False
         participant.last_updated = timezone.now()
