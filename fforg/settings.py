@@ -10,9 +10,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
+
 import dj_database_url
 import django_heroku
-from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -224,7 +225,6 @@ else:
     # Django cache
     REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/0"
 
-
 CELERY_ACCEPT_CONTENT = ['json', ]
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ACKS_LATE = True
@@ -391,12 +391,12 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
+            'level': 'INFO',
             'formatter': 'verbose'
         },
         'logzio': {
             'class': 'logzio.handler.LogzioHandler',
-            'level': 'INFO',
+            'level': 'DEBUG',
             'formatter': 'logzioFormat',
             'token': LOGZIO_API_KEY,
             'logzio_type': "django",
@@ -407,16 +407,16 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console', ],
+            'handlers': ['console', 'logzio'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO')
         },
         'root': {
             'handlers': ['console', 'logzio'],
-            'level': 'INFO'
+            # 'level': 'INFO'
         },
         '': {
             'handlers': ['console', 'logzio'],
-            'level': 'INFO'
+            # 'level': 'INFO'
         },
     }
 }
