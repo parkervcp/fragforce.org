@@ -23,6 +23,8 @@ def update_campaigns(self, team_id):
 
             n = {}
             for k in c.FIELDS_NORM:
+                if c.parsed.get(k, None) is None:
+                    continue
                 if str(k) in ['startsAt', 'endsAt']:
                     setattr(o, k, datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)) / 1000))
                 else:
@@ -37,10 +39,12 @@ def update_campaigns(self, team_id):
         except CampaignTiltifyModel.DoesNotExist as e:
             n = {}
             for k in c.FIELDS_NORM:
+                if c.parsed.get(k, None) is None:
+                    continue
                 if str(k) in ['startsAt', 'endsAt']:
-                    n[str(k)] = datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)) / 1000)
+                    n[str(k)] = datetime.datetime.fromtimestamp(int(c.parsed.get(k)) / 1000)
                 else:
-                    n[str(k)] = str(c.parsed.get(k, None))
+                    n[str(k)] = str(c.parsed.get(k))
 
             o = CampaignTiltifyModel(
                 raw=c.data,
