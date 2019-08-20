@@ -1,5 +1,5 @@
 import logging
-
+import datetime
 from celery import shared_task
 
 from .helpers import *
@@ -34,7 +34,10 @@ def update_campaigns(self, team_id):
         except CampaignTiltifyModel.DoesNotExist as e:
             n = {}
             for k in c.FIELDS_NORM:
-                n[str(k)] = str(c.parsed.get(k, None))
+                if str(k) in ['startsAt', 'endsAt']:
+                    n[str(k)] = datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)))
+                else:
+                    n[str(k)] = str(c.parsed.get(k, None))
 
             o = CampaignTiltifyModel(
                 raw=c.data,
