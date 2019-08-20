@@ -34,7 +34,7 @@ def update_campaigns(self, team_id):
         except CampaignTiltifyModel.DoesNotExist as e:
             n = {}
             for k in c.FIELDS_NORM:
-                n[k] = c.parsed.get(k, None)
+                n[str(k)] = str(c.parsed.get(k, None))
 
             o = CampaignTiltifyModel(
                 raw=c.data,
