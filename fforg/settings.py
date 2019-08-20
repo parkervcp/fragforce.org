@@ -359,18 +359,18 @@ else:
 
 # Second to last
 CELERY_BEAT_SCHEDULE = {
-    # 'update-all-teams': {
-    #     'task': 'ffdonations.tasks.teams.update_teams_if_needed',
-    #     'schedule': EL_TEAM_UPDATE_FREQUENCY_CHECK,
-    # },
-    # 'update-all-participants': {
-    #     'task': 'ffdonations.tasks.participants.update_participants_if_needed',
-    #     'schedule': EL_PTCP_UPDATE_FREQUENCY_CHECK,
-    # },
-    # 'update-all-donations': {
-    #     'task': 'ffdonations.tasks.donations.update_donations_if_needed',
-    #     'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
-    # },
+    'update-all-teams': {
+        'task': 'ffdonations.tasks.teams.update_teams_if_needed',
+        'schedule': EL_TEAM_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-participants': {
+        'task': 'ffdonations.tasks.participants.update_participants_if_needed',
+        'schedule': EL_PTCP_UPDATE_FREQUENCY_CHECK,
+    },
+    'update-all-donations': {
+        'task': 'ffdonations.tasks.donations.update_donations_if_needed',
+        'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
+    },
     'til-update-all-teams': {
         'task': 'ffdonations.tasks.tiltify.teams.update_teams',
         'schedule': TIL_TEAMS_UPDATE_FREQUENCY_CHECK,
