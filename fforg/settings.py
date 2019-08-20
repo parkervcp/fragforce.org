@@ -385,7 +385,7 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
         'logzioFormat': {
-            'format': '{"additional_field": "value"}'
+            'format': '{"source": "django"}'
         }
     },
     'handlers': {
