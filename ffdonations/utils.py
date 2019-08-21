@@ -2,9 +2,8 @@
 from django.db.models import Sum
 from django.utils import timezone
 from memoize import memoize
-
 from ffsfdc.models import *
-# from django.conf import settings
+from django.conf import settings
 from .models import *
 
 
@@ -105,6 +104,7 @@ def childsplay_donation_stats():
     raised = CampaignTiltifyModel.objects.filter(
         startsAt__lte=timezone.now(),
         endsAt__gte=timezone.now(),
+        team__in=TeamTiltifyModel.objects.filter(slug__in=[str(slug) for slug in settings.TILTIFY_TEAMS])
     ).aggregate(
         total=Sum('totalAmountRaised'),
         supporting=Sum('supportingAmountRaised'),
