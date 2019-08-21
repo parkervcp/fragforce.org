@@ -104,7 +104,7 @@ def childsplay_donation_stats():
     """ For current year """
     return dict(
         totalAmountRaised=CampaignTiltifyModel.objects.filter(
-            startsAt__gte=timezone.now(),
-            endsAt__lte=timezone.now()
+            startsAt__lte=timezone.now(),
+            endsAt__gte=timezone.now(),
         ).aggregate(total=Sum('totalAmountRaised')).get('total'),
     )
