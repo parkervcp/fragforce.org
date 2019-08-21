@@ -13,7 +13,7 @@ def donations(request):
         cp_donation_stats=childsplay_donation_stats(),
     )
     ret['extralife'] = ret['el_donation_stats']['sumDonations']
-    ret['childsplay'] = ret['cp_donation_stats']['FIXME']
+    ret['childsplay'] = ret['cp_donation_stats']['totalAmountRaised']
     ret['singapore'] = settings.SINGAPORE_DONATIONS
     ret['sumDonations'] = ret['extralife'] + ret['childsplay'] + ret['singapore']
     ret['target'] = settings.TARGET_DONATIONS
