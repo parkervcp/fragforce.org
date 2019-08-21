@@ -10,9 +10,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
+
 import dj_database_url
 import django_heroku
-from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -169,7 +170,6 @@ HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
 HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
 
 SINGAPORE_DONATIONS = float(os.environ.get('SINGAPORE_DONATIONS', '0.0'))
-CHILDSPLAY_DONATIONS = float(os.environ.get('CHILDSPLAY_DONATIONS', '0.0'))
 TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
 
 # Cache version prefix
@@ -192,7 +192,24 @@ if os.environ.get('REDIS_URL', None):
     REDIS_URL_TIMERS = REDIS_URL_BASE + "/3"
     # Django cache
     REDIS_URL_DJ_CACHE = REDIS_URL_BASE + "/4"
+
+
 elif os.environ.get('REDIS0_URL', None):
+    REDIS_URL_DEFAULT = 'redis://localhost'
+    # Base URL - Needs DB ID added
+    REDIS_URL_BASE = REDIS_URL_DEFAULT
+    # Don't use DB 0 for anything
+    REDIS_URL_DEFAULT = os.environ.get('REDIS0_URL', 'redis://localhost') + "/0"
+    # Celery tasks
+    REDIS_URL_TASKS = os.environ.get('REDIS1_URL', 'redis://localhost') + "/0"
+    # Celery tombstones (aka results)
+    REDIS_URL_TOMBS = os.environ.get('REDIS2_URL', 'redis://localhost') + "/0"
+    # Misc timers
+    REDIS_URL_TIMERS = os.environ.get('REDIS3_URL', 'redis://localhost') + "/0"
+    # Django cache
+    REDIS_URL_DJ_CACHE = os.environ.get('REDIS4_URL', 'redis://localhost') + "/0"
+
+else:
     REDIS_URL_DEFAULT = 'redis://localhost'
     # Base URL - Needs DB ID added
     REDIS_URL_BASE = REDIS_URL_DEFAULT
@@ -270,8 +287,13 @@ EL_REQUEST_MIN_TIME_URL = timedelta(seconds=int(os.environ.get('EL_REQUEST_MIN_T
 REQUEST_MIN_TIME_HOST = timedelta(seconds=int(os.environ.get('REQUEST_MIN_TIME_HOST_SECONDS', 5)))
 
 # How often to check for updates
-TIL_DON_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_DON_UPDATE_FREQUENCY_CHECK', 60)))
+TIL_TEAMS_UPDATE_FREQUENCY_CHECK = timedelta(minutes=int(os.environ.get('TIL_TEAMS_UPDATE_FREQUENCY_CHECK', 10)))
 
+# How long to wait in seconds after getting a parent before fetching any children
+TF_UPDATE_WAIT = timedelta(seconds=int(os.environ.get('TF_UPDATE_WAIT', 120)))
+
+# Comma seperated list of tiltify teams (the slugs or IDs) to monitor
+TILTIFY_TEAMS = os.environ.get('TILTIFY_TEAMS', 'fragforce').split(',')
 
 # Cache Configuration
 if REDIS_URL_BASE and REDIS_URL_BASE == REDIS_URL_DEFAULT:
@@ -348,10 +370,54 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'ffdonations.tasks.donations.update_donations_if_needed',
         'schedule': EL_DON_UPDATE_FREQUENCY_CHECK,
     },
-    'til-update-all-donations': {
-        'task': 'ffdonations.tasks.tiltify.campaigns.update_campaigns',
-        'schedule': TIL_DON_UPDATE_FREQUENCY_CHECK,
+    'til-update-all-teams': {
+        'task': 'ffdonations.tasks.tiltify.teams.update_teams',
+        'schedule': TIL_TEAMS_UPDATE_FREQUENCY_CHECK,
     },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'logzioFormat': {
+            'format': '{"source": "django"}'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO',
+            'formatter': 'verbose'
+        },
+        'logzio': {
+            'class': 'logzio.handler.LogzioHandler',
+            'level': 'DEBUG',
+            'formatter': 'logzioFormat',
+            'token': LOGZIO_API_KEY,
+            'logzio_type': "django",
+            'logs_drain_timeout': 5,
+            'url': 'https://listener.logz.io:8071',
+            'debug': True
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'logzio'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+        },
+        'root': {
+            'handlers': ['console', 'logzio'],
+            # 'level': 'INFO'
+        },
+        '': {
+            'handlers': ['console', 'logzio'],
+            # 'level': 'INFO'
+        },
+    }
 }
 
 # Activate Django-Heroku - Very last

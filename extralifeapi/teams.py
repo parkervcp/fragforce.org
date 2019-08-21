@@ -42,7 +42,7 @@ class Teams(DonorDriveBase):
             if f == 'raw':
                 kws[f] = data
             else:
-                kws[f] = data.get(f, None)
+                kws[f] = dict(data).get(f, None)
         return Team(**kws)
 
     def teams(self):

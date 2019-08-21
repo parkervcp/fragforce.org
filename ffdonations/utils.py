@@ -1,10 +1,11 @@
 # from .tasks import *
-from django.db.models import Q, Avg, Max, Min, Sum
-# from django.conf import settings
-from .models import *
-from memoize import memoize
-from ffsfdc.models import *
+from django.conf import settings
+from django.db.models import Sum
 from django.utils import timezone
+from memoize import memoize
+
+from ffsfdc.models import *
+from .models import *
 
 
 # @memoize(timeout=120)
@@ -95,4 +96,23 @@ def el_donation_stats(year=timezone.now().year):
         sumDonations=float(tsum + psum),
         sumteamDonations=float(tsum),
         sumparticipantDonations=float(psum),
+    )
+
+
+@memoize(timeout=120)
+def childsplay_donation_stats():
+    """ For current year """
+    raised = CampaignTiltifyModel.objects.filter(
+        startsAt__lte=timezone.now(),
+        endsAt__gte=timezone.now(),
+        team__in=TeamTiltifyModel.objects.filter(slug__in=settings.TILTIFY_TEAMS)
+    ).aggregate(
+        total=Sum('totalAmountRaised'),
+        supporting=Sum('supportingAmountRaised'),
+        direct=Sum('amountRaised'),
+    )
+    return dict(
+        totalAmountRaised=float(raised.get('total', 0) or 0),
+        supportingAmountRaised=float(raised.get('supporting', 0) or 0),
+        amountRaised=float(raised.get('amount', 0) or 0),
     )
