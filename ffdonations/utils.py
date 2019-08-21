@@ -106,5 +106,9 @@ def childsplay_donation_stats():
         totalAmountRaised=float(CampaignTiltifyModel.objects.filter(
             startsAt__lte=timezone.now(),
             endsAt__gte=timezone.now(),
-        ).aggregate(total=Sum('totalAmountRaised')).get('total')),
+        ).aggregate(
+            total=Sum('totalAmountRaised'),
+            supporting=Sum('supportingAmountRaised'),
+            direct=Sum('amountRaised'),
+        ).get('total')),
     )
