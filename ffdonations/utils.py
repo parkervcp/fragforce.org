@@ -104,14 +104,14 @@ def childsplay_donation_stats():
     raised = CampaignTiltifyModel.objects.filter(
         startsAt__lte=timezone.now(),
         endsAt__gte=timezone.now(),
-        team__in=TeamTiltifyModel.objects.filter(slug__in=[str(slug) for slug in settings.TILTIFY_TEAMS])
+        team__in=TeamTiltifyModel.objects.filter(slug__in=settings.TILTIFY_TEAMS)
     ).aggregate(
         total=Sum('totalAmountRaised'),
         supporting=Sum('supportingAmountRaised'),
         direct=Sum('amountRaised'),
     )
     return dict(
-        totalAmountRaised=float(raised.get('total')),
-        supportingAmountRaised=float(raised.get('supporting')),
-        amountRaised=float(raised.get('amount')),
+        totalAmountRaised=float(raised.get('total') or 0),
+        supportingAmountRaised=float(raised.get('supporting') or 0),
+        amountRaised=float(raised.get('amount') or 0),
     )
