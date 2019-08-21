@@ -112,7 +112,7 @@ def childsplay_donation_stats():
         direct=Sum('amountRaised'),
     )
     return dict(
-        totalAmountRaised=float(raised.get('total', 0)),
-        supportingAmountRaised=float(raised.get('supporting', 0)),
-        amountRaised=float(raised.get('amount', 0)),
+        totalAmountRaised=float(raised.get('total', 0) or 0),
+        supportingAmountRaised=float(raised.get('supporting', 0) or 0),
+        amountRaised=float(raised.get('amount', 0) or 0),
     )
