@@ -1,9 +1,10 @@
 # from .tasks import *
+from django.conf import settings
 from django.db.models import Sum
 from django.utils import timezone
 from memoize import memoize
+
 from ffsfdc.models import *
-from django.conf import settings
 from .models import *
 
 
@@ -111,7 +112,7 @@ def childsplay_donation_stats():
         direct=Sum('amountRaised'),
     )
     return dict(
-        totalAmountRaised=float(raised.get('total') or 0),
-        supportingAmountRaised=float(raised.get('supporting') or 0),
-        amountRaised=float(raised.get('amount') or 0),
+        totalAmountRaised=float(raised.get('total', 0)),
+        supportingAmountRaised=float(raised.get('supporting', 0)),
+        amountRaised=float(raised.get('amount', 0)),
     )
