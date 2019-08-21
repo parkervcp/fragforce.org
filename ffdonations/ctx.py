@@ -10,9 +10,10 @@ def donations(request):
         # FIXME: Add custom caching here - use tasks to pregenerate so it doesn't slow down random pages
         el_donation_stats=el_donation_stats(),
         el_num_donations=el_num_donations(),
+        cp_donation_stats=childsplay_donation_stats(),
     )
     ret['extralife'] = ret['el_donation_stats']['sumDonations']
-    ret['childsplay'] = settings.CHILDSPLAY_DONATIONS
+    ret['childsplay'] = ret['cp_donation_stats']['FIXME']
     ret['singapore'] = settings.SINGAPORE_DONATIONS
     ret['sumDonations'] = ret['extralife'] + ret['childsplay'] + ret['singapore']
     ret['target'] = settings.TARGET_DONATIONS
