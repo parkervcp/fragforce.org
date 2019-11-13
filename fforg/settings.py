@@ -170,6 +170,7 @@ HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
 HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
 
 SINGAPORE_DONATIONS = float(os.environ.get('SINGAPORE_DONATIONS', '0.0'))
+OTHER_DONATIONS = float(os.environ.get('OTHER_DONATIONS', '0.0'))
 TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
 
 # Cache version prefix
