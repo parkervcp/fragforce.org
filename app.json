@@ -4,6 +4,7 @@
   "env": {
     "HC_RO_SCHEMA": "org",
     "SINGAPORE_DONATIONS": "5000",
+    "OTHER_DONATIONS": "1000",
     "TARGET_DONATIONS": "250000",
     "GOOGLE_ANALYTICS_ID": {
       "required": true
