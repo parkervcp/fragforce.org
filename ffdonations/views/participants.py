@@ -10,7 +10,7 @@ from django.conf import settings
 def v_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
-        [d for d in ParticipantModel.objects.all().order_by('id').values()],
+        [d for d in ParticipantModel.objects.all().order_by('id')[:settings.MAX_API_ROWS].values()],
         safe=False,
     )
 
@@ -19,6 +19,6 @@ def v_participants(request):
 def v_tracked_participants(request):
     update_participants_if_needed.delay()
     return JsonResponse(
-        [d for d in ParticipantModel.objects.filter(tracked=True).order_by('id').values()],
+        [d for d in ParticipantModel.objects.filter(tracked=True)[:settings.MAX_API_ROWS].order_by('id').values()],
         safe=False,
     )

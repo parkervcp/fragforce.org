@@ -1,9 +1,12 @@
 from __future__ import absolute_import, unicode_literals
+
 from celery import shared_task
-from extralifeapi.donors import Donations, Donation
-from ..models import *
 from django.conf import settings
 from django.utils import timezone
+from requests.exceptions import HTTPError
+
+from extralifeapi.donors import Donations
+from ..models import *
 
 
 def _make_d(*args, **kwargs):
@@ -58,7 +61,7 @@ def update_donations_existing(self):
     for teamID in teamIDs:
         ret.append(update_donations_if_needed_team.delay(teamID=teamID).id)
     for participantID in participantIDs:
-        ret.append(update_donations_if_needed_participant.delay(participantID=participantID).id)
+        ret.append(update_donations_if_needed_participant.delay(participantID=participantID['participant']).id)
     return ret
 
 
@@ -208,7 +211,15 @@ def update_donations_participant(self, participantID):
         participant = ParticipantModel(id=participantID, tracked=False)
         participant.save()
 
-    for donation in d.donations_for_participants(participantID=participantID):
+    try:
+        donations = list(d.donations_for_participants(participantID=participantID))
+    except HTTPError:
+        participant.tracked = False
+        participant.last_updated = timezone.now()
+        participant.save()
+        return None
+
+    for donation in donations:
         # Get/create participant if it's set...
         if donation.teamID:
             try:

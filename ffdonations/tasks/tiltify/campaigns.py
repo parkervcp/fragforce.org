@@ -1,21 +1,59 @@
+import logging
+import datetime
+from celery import shared_task
+
 from .helpers import *
 from ...models import *
-from celery import shared_task
+
+log = logging.getLogger('ffdonations.tasks.tiltify.campaigns')
 
 
 @shared_task(bind=True)
-def update_campaigns(self):
+def update_campaigns(self, team_id):
+    team = TeamTiltifyModel.objects.get(id=team_id)
+
     tf = get_tiltify()
-    count = 0
-    for c in tf.f_campaigns():
+
+    updated = 0
+    created = 0
+    for c in tf.f_team_campaigns(team.id):
+        log.warning("Working on team-campaign %r", c.parsed.get('id', None), extra=dict(c=c.parsed))
         try:
-            o = CampaignTiltifyModel.objects.get(id=c.id)
+            o = CampaignTiltifyModel.objects.get(id=int(c.parsed.get('id')))
+
+            n = {}
+            for k in c.FIELDS_NORM:
+                if c.parsed.get(k, None) is None:
+                    continue
+                if str(k) in ['startsAt', 'endsAt']:
+                    setattr(o, k, datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)) / 1000))
+                else:
+                    setattr(o, k, str(c.parsed.get(k, None)))
+
+            o.team_id = team.id
+            o.raw = c.data
+            o.subtype = c.__class__.__name__
+
+            o.save()
+            updated += 1
         except CampaignTiltifyModel.DoesNotExist as e:
             n = {}
             for k in c.FIELDS_NORM:
-                n[k] = getattr(c, k, None)
+                if c.parsed.get(k, None) is None:
+                    continue
+                if str(k) in ['startsAt', 'endsAt']:
+                    n[str(k)] = datetime.datetime.fromtimestamp(int(c.parsed.get(k)) / 1000)
+                else:
+                    n[str(k)] = str(c.parsed.get(k))
 
-            o = CampaignTiltifyModel(**n)
+            o = CampaignTiltifyModel(
+                raw=c.data,
+                subtype=c.__class__.__name__,
+                team=team,
+                **n,
+            )
+
             o.save()
-            count += 1
-    return count
+            created += 1
+
+    return created, updated

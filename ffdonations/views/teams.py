@@ -10,7 +10,7 @@ from django.conf import settings
 def v_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
-        [d for d in TeamModel.objects.all().order_by('id').values()],
+        [d for d in TeamModel.objects.all().order_by('id')[:settings.MAX_API_ROWS].values()],
         safe=False,
     )
 
@@ -19,6 +19,6 @@ def v_teams(request):
 def v_tracked_teams(request):
     update_teams_if_needed.delay()
     return JsonResponse(
-        [d for d in TeamModel.objects.filter(tracked=True).order_by('id').values()],
+        [d for d in TeamModel.objects.filter(tracked=True).order_by('id')[:settings.MAX_API_ROWS].values()],
         safe=False,
     )
