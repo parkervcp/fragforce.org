@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+import logging
+
 from celery import shared_task
 from django.conf import settings
 from django.utils import timezone
@@ -7,6 +9,8 @@ from requests.exceptions import HTTPError
 
 from extralifeapi.donors import Donations
 from ..models import *
+
+log = logging.getLogger("donations")
 
 
 def _make_d(*args, **kwargs):
@@ -22,6 +26,7 @@ def update_donations_if_needed(self):
     May not capture ones if we don't have donations for that team/participant already.
     See update_donations_if_needed_team and update_donations_if_needed_participant.
     """
+    log.debug("update_donations_if_needed: n/a")
 
     def doupdate():
         return update_donations_existing()
@@ -67,6 +72,8 @@ def update_donations_existing(self):
 
 @shared_task(bind=True)
 def update_donations_if_needed_team(self, teamID):
+    log.debug("update_donations_if_needed_team: %r", teamID)
+
     def doupdate():
         return update_donations_team(teamID=teamID)
 
@@ -156,6 +163,7 @@ def update_donations_team(self, teamID):
 
 @shared_task(bind=True)
 def update_donations_if_needed_participant(self, participantID):
+    log.debug("update_donations_if_needed_participant: %r", participantID)
     def doupdate():
         return update_donations_participant(participantID=participantID)
 
