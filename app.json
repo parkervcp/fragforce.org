@@ -43,6 +43,17 @@
       "generator": "secret"
     }
   },
+  "environments": {
+    "test": {
+      "env": {
+        "LOGZIO_API_KEY": "",
+        "DEBUG": "True",
+        "TILTIFY_TOKEN": "",
+        "TILTIFY_TEAMS": "",
+        "GOOGLE_ANALYTICS_ID": ""
+      }
+    }
+  },
   "formation": {
     "web": {
       "quantity": 1,
@@ -116,4 +127,4 @@
     "postdeploy": "python manage.py migrate"
   },
   "success_url": "/"
-}
+},
