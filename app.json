@@ -1,6 +1,8 @@
 {
   "name": "fragforce.org",
   "description": "Fragforce Dev PR",
+  "website": "https://www.fragforce.org",
+  "repository": "https://github.com/fragforce/fragforce.org",
   "env": {
     "HC_RO_SCHEMA": "org",
     "SINGAPORE_DONATIONS": "5000",
@@ -9,22 +11,30 @@
     "GOOGLE_ANALYTICS_ID": {
       "required": true
     },
-    "REDIS_DJ_POOL_MAX_CONN": {
+    "HC_RO_URL": {
       "required": true
+    },
+    "TILTIFY_TEAMS": {
+      "required": true,
+      "value": "fragforce"
     },
     "TILTIFY_TOKEN": {
       "required": true
     },
-    "REDIS_DJ_TIMEOUT": {
-      "required": true
-    },
     "DEBUG": {
-      "required": true
+      "required": true,
+      "value": "False"
     },
     "EXTRALIFE_TEAMID": {
       "required": true
     },
-    "HC_RO_URL": {
+    "LOGZIO_API_KEY": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "REDIS_URL": {
       "required": true
     },
     "SECRET_KEY": {
@@ -33,10 +43,44 @@
       "generator": "secret"
     }
   },
+  "environments": {
+    "review": {
+      "scripts": {
+        "test": "python manage.py test"
+      },
+      "env": {
+        "LOGZIO_API_KEY": "",
+        "DEBUG": "True",
+        "TILTIFY_TOKEN": "",
+        "TILTIFY_TEAMS": "",
+        "GOOGLE_ANALYTICS_ID": ""
+      }
+    },
+    "test": {
+      "scripts": {
+        "test": "python manage.py test"
+      },
+      "env": {
+        "LOGZIO_API_KEY": "",
+        "DEBUG": "True",
+        "TILTIFY_TOKEN": "",
+        "TILTIFY_TEAMS": "",
+        "GOOGLE_ANALYTICS_ID": ""
+      }
+    }
+  },
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "standard-1x"
+      "size": "standard-2x"
+    },
+    "worker": {
+      "quantity": 2,
+      "size": "standard-2x"
+    },
+    "beat": {
+      "quantity": 1,
+      "size": "standard-2x"
     }
   },
   "addons": [
@@ -87,11 +131,8 @@
       "url": "heroku/python"
     }
   ],
-  "environments": {
-    "test": {
-      "scripts": {
-        "test": "python manage.py test"
-      }
-    }
-  }
+  "scripts": {
+    "postdeploy": "python manage.py migrate"
+  },
+  "success_url": "/"
 }
