@@ -44,6 +44,18 @@
     }
   },
   "environments": {
+    "review": {
+      "scripts": {
+        "test": "python manage.py test"
+      },
+      "env": {
+        "LOGZIO_API_KEY": "",
+        "DEBUG": "True",
+        "TILTIFY_TOKEN": "",
+        "TILTIFY_TEAMS": "",
+        "GOOGLE_ANALYTICS_ID": ""
+      }
+    },
     "test": {
       "scripts": {
         "test": "python manage.py test"
