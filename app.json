@@ -11,22 +11,30 @@
     "GOOGLE_ANALYTICS_ID": {
       "required": true
     },
-    "REDIS_DJ_POOL_MAX_CONN": {
+    "HC_RO_URL": {
       "required": true
+    },
+    "TILTIFY_TEAMS": {
+      "required": true,
+      "value": "fragforce"
     },
     "TILTIFY_TOKEN": {
       "required": true
     },
-    "REDIS_DJ_TIMEOUT": {
-      "required": true
-    },
     "DEBUG": {
-      "required": true
+      "required": true,
+      "value": "False"
     },
     "EXTRALIFE_TEAMID": {
       "required": true
     },
-    "HC_RO_URL": {
+    "LOGZIO_API_KEY": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "REDIS_URL": {
       "required": true
     },
     "SECRET_KEY": {
