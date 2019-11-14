@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 
 class Hcmeta(models.Model):
     hcver = models.IntegerField(blank=True, null=True)
@@ -138,15 +138,15 @@ class SiteAccount(models.Model):
     def has_events(self):
         """ Return True if this account has upcoming events """
         import datetime
-        return Event.objects.filter(event_start_date__gte=datetime.datetime.now(), site=self).count() > 0
+        return Event.objects.filter(event_start_date__gte=timezone.now(), site=self).count() > 0
 
     def upcoming(self):
         import datetime
-        return self.events.filter(event_start_date__gte=datetime.datetime.now()).order_by('event_start_date').all()
+        return self.events.filter(event_start_date__gte=timezone.now()).order_by('event_start_date').all()
 
     def past(self):
         import datetime
-        return self.events.filter(event_start_date__lt=datetime.datetime.now()).order_by('-event_start_date').all()
+        return self.events.filter(event_start_date__lt=timezone.now()).order_by('-event_start_date').all()
 
 
 class Contact(models.Model):
