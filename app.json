@@ -1,6 +1,8 @@
 {
   "name": "fragforce.org",
   "description": "Fragforce Dev PR",
+  "website": "https://www.fragforce.org",
+  "repository": "https://github.com/fragforce/fragforce.org",
   "env": {
     "HC_RO_SCHEMA": "org",
     "SINGAPORE_DONATIONS": "5000",
@@ -36,7 +38,15 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "standard-1x"
+      "size": "standard-2x"
+    },
+    "worker": {
+      "quantity": 2,
+      "size": "standard-2x"
+    },
+    "beat": {
+      "quantity": 1,
+      "size": "standard-2x"
     }
   },
   "addons": [
@@ -93,5 +103,9 @@
         "test": "python manage.py test"
       }
     }
-  }
+  },
+  "scripts": {
+    "postdeploy": "python manage.py migrate"
+  },
+  "success_url": "/"
 }
