@@ -45,6 +45,9 @@
   },
   "environments": {
     "test": {
+      "scripts": {
+        "test": "python manage.py test"
+      },
       "env": {
         "LOGZIO_API_KEY": "",
         "DEBUG": "True",
@@ -116,13 +119,6 @@
       "url": "heroku/python"
     }
   ],
-  "environments": {
-    "test": {
-      "scripts": {
-        "test": "python manage.py test"
-      }
-    }
-  },
   "scripts": {
     "postdeploy": "python manage.py migrate"
   },
