@@ -25,12 +25,12 @@ def update_donations(self, campaign_id):
             for k in c.FIELDS_NORM:
                 if c.parsed.get(k, None) is None:
                     continue
-                if str(k) in ['completedAt',]:
+                if str(k) in ['completedAt', ]:
                     setattr(o, k, datetime.datetime.fromtimestamp(int(c.parsed.get(k, None)) / 1000))
                 else:
                     setattr(o, k, str(c.parsed.get(k, None)))
 
-            #if c.parsed.get('rewardId',None):
+            # if c.parsed.get('rewardId',None):
             # TODO: Add rewards
 
             o.campaign_id = campaign.id
