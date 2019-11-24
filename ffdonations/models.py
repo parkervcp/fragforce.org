@@ -375,7 +375,7 @@ class DonationTiltifyModel(models.Model):
     comment = models.CharField(max_length=1024 * 1024, null=True, verbose_name="Comment")
     completedAt = models.DateTimeField(null=True, verbose_name="Completed At")
     reward = models.ForeignKey(RewardTiltifyModel, verbose_name="Reward", null=True, on_delete=models.DO_NOTHING)
-    campaign = models.ForeignKey(CampaignTiltifyModel, verbose_name="Campaign", null=False, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(CampaignTiltifyModel, verbose_name="Campaign", null=True, on_delete=models.CASCADE)
 
     # Extra
     raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
