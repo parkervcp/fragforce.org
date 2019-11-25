@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Hcmeta(models.Model):
     hcver = models.IntegerField(blank=True, null=True)
     org_id = models.CharField(max_length=50, blank=True, null=True)
