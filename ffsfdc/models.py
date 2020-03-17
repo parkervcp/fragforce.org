@@ -229,14 +229,14 @@ class Event(models.Model):
     stream_recording_link = models.CharField(db_column='stream_recording_link__c', max_length=255, blank=True,
                                              null=True)
     participant_count = models.FloatField(db_column='participant_count__c', blank=True, null=True)
-    prereg_url = models.CharField(db_column='prereg_url__c', max_length=1300, blank=True, null=True)
+    # prereg_url = models.CharField(db_column='prereg_url__c', max_length=1300, blank=True, null=True)
     mayedit = models.NullBooleanField()
-    open_for_preregistration = models.NullBooleanField(db_column='open_for_preregistration__c')
+    # open_for_preregistration = models.NullBooleanField(db_column='open_for_preregistration__c')
     islocked = models.NullBooleanField()
-    signinurl = models.CharField(db_column='signinurl__c', max_length=1300, blank=True, null=True)
+    # signinurl = models.CharField(db_column='signinurl__c', max_length=1300, blank=True, null=True)
     event_address_lookup = models.CharField(db_column='event_address_lookup__c', max_length=1300, blank=True, null=True)
     event_information = models.TextField(db_column='event_information__c', blank=True, null=True)
-    open_for_registration = models.NullBooleanField(db_column='open_for_registration__c')
+    # open_for_registration = models.NullBooleanField(db_column='open_for_registration__c')
     # Short description of the event
     description = models.TextField(db_column='description__c', blank=True, null=True)
 
