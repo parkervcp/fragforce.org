@@ -70,3 +70,4 @@ target/
 *.iml
 *.db
 *.sqlite3
+/venv/
