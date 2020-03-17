@@ -128,7 +128,7 @@ class SiteAccount(models.Model):
     site_info = models.TextField(db_column='site_info__c', blank=True, null=True)
     nerd_in_chief = models.CharField(db_column='nerd_in_chief__c', max_length=18, blank=True, null=True)
     mayedit = models.NullBooleanField()
-    contacturl = models.CharField(db_column='contacturl__c', max_length=1300, blank=True, null=True)
+    # contacturl = models.CharField(db_column='contacturl__c', max_length=1300, blank=True, null=True)
     islocked = models.NullBooleanField()
     loot_guard = models.CharField(db_column='loot_guard__c', max_length=18, blank=True, null=True)
 
