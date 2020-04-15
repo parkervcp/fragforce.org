@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Hcmeta(models.Model):
     hcver = models.IntegerField(blank=True, null=True)
     org_id = models.CharField(max_length=50, blank=True, null=True)
@@ -127,7 +128,7 @@ class SiteAccount(models.Model):
     site_info = models.TextField(db_column='site_info__c', blank=True, null=True)
     nerd_in_chief = models.CharField(db_column='nerd_in_chief__c', max_length=18, blank=True, null=True)
     mayedit = models.NullBooleanField()
-    contacturl = models.CharField(db_column='contacturl__c', max_length=1300, blank=True, null=True)
+    # contacturl = models.CharField(db_column='contacturl__c', max_length=1300, blank=True, null=True)
     islocked = models.NullBooleanField()
     loot_guard = models.CharField(db_column='loot_guard__c', max_length=18, blank=True, null=True)
 
@@ -227,15 +228,15 @@ class Event(models.Model):
     use_secondary_address = models.NullBooleanField(db_column='use_secondary_address__c')
     stream_recording_link = models.CharField(db_column='stream_recording_link__c', max_length=255, blank=True,
                                              null=True)
-    # participant_count = models.FloatField(db_column='participant_count__c', blank=True, null=True)
-    prereg_url = models.CharField(db_column='prereg_url__c', max_length=1300, blank=True, null=True)
+    participant_count = models.FloatField(db_column='participant_count__c', blank=True, null=True)
+    # prereg_url = models.CharField(db_column='prereg_url__c', max_length=1300, blank=True, null=True)
     mayedit = models.NullBooleanField()
-    open_for_preregistration = models.NullBooleanField(db_column='open_for_preregistration__c')
+    # open_for_preregistration = models.NullBooleanField(db_column='open_for_preregistration__c')
     islocked = models.NullBooleanField()
-    signinurl = models.CharField(db_column='signinurl__c', max_length=1300, blank=True, null=True)
-    #event_address_lookup = models.CharField(db_column='event_address_lookup__c', max_length=1300, blank=True, null=True)
+    # signinurl = models.CharField(db_column='signinurl__c', max_length=1300, blank=True, null=True)
+    event_address_lookup = models.CharField(db_column='event_address_lookup__c', max_length=1300, blank=True, null=True)
     event_information = models.TextField(db_column='event_information__c', blank=True, null=True)
-    open_for_registration = models.NullBooleanField(db_column='open_for_registration__c')
+    # open_for_registration = models.NullBooleanField(db_column='open_for_registration__c')
     # Short description of the event
     description = models.TextField(db_column='description__c', blank=True, null=True)
 
