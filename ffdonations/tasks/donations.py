@@ -164,6 +164,7 @@ def update_donations_team(self, teamID):
 @shared_task(bind=True)
 def update_donations_if_needed_participant(self, participantID):
     log.debug("update_donations_if_needed_participant: %r", participantID)
+
     def doupdate():
         return update_donations_participant(participantID=participantID)
 
