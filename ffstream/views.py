@@ -22,7 +22,7 @@ def start(request):
     stream.save()
 
     # Change key to GUID
-    return HttpResponseRedirect(stream.guid)
+    return HttpResponseRedirect(key.name + "__" + stream.guid)
 
 
 @require_POST
