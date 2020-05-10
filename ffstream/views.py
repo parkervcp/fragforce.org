@@ -18,7 +18,7 @@ def start(request):
     key.is_live = True
     key.save()
 
-    stream = Stream(key=key, owner=key.owner, is_live=True, started=timezone.now(), ended=None)
+    stream = Stream(key=key, is_live=True, started=timezone.now(), ended=None)
     stream.save()
 
     # Change key to GUID
