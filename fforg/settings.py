@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'ffsite',
     'ffsfdc',
     'ffdonations',
+    'ffstream',
 ]
 
 MIDDLEWARE = [
