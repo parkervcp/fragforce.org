@@ -20,5 +20,6 @@ from .views import *
 
 urlpatterns = [
     path('pub/start', start, name='pub-start'),
+    path('pub/play', play, name='pub-play'),
     path('pub/stop', stop, name='pub-stop'),
 ]
