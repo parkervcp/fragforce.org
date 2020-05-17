@@ -3,9 +3,11 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirec
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 
+@csrf_exempt
 @require_POST
 def start(request):
     skey = request.POST['name']
@@ -25,6 +27,7 @@ def start(request):
     return HttpResponseRedirect(key.name + "__" + stream.guid)
 
 
+@csrf_exempt
 @require_POST
 def stop(request):
     skey = request.POST['name']
