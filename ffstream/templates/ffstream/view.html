@@ -1,0 +1,19 @@
+{% extends "ff/base.html" %}
+
+{% block title %}Active Streams{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for stream in streams %}
+            <div class="col-lg border border-light rounded p-3 m-4 card">
+                <h2><a href="{{ stream.url }}">{{ stream.key.name }}</a></h2>
+                <br/>
+                <div>
+                    <video autoplay="" preload="none" controls="true">
+                        <source src="{{ stream.url }}" type="application/dash+xml">
+                    </video>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
