@@ -47,7 +47,30 @@ def stop(request):
 @require_POST
 def play(request):
     name = request.POST['name']
-    key = get_object_or_404(Key, name=name)
+
+    key = None
+    try:
+        key = Key.objects.get(name=name)
+    except Key.DoesNotExist:
+        pass
+
+    if not key:
+        try:
+            key = Key.objects.get(key=name)
+        except Key.DoesNotExist:
+            pass
+
+    if not key:
+        if "__" not in name:
+            return HttpResponseForbidden("bad stream")
+        kname, sname = name.split("__")
+        key = get_object_or_404(Key, name=kname)
+        stream = key.stream_set.filter(guid=sname).first()
+        return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+
+    if not key:
+        return HttpResponseForbidden("bad stream")
+
     if not key.active:
         return HttpResponseForbidden("inactive key")
 
