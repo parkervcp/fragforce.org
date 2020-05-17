@@ -22,3 +22,10 @@ class Stream(models.Model):
     is_live = models.BooleanField(null=False, default=False, verbose_name="Is Live")
     started = models.DateTimeField(verbose_name="Started Streaming At", null=True)
     ended = models.DateTimeField(verbose_name="Ended Streaming At", null=True)
+
+    def url(self):
+        return "https://stream.fragforce.org/dash/%s__%s?key=%s" % (
+            self.key.name,
+            self.guid,
+            self.key.id,
+        )
