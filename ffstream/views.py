@@ -41,3 +41,18 @@ def stop(request):
         stream.save()
 
     return HttpResponse("OK")
+
+
+@csrf_exempt
+@require_POST
+def play(request):
+    skey = request.POST['name']
+    key = get_object_or_404(Key, id=skey)
+    if not key.active:
+        return HttpResponseForbidden("inactive key")
+
+    for stream in key.stream_set.filter(is_live=True, ended=None).order_by("-started"):
+        return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+
+    # Change key to GUID
+    return HttpResponseForbidden("inactive stream")
