@@ -46,8 +46,8 @@ def stop(request):
 @csrf_exempt
 @require_POST
 def play(request):
-    skey = request.POST['name']
-    key = get_object_or_404(Key, id=skey)
+    name = request.POST['name']
+    key = get_object_or_404(Key, name=name)
     if not key.active:
         return HttpResponseForbidden("inactive key")
 
