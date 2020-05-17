@@ -11,7 +11,7 @@ from .models import *
 @require_POST
 def start(request):
     skey = request.POST['name']
-    key = get_object_or_404(Key, key=skey)
+    key = get_object_or_404(Key, id=skey)
     if not key.active:
         return HttpResponseForbidden("inactive key")
     # if key.is_live:
@@ -31,7 +31,7 @@ def start(request):
 @require_POST
 def stop(request):
     skey = request.POST['name']
-    key = get_object_or_404(Key, key=skey)
+    key = get_object_or_404(Key, id=skey)
     key.is_live = False
     key.save()
     # End them all, just in case
