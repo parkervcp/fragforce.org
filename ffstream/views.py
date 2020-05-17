@@ -56,7 +56,7 @@ def play(request):
 
     if not key:
         try:
-            key = Key.objects.get(key=name)
+            key = Key.objects.get(id=name)
         except Key.DoesNotExist:
             pass
 
