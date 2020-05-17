@@ -3,7 +3,7 @@ import uuid
 
 
 class Key(models.Model):
-    id = models.CharField(max_length=255, primary_key=True, blank=True, default=lambda: str(uuid.uuid4()))
+    id = models.CharField(max_length=255, primary_key=True, blank=True)
     name = models.SlugField(max_length=256, unique=True)
     # owner = models.ForeignKey('ffsfdc.Contact', on_delete=models.CASCADE, null=False, blank=False)
     created = models.DateTimeField(verbose_name="Created At", null=True, blank=True, auto_now_add=True)
