@@ -77,6 +77,7 @@ def view(request, key=None):
     return render(request, 'ffstream/view.html', dict(
         pullKey=pullKey,
         streams=Stream.objects.filter(is_live=True).order_by("-created").all(),
+        liveKeys=Key.objects.filter(is_live=True, active=True).order_by("-created").all(),
     ))
 
 
