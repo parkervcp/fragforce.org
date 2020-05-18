@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import *
 
 
@@ -41,3 +42,39 @@ def stop(request):
         stream.save()
 
     return HttpResponse("OK")
+
+
+@csrf_exempt
+@require_POST
+def play(request):
+    # Handle loopback for ffmpeg
+    if "__" in request.POST['name']:
+        kname, sname = request.POST['name'].split("__")
+        key = get_object_or_404(Key, name=kname)
+        stream = key.stream_set.filter(guid=sname).get()
+        return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+
+    if not request.GET.get('key', None):
+        return HttpResponseForbidden("bad key")
+
+    pullKey = get_object_or_404(Key, id=request.GET['key'])
+    streamKey = get_object_or_404(Key, name=request.POST['name'])
+
+    if not pullKey.pull:
+        return HttpResponseForbidden("bad key")
+
+    for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
+        return HttpResponseRedirect(streamKey.name + "__" + str(stream.guid))
+
+    return HttpResponseForbidden("inactive stream")
+
+
+def view(request, key=None):
+    pullKey = get_object_or_404(Key, id=key)
+    if not pullKey.pull:
+        return HttpResponseForbidden("bad key")
+
+    return render(request, 'ffstream/view.html', dict(
+        pullKey=pullKey,
+        streams=Stream.objects.filter(is_live=True).order_by("-created").all(),
+    ))
