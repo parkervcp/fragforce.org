@@ -88,6 +88,6 @@ def goto(request, key, name):
 
     streamKey = get_object_or_404(Key, name=name)
     for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
-        return HttpResponseRedirect(streamKey.url())
+        return HttpResponseRedirect(stream.url())
 
     return Http404("No active stream")
