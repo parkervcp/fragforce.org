@@ -13,6 +13,9 @@ class Key(models.Model):
     active = models.BooleanField(default=True, blank=True, verbose_name="Can be used for streaming")
     pull = models.BooleanField(default=False, blank=True, verbose_name="Can be used for pulling streaming")
 
+    def __str__(self):
+        return self.name
+
 
 class Stream(models.Model):
     guid = models.UUIDField(default=uuid.uuid4, primary_key=True)
@@ -30,3 +33,6 @@ class Stream(models.Model):
             self.key.name,
             self.guid,
         )
+
+    def __str__(self):
+        return "%s__%s" % (self.key.name, self.guid)
