@@ -50,7 +50,7 @@ def play(request):
     # Handle loopback for ffmpeg
     if "__" in request.POST['name']:
         kname, sname = request.POST['name'].split("__")
-        key = get_object_or_404(Key, id=kname)
+        key = get_object_or_404(Key, name=kname)
         stream = key.stream_set.filter(guid=sname).get()
         return HttpResponseRedirect(key.name + "__" + str(stream.guid))
 
