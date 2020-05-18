@@ -48,7 +48,7 @@ def stop(request):
 @require_POST
 def play(request):
     # Handle loopback for ffmpeg
-    if "__" in request.POST['name'] and request.GET.get('key', None) == "loop":
+    if "__" in request.POST['name']:
         kname, sname = request.POST['name'].split("__")
         key = get_object_or_404(Key, id=kname)
         stream = key.stream_set.filter(guid=sname).get()
