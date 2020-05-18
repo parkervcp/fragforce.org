@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.decorators.http import require_POST
@@ -78,3 +78,15 @@ def view(request, key=None):
         pullKey=pullKey,
         streams=Stream.objects.filter(is_live=True).order_by("-created").all(),
     ))
+
+
+def goto(request, key, name):
+    pullKey = get_object_or_404(Key, id=key)
+    if not pullKey.pull:
+        return HttpResponseForbidden("bad key")
+
+    streamKey = get_object_or_404(Key, name=name)
+    for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
+        return HttpResponseRedirect(streamKey.url())
+
+    return Http404("No active stream")
