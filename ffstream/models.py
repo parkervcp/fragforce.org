@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.conf import settings
 
 
 class Key(models.Model):
@@ -24,7 +25,8 @@ class Stream(models.Model):
     ended = models.DateTimeField(verbose_name="Ended Streaming At", null=True)
 
     def url(self):
-        return "https://stream.fragforce.org/dash/%s__%s/index.mpd" % (
+        return "%s/dash/%s__%s/index.mpd" % (
+            settings.STREAM_DASH_BASE,
             self.key.name,
             self.guid,
         )

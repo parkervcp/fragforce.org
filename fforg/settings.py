@@ -40,6 +40,8 @@ LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
 
 # Application definition
 
+STREAM_DASH_BASE = os.environ.get("STREAM_DASH_BASE", "https://stream.fragforce.org")
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
