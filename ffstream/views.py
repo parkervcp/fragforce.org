@@ -48,16 +48,16 @@ def stop(request):
 @require_POST
 def play(request):
     # Handle loopback for ffmpeg
-    if "__" in request.POST['name'] and request.POST.get('key', None) == "loop":
+    if "__" in request.POST['name'] and request.GET.get('key', None) == "loop":
         kname, sname = request.POST['name'].split("__")
         key = get_object_or_404(Key, id=kname)
         stream = key.stream_set.filter(guid=sname).get()
         return HttpResponseRedirect(key.name + "__" + str(stream.guid))
 
-    if not request.POST.get('key', None):
+    if not request.GET.get('key', None):
         return HttpResponseForbidden("bad key")
 
-    pullKey = get_object_or_404(Key, id=request.POST['key'])
+    pullKey = get_object_or_404(Key, id=request.GET['key'])
     streamKey = get_object_or_404(Key, name=request.POST['name'])
 
     if not pullKey.pull:
@@ -69,7 +69,6 @@ def play(request):
     return HttpResponseForbidden("inactive stream")
 
 
-@csrf_exempt
 def view(request, key=None):
     pullKey = get_object_or_404(Key, id=key)
     if not pullKey.pull:
