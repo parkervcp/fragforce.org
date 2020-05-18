@@ -24,8 +24,7 @@ class Stream(models.Model):
     ended = models.DateTimeField(verbose_name="Ended Streaming At", null=True)
 
     def url(self):
-        return "https://stream.fragforce.org/dash/%s__%s?key=%s" % (
+        return "https://stream.fragforce.org/dash/%s__%s/index.mpd" % (
             self.key.name,
             self.guid,
-            self.key.id,
         )
