@@ -300,11 +300,10 @@
         },
         "logzio-python-handler": {
             "hashes": [
-                "sha256:280921e079d0e965b2a5bb002a56f4b083151325ddf71e2c95f96aa74f927db5",
-                "sha256:6e55d37194cad69302d0f236d4db0e744de4036fb4ba401e243a2bfb3e250d27"
+                "sha256:5dfbd66b8b6a1bac82c3506d3bc809b89df4059b5336310c99cf45da3888a11e"
             ],
             "index": "pypi",
-            "version": "==2.0.14"
+            "version": "==3.0.0"
         },
         "lxml": {
             "hashes": [
