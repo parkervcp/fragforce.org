@@ -171,11 +171,10 @@
         },
         "django-memoize": {
             "hashes": [
-                "sha256:32b1a14224f0a63cd73c02d369d076dc6433e39a36720ef99629f41dd840cec5",
-                "sha256:f03f4cae91034ea35ff80355b143c97ab4dc52d93cc08a893cb56defddd8b819"
+                "sha256:62ac4807710ecf22a7397d008d64d0f798e7230482d4b6072d916cac852a47cd"
             ],
             "index": "pypi",
-            "version": "==2.2.0"
+            "version": "==2.3.1"
         },
         "django-redis-cache": {
             "hashes": [
