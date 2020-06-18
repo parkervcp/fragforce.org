@@ -8,17 +8,17 @@
 
 {% block body %}
 
-    <div class="row">
+    <div>
         {% for key in liveKeys %}
-            <div class="col-lg border border-light rounded p-3 m-4 card">
+            <div class="col-lg border border-light rounded p-1 m-1 card">
                 <h4><a href="/stream/play/{{ pullKey.id }}/{{ key.name }}">{{ key.name }}</a></h4>
             </div>
         {% endfor %}
     </div>
 
-    <div class="row">
+    <div>
         {% for stream in streams %}
-            <div class="col-lg border border-light rounded p-3 m-4 card">
+            <div class="col-sm border border-light rounded p-2 m-2 card">
                 <h2><a href="{{ stream.url }}">{{ stream.key.name }}</a></h2>
                 <br/>
                 <div>
