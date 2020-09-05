@@ -83,7 +83,7 @@ def update_teams(self, teams=None):
 
         # Update tracked from org
         try:
-            if SiteAccount.objects.filter(el_id=team.teamID).order_by('').count() > 0:
+            if SiteAccount.objects.filter(el_id=team.teamID).order_by('-createddate').count() > 0:
                 tm.tracked = True
         except SiteAccount.DoesNotExist as e:
             pass
