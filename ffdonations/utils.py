@@ -34,15 +34,15 @@ def el_teams(year=timezone.now().year):
     """ Returns a list of team IDs that we're tracking for the given year """
     from ffdonations.tasks.teams import update_teams
     yr = event_name_maker(year=year)
-    ret = []
+    ret = set([])
     for sa in SiteAccount.objects.filter(el_id__isnull=False).only('el_id').all():
         try:
             tm = TeamModel.objects.get(id=sa.el_id)
             if tm.event.name == yr:
-                ret.append(tm.id)
+                ret.add(tm.id)
         except TeamModel.DoesNotExist:
             update_teams.delay([sa.el_id, ])
-    return ret
+    return list(ret)
 
 
 @memoize(timeout=120)
