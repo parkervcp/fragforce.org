@@ -42,7 +42,7 @@ def el_teams(year=timezone.now().year):
                 ret.add(tm.id)
         except TeamModel.DoesNotExist:
             update_teams.delay([sa.el_id, ])
-    return list(ret)
+    return ret
 
 
 @memoize(timeout=120)
