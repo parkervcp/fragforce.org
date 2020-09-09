@@ -226,7 +226,7 @@ def update_donations_participant(self, participantID):
     # Participant not tracked
     if not participant.tracked:
         log.debug(f"Expected a tracked participant - Got {participant}")
-        return None
+        return ret
 
     try:
         donations = list(d.donations_for_participants(participantID=participantID))
