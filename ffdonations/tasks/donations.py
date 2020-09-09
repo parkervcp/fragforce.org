@@ -175,7 +175,10 @@ def update_donations_if_needed_participant(self, participantID):
         # TODO: Log this
         return None
 
-    assert participant.tracked, f"Expected a tracked participant - Got {participant}"
+    # Participant not tracked
+    if not participant.tracked:
+        log.debug(f"Expected a tracked participant - Got {participant}")
+        return None
 
     minc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MIN
     maxc = timezone.now() - settings.EL_DON_PTCP_UPDATE_FREQUENCY_MAX
