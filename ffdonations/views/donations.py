@@ -10,6 +10,7 @@ from django.conf import settings
 def v_donations(request):
     orderByVar = request.GET.get('orderBy', 'id')
     filterByVar = request.GET.get('filterBy', 'none')
+    filterByInt = int(filterByVar)
     recordCountVar = request.GET.get('recordCount', '0')
     recordCountInt = int(recordCountVar)
     update_donations_if_needed.delay()
@@ -19,7 +20,7 @@ def v_donations(request):
     else:
         listedDonos = listedDonos[:settings.MAX_API_ROWS]
     if filterByVar != 'none':
-        listedDonos = listedDonos.filter(participant_id=filterByVar)
+        listedDonos = listedDonos.filter(participant_id=filterByInt)
     return JsonResponse(
         [d for d in listedDonos.values()],
         safe=False,
