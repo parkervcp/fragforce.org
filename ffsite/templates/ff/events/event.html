@@ -15,7 +15,7 @@
             {% endif %}
             {% if event.event_start_date %}
             <div class="event_info">
-                <b>Start:</b>
+                <strong>Start:</strong>
                 {% autoescape off %}
                 {{ event.event_start_date|localtime }}
                 {% endautoescape %}
@@ -24,7 +24,7 @@
 
             {% if event.event_end_date %}
             <div class="event_info">
-                <b>Ends:</b>
+                <strong>Ends:</strong>
                 {% autoescape off %}
                 {{ event.event_end_date|localtime }}
                 {% endautoescape %}
@@ -33,7 +33,7 @@
 
             {% if event.event_address_lookup %}
             <div class="event_info">
-                <b>Location:</b>
+                <strong>Location:</strong>
                 <p>
                     {% autoescape off %}
                     {{ event.event_address_lookup }}
@@ -43,24 +43,24 @@
             {% endif %}
 
             {% if event.participant_count > 0 %}
-            <div><b>Registered Participants: </b>{{ event.participant_count|floatformat }}</div>
+            <div><strong>Registered Participants: </strong>{{ event.participant_count|floatformat }}</div>
             {% endif %}
 
             {% if event.volunteerforce_link %}
             <div class="event_info">
-                <b><a href="{{ event.volunteerforce_link }}">Volunteer Force</a></b> <i>(SFDC Internal Only)</i>
+                <strong><a href="{{ event.volunteerforce_link }}">Volunteer Force</a></strong> <em>(SFDC Internal Only)</em>
             </div>
             {% endif %}
 
             {% if event.open_for_preregistration %}
             <div class="event_info">
-                <b><a href="{{ event.prereg_url }}">Pre-Registration URL</a></b>
+                <strong><a href="{{ event.prereg_url }}">Pre-Registration URL</a></strong>
             </div>
             {% endif %}
 
             {% if event.stream_recording_link %}
             <div class="event_info">
-                <b><a href="{{ event.stream_recording_link }}">Stream Recording</a></b>
+                <strong><a href="{{ event.stream_recording_link }}">Stream Recording</a></strong>
             </div>
             {% endif %}
         </div>

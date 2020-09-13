@@ -40,6 +40,8 @@ LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
 
 # Application definition
 
+STREAM_DASH_BASE = os.environ.get("STREAM_DASH_BASE", "https://stream.fragforce.org")
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'ffsite',
     'ffsfdc',
     'ffdonations',
+    'ffstream',
 ]
 
 MIDDLEWARE = [
@@ -170,6 +173,7 @@ HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', None)
 HEROKU_SLUG_DESCRIPTION = os.environ.get('HEROKU_SLUG_DESCRIPTION', None)
 
 SINGAPORE_DONATIONS = float(os.environ.get('SINGAPORE_DONATIONS', '0.0'))
+OTHER_DONATIONS = float(os.environ.get('OTHER_DONATIONS', '0.0'))
 TARGET_DONATIONS = float(os.environ.get('TARGET_DONATIONS', '1.0'))
 
 # Cache version prefix

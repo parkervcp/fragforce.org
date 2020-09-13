@@ -12,10 +12,11 @@ def donations(request):
         el_num_donations=el_num_donations(),
         cp_donation_stats=childsplay_donation_stats(),
     )
-    ret['extralife'] = ret['el_donation_stats']['sumDonations']
-    ret['childsplay'] = ret['cp_donation_stats']['totalAmountRaised']
-    ret['singapore'] = settings.SINGAPORE_DONATIONS
+    ret['extralife'] = int(ret['el_donation_stats']['sumDonations'])
+    ret['childsplay'] = int(ret['cp_donation_stats']['totalAmountRaised'])
+    ret['singapore'] = int(settings.SINGAPORE_DONATIONS)
+    ret['other'] = int(settings.OTHER_DONATIONS)
     ret['sumDonations'] = ret['extralife'] + ret['childsplay'] + ret['singapore']
-    ret['target'] = settings.TARGET_DONATIONS
-    ret['togo'] = ret['target'] - ret['sumDonations']
+    ret['target'] = int(settings.TARGET_DONATIONS)
+    ret['togo'] = int(ret['target'] - ret['sumDonations'])
     return ret
