@@ -15,9 +15,9 @@ def v_donations(request):
     update_donations_if_needed.delay()
     listedDonos = DonationModel.objects.order_by(orderByVar)
     if filterByVar != 'none':
-        listedDonos = listedDonos.filter(participant_id=filterByVar,amount__isnull=false)
+        listedDonos = listedDonos.filter(participant_id=filterByVar,amount__isnull=False)
     else:
-        listedDonos = listedDonos.filter(amount__isnull=false)
+        listedDonos = listedDonos.filter(amount__isnull=False)
     if recordCountInt > 0 and recordCountInt <= settings.MAX_API_ROWS:
         listedDonos = listedDonos[:recordCountInt]
     else:
