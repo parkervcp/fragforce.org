@@ -1,0 +1,39 @@
+.textbox {
+	width: 600px;
+	height: 50px;
+	overflow: hidden;
+	position: relative;
+}
+.textscroll {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	line-height: 50px;
+	text-align: left;
+	/* Apply animation to this element */	
+	-moz-animation: textscroll 15s linear infinite alternate;
+	-webkit-animation: textscroll 15s linear infinite alternate;
+	animation: textscroll 15s linear infinite alternate;
+}
+/* Move it (define the animation) */
+@-moz-keyframes textscroll {
+	0%   { -moz-transform: translateX(70%); }
+	100% { -moz-transform: translateX(0%); }
+}
+@-webkit-keyframes textscroll {
+	0%   { -webkit-transform: translateX(70%); }
+	100% { -webkit-transform: translateX(0%); }
+}
+@keyframes textscroll {
+ 0%   { 
+	-moz-transform: translateX(70%); /* Firefox bug fix */
+	-webkit-transform: translateX(70%); /* Firefox bug fix */
+	transform: translateX(70%); 		
+}
+100% { 
+	-moz-transform: translateX(0%); /* Firefox bug fix */
+	-webkit-transform: translateX(0%); /* Firefox bug fix */
+	transform: translateX(0%); 
+	}
+}
