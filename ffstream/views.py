@@ -25,7 +25,7 @@ def start(request):
     stream.save()
 
     # Change key to GUID
-    return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+    return HttpResponseRedirect(stream.stream_key())
 
 
 @csrf_exempt
