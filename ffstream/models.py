@@ -16,6 +16,7 @@ class Key(models.Model):
     def __str__(self):
         return self.name
 
+
 class Stream(models.Model):
     guid = models.UUIDField(default=uuid.uuid4, primary_key=True)
     key = models.ForeignKey(Key, on_delete=models.CASCADE, null=False, blank=False)
