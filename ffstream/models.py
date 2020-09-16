@@ -26,7 +26,16 @@ class Stream(models.Model):
     is_live = models.BooleanField(null=False, default=False, verbose_name="Is Live")
     started = models.DateTimeField(verbose_name="Started Streaming At", null=True)
     ended = models.DateTimeField(verbose_name="Ended Streaming At", null=True)
-    saved_as = models.CharField(max_length=254, null=False, blank=False)
+    saved_as = models.CharField(max_length=254, null=True, blank=False)
+
+    def set_stream_key(self):
+        self.saved_as = self.stream_key()
+        self.save()
+
+    @staticmethod
+    def make_stream_key(key_name, guid):
+        # Changes here may need to be mirrored to migration 0003_stream_saved_as.py
+        return "%s__%s" % (key_name, guid)
 
     def url(self):
         return "%s/dash/%s/index.mpd" % (
@@ -38,11 +47,6 @@ class Stream(models.Model):
         if self.saved_as:
             return self.saved_as
         return self.make_stream_key(self.key.name, self.guid)
-
-    @staticmethod
-    def make_stream_key(key_name, guid):
-        # Changes here may need to be mirrored to migration 0003_stream_saved_as.py
-        return "%s__%s" % (key_name, guid)
 
     def __str__(self):
         return "%s__%s" % (self.key.name, self.guid)
