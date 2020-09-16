@@ -55,12 +55,12 @@ def play(request):
         stream = key.stream_set.filter(guid=sname).get()
         return HttpResponseRedirect(stream.stream_key())
 
-    if not request.data.get('key', None):
+    if not request.POST.get('key', None):
         print("no key")
         return HttpResponseForbidden("no key given")
 
-    pullKey = get_object_or_404(Key, id=request.data['key'])
-    streamKey = get_object_or_404(Key, name=request.data['name'])
+    pullKey = get_object_or_404(Key, id=request.POST['key'])
+    streamKey = get_object_or_404(Key, name=request.POST['name'])
 
     if not pullKey.pull:
         print("not a pull key")
