@@ -35,7 +35,7 @@ class Stream(models.Model):
     @staticmethod
     def make_stream_key(key_name, guid):
         # Changes here may need to be mirrored to migration 0003_stream_saved_as.py
-        return "%s__%s" % (key_name, guid)
+        return key_name
 
     def url(self):
         return "%s/dash/%s/index.mpd" % (
