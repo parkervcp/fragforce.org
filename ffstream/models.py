@@ -49,4 +49,4 @@ class Stream(models.Model):
         return self.make_stream_key(self.key.name, self.guid)
 
     def __str__(self):
-        return "%s__%s" % (self.key.name, self.guid)
+        return self.stream_key()
