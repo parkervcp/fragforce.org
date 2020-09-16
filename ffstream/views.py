@@ -52,7 +52,7 @@ def play(request):
         kname, sname = request.POST['name'].split("__")
         key = get_object_or_404(Key, name=kname)
         stream = key.stream_set.filter(guid=sname).get()
-        return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+        return HttpResponseRedirect(stream.stream_key())
 
     if not request.GET.get('key', None):
         return HttpResponseForbidden("bad key")
@@ -64,7 +64,7 @@ def play(request):
         return HttpResponseForbidden("bad key")
 
     for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
-        return HttpResponseRedirect(streamKey.name + "__" + str(stream.guid))
+        return HttpResponseRedirect(stream.stream_key())
 
     return HttpResponseForbidden("inactive stream")
 
