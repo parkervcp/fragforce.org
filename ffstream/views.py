@@ -23,6 +23,7 @@ def start(request):
 
     stream = Stream(key=key, is_live=True, started=timezone.now(), ended=None)
     stream.save()
+    stream.set_stream_key()  # No save needed
 
     # Change key to GUID
     return HttpResponseRedirect(stream.stream_key())
