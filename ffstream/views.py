@@ -56,21 +56,21 @@ def play(request):
         return HttpResponseRedirect(stream.stream_key())
 
     if not request.POST.get('key', None):
-        print("no key")
+        # print("no key")
         return HttpResponseForbidden("no key given")
 
     pullKey = get_object_or_404(Key, id=request.POST['key'])
     streamKey = get_object_or_404(Key, name=request.POST['name'])
 
     if not pullKey.pull:
-        print("not a pull key")
+        # print("not a pull key")
         return HttpResponseForbidden("not a pull key")
 
     for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
-        print("Found " + stream.stream_key())
+        # print("Found " + stream.stream_key())
         return HttpResponseRedirect(stream.stream_key())
 
-    print("inactive stream")
+    # print("inactive stream")
     return HttpResponseForbidden("inactive stream")
 
 
