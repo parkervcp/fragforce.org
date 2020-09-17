@@ -23,9 +23,10 @@ def start(request):
 
     stream = Stream(key=key, is_live=True, started=timezone.now(), ended=None)
     stream.save()
+    stream.set_stream_key()  # No save needed
 
     # Change key to GUID
-    return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+    return HttpResponseRedirect(stream.stream_key())
 
 
 @csrf_exempt
@@ -52,20 +53,24 @@ def play(request):
         kname, sname = request.POST['name'].split("__")
         key = get_object_or_404(Key, name=kname)
         stream = key.stream_set.filter(guid=sname).get()
-        return HttpResponseRedirect(key.name + "__" + str(stream.guid))
+        return HttpResponseRedirect(stream.stream_key())
 
-    if not request.GET.get('key', None):
-        return HttpResponseForbidden("bad key")
+    if not request.POST.get('key', None):
+        # print("no key")
+        return HttpResponseForbidden("no key given")
 
-    pullKey = get_object_or_404(Key, id=request.GET['key'])
+    pullKey = get_object_or_404(Key, id=request.POST['key'])
     streamKey = get_object_or_404(Key, name=request.POST['name'])
 
     if not pullKey.pull:
-        return HttpResponseForbidden("bad key")
+        # print("not a pull key")
+        return HttpResponseForbidden("not a pull key")
 
     for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
-        return HttpResponseRedirect(streamKey.name + "__" + str(stream.guid))
+        # print("Found " + stream.stream_key())
+        return HttpResponseRedirect(stream.stream_key())
 
+    # print("inactive stream")
     return HttpResponseForbidden("inactive stream")
 
 

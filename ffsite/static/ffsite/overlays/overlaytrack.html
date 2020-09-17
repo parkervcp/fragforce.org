@@ -16,14 +16,15 @@
 
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<link rel="stylesheet" href="overlayformat.css">
 	<script>
 		
 		// first pull URL and see if we have any vars to parse
 		var url = new URL(window.location.href);
-		var urlInterval = url.searchParams.get("checkInterval");
+		var urlInterval = url.searchParams.get("checkInterval"); 
 		var urlList = url.searchParams.get("listType");
-		var urlCount = url.searchParams.get("numDonations");
+		var urlCount = 1; // No longer needed to be more than one
 		var urlUserId = url.searchParams.get("filterId");
 
 		// load variables from config data
@@ -42,8 +43,8 @@
 			checkInterval = 10000;
 		}
 		if(numDonations < 1 || numDonations > 10){
-			console.log('invalid value for numDonations, defaulting to 3');
-			numDonations = 3;
+			console.log('invalid value for numDonations, defaulting to 1');
+			numDonations = 1;
 		}
 
 		/* System variables, don't edit */
@@ -63,8 +64,8 @@
 		jsonURL += '&recordCount=' + numDonations;
 		console.log( 'calling url string: ' + jsonURL );
 		
-		// string before list of donators
-		var scrollFinalString = 'Welcome to Fragforce! ';
+		// open a blank string
+		var scrollFinalString = '';
 		
 		// method called to reset scroll loop (note keeping blank URL check for future changes)
 		function getViaApi(){
@@ -87,20 +88,12 @@
 						if( currentAPIRes.length >= numDonations ){
 							
 							//reset string to base for re-population
-							scrollFinalString = 'Welcome to Fragforce! ';
-
-							if(jsonSource == 'last') {
-								scrollFinalString += ' Thanks for our most recent donations:';
-							} else if(jsonSource == 'top'){
-								scrollFinalString += ' Massive thank you to our top donators:';
-							} else {
-								jsonURL = ''; // default to null string, meaning no data pulled
-							}
+							scrollFinalString = '';
 
 							// loop through x donations and add to string
 							var i;
 							for( i = 0; i < numDonations; i++ ){
-								scrollFinalString += '    ' + currentAPIRes[i].displayName + ': $' + currentAPIRes[i].amount;
+								scrollFinalString += currentAPIRes[i].displayName + ': $' + currentAPIRes[i].amount;
 							}
 						}
 
@@ -115,7 +108,7 @@
 			} else {
 				// in case no json source is set in config (or bad source label), default to just prep string
 				console.log('Bad or empty json source in settings, defaulting to basic response');
-				document.getElementById("textscroll").innerHTML = scrollFinalString;
+				document.getElementById("textscroll").innerHTML = '--ERROR--';
 			}
 		}
 		// make first call and schedule future calls at interval
@@ -123,27 +116,10 @@
 		setInterval(getViaApi, checkInterval);
 	</script>
 	<head>
-		<link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+                <title>Overlay Tracker</title>
 	</head>
-	<style>
-		/* General -- Font settings for Acme font */
-		.acmeFontLarge{
-			font-family: 'Acme';
-			font-size: 80px; 
-			font-weight: bold; 
-			text-align: center;
-		}
-		.acmeFontSmall{
-			font-family: 'Acme';
-			font-size: 28px; 
-			font-weight: bold; 
-			text-align: center;
-		}
-	</style>
 	<body>
-		<marquee behavior="scroll" direction="left" style="font-size:24px">
-			<div id="textscroll" class="textscroll acmeFontSmall"> </div>
-		</marquee>
+		<div id="textscroll" class="textscroll"> --WAIT-- </div>
 	</body>
 </html>
 	

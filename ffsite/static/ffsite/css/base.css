@@ -20,14 +20,14 @@ a, a:hover, a:visited, a:active, a:link {
 h1 {
     /*font-size: 110%;*/
     /*font-family: 'Press Start 2P', cursive;*/
-    font-family: 'oswald' !important;
+    font-family: 'oswald', sans-serif !important;
     color: #46a4e8;
 }
 
 h2 {
     /*font-family: 'Press Start 2P', cursive;*/
     /*font-size: 100%;*/
-    font-family: 'oswald' !important;
+    font-family: 'oswald', sans-serif !important;
     color: #46a4e8;
     border-bottom: 2px solid #46a4e8;
     padding-bottom: 2px;
@@ -36,12 +36,12 @@ h2 {
 h3 {
     /*font-size: 80%;*/
     /*font-family: 'Press Start 2P', cursive;*/
-    font-family: 'oswald' !important;
+    font-family: 'oswald', sans-serif !important;
     color: #46a4e8;
 }
 
 a.nav-link {
-    font-family: 'oswald';
+    font-family: 'oswald', sans-serif;
     font-size: 115%;
 }
 
