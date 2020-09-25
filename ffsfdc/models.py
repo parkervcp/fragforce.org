@@ -138,15 +138,12 @@ class SiteAccount(models.Model):
 
     def has_events(self):
         """ Return True if this account has upcoming events """
-        import datetime
         return Event.objects.filter(event_start_date__gte=timezone.now(), site=self).count() > 0
 
     def upcoming(self):
-        import datetime
         return self.events.filter(event_start_date__gte=timezone.now()).order_by('event_start_date').all()
 
     def past(self):
-        import datetime
         return self.events.filter(event_start_date__lt=timezone.now()).order_by('-event_start_date').all()
 
 

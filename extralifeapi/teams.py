@@ -1,7 +1,8 @@
 """ Teams """
-from .log import root_logger
-from .base import DonorDriveBase
 from collections import namedtuple
+
+from .base import DonorDriveBase
+from .log import root_logger
 
 Team = namedtuple('Team',
                   [

@@ -1,10 +1,10 @@
-from django.shortcuts import render, Http404
-from django.http import JsonResponse
-from ..tasks import *
-from django.db.models import Q, Avg, Max, Min, Sum
-from django.views.decorators.cache import cache_page
-from django.conf import settings
 from functools import wraps
+
+from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import Http404
+
+from ..tasks import *
 
 
 def _onlydebug(f):
