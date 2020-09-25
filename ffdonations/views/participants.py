@@ -1,9 +1,8 @@
-from django.shortcuts import render, Http404
-from django.http import JsonResponse
-from ..tasks import *
-from django.db.models import Q, Avg, Max, Min, Sum
-from django.views.decorators.cache import cache_page
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+
+from ..tasks import *
 
 
 @cache_page(settings.VIEW_PARTICIPANTS_CACHE)

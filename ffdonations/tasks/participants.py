@@ -1,10 +1,12 @@
 from __future__ import absolute_import, unicode_literals
+
 from celery import shared_task
-from extralifeapi.participants import Participants, Participant
-from ..models import *
 from django.conf import settings
-from ffsfdc.models import *
 from django.utils import timezone
+
+from extralifeapi.participants import Participants
+from ffsfdc.models import *
+from ..models import *
 
 
 def _make_p(*args, **kwargs):
