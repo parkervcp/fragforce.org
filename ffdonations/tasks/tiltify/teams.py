@@ -1,5 +1,4 @@
 from celery import shared_task
-from django.conf import settings
 
 from .campaigns import update_campaigns
 from .helpers import *

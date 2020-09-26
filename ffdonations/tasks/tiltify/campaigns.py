@@ -1,10 +1,11 @@
 import logging
-import datetime
+
 from celery import shared_task
+from django.utils import timezone
+
 from .donations import update_donations
 from .helpers import *
 from ...models import *
-from django.utils import timezone
 
 log = logging.getLogger('ffdonations.tasks.tiltify.campaigns')
 

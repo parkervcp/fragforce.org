@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from ffsfdc.models import *
-from ffsite.models import *
-from django.views.decorators.cache import cache_page
 from django.conf import settings
+from django.shortcuts import render
 from django.utils import timezone
+from django.views.decorators.cache import cache_page
+
+from ffsfdc.models import *
 
 
 @cache_page(settings.VIEW_SITE_EVENT_CACHE)
@@ -17,7 +17,6 @@ def events(request):
 @cache_page(settings.VIEW_SITE_EVENT_CACHE)
 def events_upcoming(request):
     """ Events upcoming page """
-    import datetime
     return render(request, 'ff/events/upcoming.html', {
         'events': Event.objects.filter(event_start_date__gte=timezone.now()).order_by(
             'event_start_date').all(),

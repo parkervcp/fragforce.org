@@ -1,6 +1,3 @@
-from .models import *
-import datetime
-from django.conf import settings
 from .utils import *
 
 

@@ -1,9 +1,10 @@
 """ Redis based caching and data storage """
-import redis
-from django.conf import settings
 import hashlib
 import time
 from datetime import timedelta
+
+import redis
+from django.conf import settings
 
 
 class RedisDB(object):
