@@ -9,4 +9,4 @@ from ..tasks import *
 
 @cache_page(settings.VIEW_DONATIONS_STATS_CACHE)
 def v_tracked_donations_stats(request):
-    return JsonResponse(donations())
+    return JsonResponse(donations(request=request))
