@@ -1,10 +1,12 @@
 """ DonorDrive API Base Class """
-from .log import root_logger
-import requests
-from collections import namedtuple
 import re
-from urllib.parse import urlparse
+from collections import namedtuple
 from json import JSONDecodeError
+from urllib.parse import urlparse
+
+import requests
+
+from .log import root_logger
 
 mod_logger = root_logger.getChild('base')
 FetchResponse = namedtuple('FetchResponse', ['data', 'headers', 'urls'])

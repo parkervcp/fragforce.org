@@ -1,7 +1,9 @@
-from .models import *
 from ffsfdc.models import *
 from random import randint
-from django.db.models import F, Q, Max, Min
+
+from django.db.models import Q, Max, Min
+
+from ffsfdc.models import *
 
 
 def random_contact():

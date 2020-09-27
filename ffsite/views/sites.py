@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from ffsfdc.models import *
-from ffsite.models import *
-from django.views.decorators.cache import cache_page
 from django.conf import settings
+from django.shortcuts import render
+from django.views.decorators.cache import cache_page
+
+from ffsfdc.models import *
 
 
 @cache_page(settings.VIEW_SITE_SITE_CACHE)

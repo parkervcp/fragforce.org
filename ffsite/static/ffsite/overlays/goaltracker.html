@@ -63,10 +63,10 @@
 						
 						//pull data from http response
 						currentAPIRes = JSON.parse(Http.responseText);
-						console.log('Incoming JSON size: ' + currentAPIRes.length);
+						console.log('Incoming JSON: ' + currentAPIRes);
 						
 						//process if we have any records
-						if( currentAPIRes.length >= 1 ){
+						if( currentAPIRes.sumDonations > 1 ){
 							
 							var siteTotal = 0;
 							var eventTotal = 0;

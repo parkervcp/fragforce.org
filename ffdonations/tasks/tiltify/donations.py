@@ -1,5 +1,5 @@
 import logging
-import datetime
+
 from celery import shared_task
 
 from .helpers import *

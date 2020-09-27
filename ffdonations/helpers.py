@@ -1,6 +1,8 @@
 import time
-from fforg.rdbs import r_timers
+
 from django.conf import settings
+
+from fforg.rdbs import r_timers
 
 
 def el_request_sleeper(url, data, parsed, **kwargs):
