@@ -4,6 +4,7 @@ from .models import *
 
 
 class KeyAdmin(admin.ModelAdmin):
+    date_hierarchy = "modified"
     list_filter = (
         "is_live",
         "active",
@@ -11,6 +12,15 @@ class KeyAdmin(admin.ModelAdmin):
     )
     ordering = ("-modified",)
     sortable_by = (
+        "name",
+        "id",
+        "created",
+        "modified",
+        "is_live",
+        "active",
+        "pull",
+    )
+    list_display = (
         "name",
         "id",
         "created",
