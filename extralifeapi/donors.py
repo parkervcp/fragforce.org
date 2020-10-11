@@ -1,6 +1,7 @@
 """ Donations """
-from .base import DonorDriveBase
 from collections import namedtuple
+
+from .base import DonorDriveBase
 from .log import root_logger
 
 mod_logger = root_logger.getChild('donors')
