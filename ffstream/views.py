@@ -62,11 +62,16 @@ def play(request):
     pullKey = get_object_or_404(Key, id=request.POST['key'])
     streamKey = get_object_or_404(Key, name=request.POST['name'])
 
+    # Allow users to pull their own stream if they want
+    if pullKey.pk == streamKey.pk and streamKey.active:
+        for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
+            return HttpResponseRedirect(stream.stream_key())
+
     if not pullKey.pull:
         # print("not a pull key")
         return HttpResponseForbidden("not a pull key")
 
-    for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started"):
+    for stream in streamKey.stream_set.filter(is_live=True, ended=None).order_by("-started")[:1]:
         # print("Found " + stream.stream_key())
         return HttpResponseRedirect(stream.stream_key())
 
