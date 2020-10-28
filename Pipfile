@@ -23,10 +23,12 @@ redis = ">=2.10.3"
 boto = "*"
 "logzio-python-handler" = "*"
 celery = ">=5.0.0"
-"django-redis-cache" = "*"
+"django-redis-cache" = ">=2.1"
 hiredis = "*"
 "django-memoize" = "*"
 memoize = "*"
+django = ">=3.1"
+six = "*"
 
 # Temp until PR finsihed and applied
 tiltify2 = {git = "https://github.com/gpmidi/tiltify-v2-api-python.git", ref = "develop-v3", editable = true}
