@@ -64,7 +64,7 @@ def update_donations_existing(self):
 
     ret = []
     for teamID in teamIDs:
-        ret.append(update_donations_if_needed_team.delay(teamID=teamID).id)
+        ret.append(update_donations_if_needed_team.delay(teamID=teamID['team']).id)
     for participantID in participantIDs:
         ret.append(update_donations_if_needed_participant.delay(participantID=participantID['participant']).id)
     return ret
