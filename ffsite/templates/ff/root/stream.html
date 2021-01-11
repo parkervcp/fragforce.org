@@ -2,6 +2,10 @@
 
 {% block title %}Stream{% endblock %}
 
+{% block head %}
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-lg">
@@ -9,7 +13,6 @@
                 <div class="col-lg border border-light rounded p-3 m-4 card">
                     <h2>Interested In Watching Our Live Stream?</h2>
                     <div id="twitch-embed"></div>
-                    <script scr="https://embed.twitch.tv/embed/v1.js"></script>
                     <script type="text/javascript">
                       new Twitch.Embed("twitch-embed", {
                         width: "100%",
