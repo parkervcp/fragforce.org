@@ -35,9 +35,7 @@ if SECRET_KEY == 'INSECURE':
     else:
         raise ValueError("SECRET_KEY env var must be defined when not in DEBUG=True")
 
-# FIXME: Add LOGZ.IO Logging
-LOGZIO_API_KEY = os.environ.get('LOGZIO_API_KEY', None)
-
+STREAM_URL = os.environ.get('STREAM_URL', None)
 # Application definition
 
 STREAM_DASH_BASE = os.environ.get("STREAM_DASH_BASE", "https://stream.fragforce.org")

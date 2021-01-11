@@ -28,3 +28,11 @@ def join(request):
 def contact(request):
     """ Contact page """
     return render(request, 'ff/root/contact.html', {})
+
+
+@cache_page(settings.VIEW_SITE_STATIC_CACHE)
+def stream(request):
+    """ Stream page """
+    return render(request, 'ff/root/stream.html', {
+        "stream_url": settings.STREAM_URL,
+    })
