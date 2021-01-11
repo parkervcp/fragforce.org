@@ -4,8 +4,7 @@
 
 {% block head %}
 <script src="https://embed.twitch.tv/embed/v1.js"
-        integrity="sha384-F1TLMZiu0KAVT9z4j3dSP+cNoR7mq05K3GpwzCWZkPSZAALBEpprSJMEZ5CuSTcA"
-        crossorigin="anoymous"></script>
+        integrity="sha384-F1TLMZiu0KAVT9z4j3dSP+cNoR7mq05K3GpwzCWZkPSZAALBEpprSJMEZ5CuSTcA"></script>
 {% endblock %}
 
 {% block body %}
@@ -20,7 +19,8 @@
                         width: "100%",
                         height: 480,
                         channel: "fragforce",
-                        theme: "dark"
+                        theme: "dark",
+                        parent: ["fragforce.org", "dev.fragforce.org"
                       });
                     </script>
                     <p>Head over to <a href="http://twitch.tv/fragforce">http://twitch.tv/fragforce</a>!</p>
