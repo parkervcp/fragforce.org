@@ -58,7 +58,7 @@ class ParticipantModel(models.Model):
     numDonations = models.BigIntegerField(verbose_name="Donation Count", null=True)
     sumDonations = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Donations Total", null=True)
     sumPledges = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Pledges Total", null=True)
-    isTeamCaptain = models.NullBooleanField(verbose_name="Is Team Captain", default=False, null=True)
+    isTeamCaptain = models.BooleanField(verbose_name="Is Team Captain", default=False, null=True)
     # Related
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
@@ -129,9 +129,9 @@ class RewardTiltifyModel(models.Model):
     remaining = models.IntegerField(null=True, verbose_name="Remaining")
     fairMarketValue = models.DecimalField(decimal_places=2, max_digits=50, null=True, verbose_name="Fair Market Value")
     currency = models.CharField(max_length=8192, null=True, default='Currency')
-    shippingAddressRequired = models.NullBooleanField(null=True, verbose_name="Is Active")
+    shippingAddressRequired = models.BooleanField(null=True, verbose_name="Is Active")
     shippingNote = models.CharField(max_length=1024 * 1024, null=True, default='Description')
-    active = models.NullBooleanField(null=True, verbose_name="Is Active")
+    active = models.BooleanField(null=True, verbose_name="Is Active")
     startsAt = models.DateTimeField(null=True, verbose_name="Starts At")
     createdAt = models.DateTimeField(null=True, verbose_name="Created At")
     updatedAt = models.DateTimeField(null=True, verbose_name="Updated At")
@@ -227,8 +227,8 @@ class CauseTiltifyModel(models.Model):
     paypalEmail = models.EmailField(max_length=8192, null=True, verbose_name="Paypal Email")
     paypalCurrencyCode = models.CharField(max_length=8192, null=True, verbose_name="Paypal Currency Code")
     status = models.CharField(max_length=8192, null=True, verbose_name="Status")
-    stripeConnected = models.NullBooleanField(null=True, verbose_name="Stripe Connected")
-    mailchimpConnected = models.NullBooleanField(null=True, verbose_name="Mail Chimp Connected")
+    stripeConnected = models.BooleanField(null=True, verbose_name="Stripe Connected")
+    mailchimpConnected = models.BooleanField(null=True, verbose_name="Mail Chimp Connected")
 
     image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image",
                               related_name='image')
@@ -286,8 +286,8 @@ class TeamTiltifyModel(models.Model):
 
     # On some
     bio = models.CharField(max_length=1024 * 1024, verbose_name="Bio")
-    inviteOnly = models.NullBooleanField(verbose_name="Is Invite Only Team")
-    disbanded = models.NullBooleanField(verbose_name="Is Disbanded")
+    inviteOnly = models.BooleanField(verbose_name="Is Invite Only Team", null=True)
+    disbanded = models.BooleanField(verbose_name="Is Disbanded", null=True)
     totalAmountRaised = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Total Amount Raised",
                                             null=True)
     about = models.CharField(verbose_name="About", null=True, max_length=8192)
@@ -339,7 +339,7 @@ class CampaignTiltifyModel(models.Model):
                                                  verbose_name="Supporting Amount Raised", null=True)
     totalAmountRaised = models.DecimalField(decimal_places=2, max_digits=50, verbose_name="Total Amount Raised",
                                             null=True)
-    supportable = models.NullBooleanField(verbose_name="Is Supportable", null=True)
+    supportable = models.BooleanField(verbose_name="Is Supportable", null=True)
     status = models.CharField(max_length=8192, null=True, verbose_name="Status")
     startsOn = models.DateTimeField(null=True, verbose_name='Starts On')
     endsOn = models.DateTimeField(null=True, verbose_name='Ends On')
