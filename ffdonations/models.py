@@ -1,7 +1,6 @@
 import datetime
 import uuid
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 
@@ -37,7 +36,7 @@ class TeamModel(models.Model):
     event = models.ForeignKey(EventModel, null=True, default=None, verbose_name="Event", on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class ParticipantModel(models.Model):
@@ -64,7 +63,7 @@ class ParticipantModel(models.Model):
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class DonationModel(models.Model):
@@ -86,7 +85,7 @@ class DonationModel(models.Model):
     team = models.ForeignKey(TeamModel, null=True, default=None, verbose_name="Team", on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
     @classmethod
     def tracked_q(cls):
@@ -108,7 +107,7 @@ class MediaTiltifyModel(models.Model):
     height = models.IntegerField(null=True, verbose_name="Height (px)")
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
     # Type of result from lib
     subtype = models.CharField(max_length=255, null=False, default='MediaResult')
@@ -139,7 +138,7 @@ class RewardTiltifyModel(models.Model):
     image = models.ForeignKey(MediaTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Image")
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class SocailTiltifyModel(models.Model):
@@ -157,7 +156,7 @@ class SocailTiltifyModel(models.Model):
     website = models.CharField(max_length=8192, null=True, default='Website')
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class AddressTiltifyModel(models.Model):
@@ -175,7 +174,7 @@ class AddressTiltifyModel(models.Model):
     country = models.CharField(max_length=8192, null=True, default='Country')
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class ColorTiltifyModel(models.Model):
@@ -189,7 +188,7 @@ class ColorTiltifyModel(models.Model):
     background = models.CharField(max_length=8192, null=True, default='Background Color')
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class SettingsTiltifyModel(models.Model):
@@ -207,7 +206,7 @@ class SettingsTiltifyModel(models.Model):
     colors = models.ForeignKey(ColorTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Colors")
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class CauseTiltifyModel(models.Model):
@@ -241,7 +240,7 @@ class CauseTiltifyModel(models.Model):
     address = models.ForeignKey(AddressTiltifyModel, on_delete=models.DO_NOTHING, null=True, verbose_name="Address")
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class EventTiltifyModel(models.Model):
@@ -266,7 +265,7 @@ class LiveStreamTiltifyModel(models.Model):
     stream_type = models.CharField(max_length=8192, verbose_name="Type", null=True)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class TeamTiltifyModel(models.Model):
@@ -293,7 +292,7 @@ class TeamTiltifyModel(models.Model):
     about = models.CharField(verbose_name="About", null=True, max_length=8192)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
     # Type of result from lib
     subtype = models.CharField(max_length=255, null=False, default='TeamResult')
@@ -313,7 +312,7 @@ class UserTiltifyModel(models.Model):
     avatar = models.ForeignKey(MediaTiltifyModel, verbose_name="Avatar", null=True, on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
 
 class CampaignTiltifyModel(models.Model):
@@ -357,7 +356,7 @@ class CampaignTiltifyModel(models.Model):
                                          on_delete=models.DO_NOTHING)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
 
     # Type of result from lib
     subtype = models.CharField(max_length=255, null=False, default='CampaignResult')
@@ -378,4 +377,4 @@ class DonationTiltifyModel(models.Model):
     campaign = models.ForeignKey(CampaignTiltifyModel, verbose_name="Campaign", null=True, on_delete=models.CASCADE)
 
     # Extra
-    raw = JSONField(verbose_name="Raw Data", null=True, default=dict)
+    raw = models.JSONField(verbose_name="Raw Data", null=True, default=dict)
